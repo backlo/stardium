@@ -1,7 +1,7 @@
 package com.bb.stardium.bench.service;
 
 import com.bb.stardium.bench.domain.Room;
-import com.bb.stardium.bench.domain.repository.Room2Repository;
+import com.bb.stardium.bench.domain.repository.RoomRepository;
 import com.bb.stardium.bench.dto.RoomRequestDto;
 import com.bb.stardium.bench.dto.RoomResponseDto;
 import com.bb.stardium.bench.service.exception.AlreadyJoinedException;
@@ -9,9 +9,7 @@ import com.bb.stardium.bench.service.exception.FixedReadyRoomException;
 import com.bb.stardium.bench.service.exception.MasterAndRoomNotMatchedException;
 import com.bb.stardium.bench.service.exception.NotFoundRoomException;
 import com.bb.stardium.player.domain.Player;
-import com.bb.stardium.player.domain.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +21,12 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class RoomService {
-    private final Room2Repository roomRepository;
-    private final PlayerRepository playerRepository;
 
-    public long create(RoomRequestDto roomRequest, Player master) {
-        Room room = roomRequest.toEntity(master);
-        room.addPlayer(master);
+    private final RoomRepository roomRepository;
+
+    public long create(RoomRequestDto roomRequest, Player player) {
+        Room room = roomRequest.toEntity(player);
+        room.addPlayer(player);
         Room saveRoom = roomRepository.save(room);
         return saveRoom.getId();
     }
@@ -86,7 +84,7 @@ public class RoomService {
         return room;
     }
 
-    public void quit(long roomId, Player loggedInPlayer) {
+    public void quit(Player loggedInPlayer, Long roomId) {
         Room room = findRoom(roomId);
 
         if (room.isReady()) {
@@ -108,7 +106,8 @@ public class RoomService {
 
     @Transactional(readOnly = true)
     public List<RoomResponseDto> findPlayerJoinedRoom(Player player) {
-        return roomRepository.findByPlayersOrderByStartTimeAsc(player).stream()
+        return roomRepository.findByPlayers_Email(player.getEmail()).stream()
+                .sorted(Comparator.comparing(Room::getStartTime))
                 .map(RoomResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -122,7 +121,7 @@ public class RoomService {
     }
 
     public List<RoomResponseDto> findRoomBySearchKeyword(String searchKeyword) {
-        return roomRepository.findAllByDescriptionTitleContaining(searchKeyword).stream()
+        return roomRepository.findAllByTitleContaining(searchKeyword).stream()
                 .filter(Room::isUnexpiredRoom)
                 .map(RoomResponseDto::new)
                 .collect(Collectors.toList());

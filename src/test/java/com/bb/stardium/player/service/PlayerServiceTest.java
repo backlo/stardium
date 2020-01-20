@@ -37,7 +37,6 @@ class PlayerServiceTest {
         requestDto.setNickname("nickname");
         requestDto.setEmail("email@email.com");
         requestDto.setPassword("password");
-        requestDto.setConfirmPassword("password");
         requestDto.setStatusMessage("별일 없이 산다");
         player = requestDto.toEntity();
     }
@@ -68,7 +67,7 @@ class PlayerServiceTest {
     void login() {
         given(playerRepository.findByEmail("email@email.com")).willReturn(Optional.of(player));
 
-        playerService.login(requestDto);
+        PlayerResponseDto responseDto = playerService.login(requestDto);
 
         verify(playerRepository).findByEmail("email@email.com");
     }

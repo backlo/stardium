@@ -60,7 +60,7 @@ const ROOM_APP = (() => {
         }
     };
 
-    function RoomService() {
+    const RoomService = function () {
         const connector = FETCH_APP.FetchApi();
         const header = {
             'Content-Type': 'application/json; charset=UTF-8',
@@ -70,59 +70,42 @@ const ROOM_APP = (() => {
         let roomId = document.getElementById('room-id');
         roomId = roomId ? roomId.value : 0;
 
-        const roomBasicInfoItemIds = ['title', 'city', 'section', 'detail', 'gameDate', 'startTime'
-            , 'endTime', 'playersLimit', 'intro'];
-
-        const getBasicInfoItems = (roomBasicInfoItemIds) => {
-            let roomBasicInfoItems = new Map();
-            for (const id of roomBasicInfoItemIds) {
-                roomBasicInfoItems.set(id, document.getElementById(id).value);
-            }
-            return roomBasicInfoItems;
-        }
-
-        const noneBlank = (roomBasicInfoItems) => {
-            for (const value of roomBasicInfoItems.values()) {
-                if (value === "") {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        const toRoomBasicInfo = (roomBasicInfoItems) => {
-            return {
-                title: roomBasicInfoItems.get('title'),
-                address: {
-                    city: roomBasicInfoItems.get('city'),
-                    section: roomBasicInfoItems.get('section'),
-                    detail: roomBasicInfoItems.get('detail'),
-                },
-                startTime: roomBasicInfoItems.get('gameDate') + ' ' + roomBasicInfoItems.get('startTime'),
-                endTime: roomBasicInfoItems.get('gameDate') + ' ' + roomBasicInfoItems.get('endTime'),
-                playersLimit: roomBasicInfoItems.get('playersLimit'),
-                intro: roomBasicInfoItems.get('intro'),
-            };
-        }
+        const title = document.getElementById('title');
+        const city = document.getElementById('city');
+        const section = document.getElementById('section');
+        const detail = document.getElementById('detail');
+        const startTime = document.getElementById('startTime');
+        const endTime = document.getElementById('endTime');
+        const playersLimit = document.getElementById('playersLimit');
+        const intro = document.getElementById('intro');
 
         const saveRoom = event => {
-            event.preventDefault();
-            const roomBasicInfoItems = getBasicInfoItems(roomBasicInfoItemIds);
 
-            if (noneBlank(roomBasicInfoItems) === false) {
+            event.preventDefault();
+
+            if (title.value === "" || city.value === "" || section.value === "" || detail.value === "" ||
+                startTime.value === "" || endTime.value === "" || playersLimit.value === "" && intro.value === "") {
                 alert('모든 항목을 입력해주세요!');
                 return;
             }
-            const roomBasicInfo = toRoomBasicInfo(roomBasicInfoItems);
-            
-            if(new Date(roomBasicInfo.startTime) - new Date(roomBasicInfo.endTime) > 0) {
-                alert('시작 시간은 종료 시간보다 일러야 합니다.');
-                return;
-            }
+
+            const roomBasicInfo = {
+                title: title.value,
+                address: {
+                    city: city.value,
+                    section: section.value,
+                    detail: detail.value,
+                },
+                startTime: startTime.value,
+                endTime: endTime.value,
+                playersLimit: playersLimit.value,
+                intro: intro.value,
+            };
 
             const ifSucceed = (response) => {
-                response.json()
-                    .then(data => window.location.href = `/rooms/${data}`)
+                response.json().then(data => {
+                    window.location.href = `/rooms/${data}`
+                })
             };
 
             connector.fetchTemplate('/rooms',
@@ -136,19 +119,18 @@ const ROOM_APP = (() => {
         const updateRoom = event => {
             event.preventDefault();
 
-            const roomBasicInfoItems = getBasicInfoItems(roomBasicInfoItemIds);
-
-            if (noneBlank(roomBasicInfoItems) === false) {
-                alert('모든 항목을 입력해주세요!');
-                return;
-            }
-
-            const roomBasicInfo = toRoomBasicInfo(roomBasicInfoItems);
-
-            if(new Date(startTime) - new Date(endTime) > 0) {
-                alert('시작 시간은 종료 시간보다 일러야 합니다.');
-                return;
-            }
+            const roomBasicInfo = {
+                title: title.value,
+                address: {
+                    city: city.value,
+                    section: section.value,
+                    detail: detail.value,
+                },
+                startTime: startTime.value,
+                endTime: endTime.value,
+                playersLimit: playersLimit.value,
+                intro: intro.value,
+            };
 
             const ifSucceed = (response) => {
                 response.json().then(data => {
@@ -187,9 +169,9 @@ const ROOM_APP = (() => {
         const quitRoom = () => {
 
             const ifSucceed = () => {
-                alert("나가는 데 성공했습니다!");
-                window.location.href = `/rooms`
-            };
+                    alert("나가는 데 성공했습니다!");
+                    window.location.href = `/rooms`
+                };
 
             connector.fetchTemplateWithoutBody('/rooms/quit/' + roomId,
                 connector.POST,
@@ -203,14 +185,10 @@ const ROOM_APP = (() => {
                 window.location.href = '/';
             };
 
-            const sendDelete = () => {
-                connector.fetchTemplateWithoutBody('/rooms/' + roomId,
-                    connector.DELETE,
-                    ifSucceed
-                );
-            };
-
-            confirm('정말로 이 방을 삭제하시겠습니까?') ? sendDelete() : false;
+            connector.fetchTemplateWithoutBody('/rooms/' + roomId,
+                connector.DELETE,
+                ifSucceed
+            );
         };
 
         const findRoomsBySection = () => {

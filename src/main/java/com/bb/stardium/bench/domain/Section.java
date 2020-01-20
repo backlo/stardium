@@ -38,9 +38,13 @@ public enum Section {
     }
 
     public static List<String> getAllSections() {
-        return Arrays.stream(Section.values())
-                .map(section -> section.sectionName)
+        return Arrays.stream(values())
+                .map(Section::getSectionName)
                 .sorted()
                 .collect(Collectors.toList());
+    }
+
+    private String getSectionName() {
+        return this.sectionName;
     }
 }

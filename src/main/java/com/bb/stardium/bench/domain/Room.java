@@ -10,11 +10,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@EqualsAndHashCode(of = "id")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
+@Getter
+@Setter
 @Entity
 public class Room {
+
     private static final int EMPTY_SEAT = 0;
 
     @Id
@@ -22,46 +25,39 @@ public class Room {
     @Column(name = "room_id")
     private Long id;
 
-    @Embedded
-    private RoomDescription description;
+    private String title;
+
+    private String intro;
 
     @Embedded
     private Address address;
 
     @Future
-    @Column(name = "start_time")
     private LocalDateTime startTime;
 
     @Future
-    @Column(name = "end_time")
     private LocalDateTime endTime;
 
+    private int playersLimit;
 
     @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "master_id")
     private Player master;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "room_player",
+    @Builder.Default
+    @ManyToMany
+    @JoinTable(name = "player_room",
             joinColumns = @JoinColumn(name = "room_id"),
             inverseJoinColumns = @JoinColumn(name = "player_id"))
     private List<Player> players = new ArrayList<>();
 
-    @Builder
-    public Room(String title, String intro, int playersLimit, Address address,
-                @Future LocalDateTime startTime, @Future LocalDateTime endTime, Player master) {
-        checkTime(startTime, endTime);
-        this.description = new RoomDescription(title, intro, playersLimit);
-        this.address = address;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.master = master;
-    }
-
-    private void checkTime(LocalDateTime startTime, LocalDateTime endTime) {
-        if (startTime.isAfter(endTime)) {
-            throw new IllegalPlayTimeException();
-        }
+    public void update(Room updatedRoom) {
+        this.title = updatedRoom.getTitle();
+        this.intro = updatedRoom.getIntro();
+        this.address = updatedRoom.getAddress();
+        this.startTime = updatedRoom.getStartTime();
+        this.endTime = updatedRoom.getEndTime();
+        this.playersLimit = updatedRoom.getPlayersLimit();
     }
 
     public boolean isNotMaster(Player masterPlayer) {
@@ -73,6 +69,7 @@ public class Room {
             throw new PlayerAlreadyExistException();
         }
         this.players.add(player);
+        player.addRoom(this);
     }
 
     public boolean hasPlayer(Player player) {
@@ -80,6 +77,7 @@ public class Room {
     }
 
     public void removePlayer(Player player) {
+        player.removeRoom(this);
         this.players.remove(player);
     }
 
@@ -88,29 +86,10 @@ public class Room {
     }
 
     public boolean hasRemainingSeat() {
-        return this.description.getPlayerLimit() - players.size() > EMPTY_SEAT;
+        return this.playersLimit - players.size() > EMPTY_SEAT;
     }
 
     public boolean isReady() {
         return !hasRemainingSeat();
-    }
-
-    public void update(Room another) {
-        this.description = another.description;
-        this.address = another.getAddress();
-        this.startTime = another.getStartTime();
-        this.endTime = another.getEndTime();
-    }
-
-    public String getTitle() {
-        return description.getTitle();
-    }
-
-    public String getIntro() {
-        return description.getIntro();
-    }
-
-    public int getPlayersLimit() {
-        return description.getPlayerLimit();
     }
 }

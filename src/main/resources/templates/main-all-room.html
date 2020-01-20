@@ -12,18 +12,18 @@
 </th:block>
 
 <th:block layout:fragment="content-header">
-    <th:block th:replace="fragment/main-header"/>
-    <div class="ui grid">
-        <div class="six wide column" style="padding-right: 0;">
-            <select class="ui fluid search selection dropdown" id="selectOption" name="지역">
-                <option>지역</option>
-                <option th:each="section : ${sections}" th:text="${section}"></option>
-            </select>
-        </div>
-        <div class="ten wide column" style="padding-left: 0;">
-            <div class="ui fluid action input">
-                <input id="search-keyword" placeholder="Search" type="text">
-                <button class="ui violet submit button" id="search-button">검색</button>
+    <div class="segments">
+        <th:block th:replace="fragment/main-header"/>
+        <div class="segment">
+            <div class="ui two item menu" style="margin-top: 0; margin-bottom: 0;">
+                <select class="ui dropdown" id="selectOption" name="지역">
+                    <option>지역</option>
+                    <option th:each="section : ${sections}" th:text="${section}"></option>
+                </select>
+                <div class="ui action input">
+                    <input type="text" placeholder="Search" id="search-keyword">
+                    <button class="ui violet submit button" id="search-button">Search</button>
+                </div>
             </div>
         </div>
     </div>
@@ -61,13 +61,7 @@
                         </div>
                     </div>
                     <div class="extra content">
-                        <button class="ui fluid violet button room-join-button"
-                                th:data-room-id="${room.id}"
-                                th:if="${!room.hasPlayer(session.login.nickname)}">참여하기
-                        </button>
-                        <button class="ui fluid basic violet button"
-                                th:if="${room.hasPlayer(session.login.nickname)}"
-                                th:onclick="'window.location.href=\'/rooms/' + ${room.id} + '\''">상세 보기
+                        <button class="ui fluid violet button room-join-button" th:data-room-id="${room.id}">참여하기
                         </button>
                     </div>
                 </div>
@@ -80,10 +74,5 @@
     <script type="text/javascript" src="/js/main.js"></script>
     <script type="text/javascript" src="/js/fetch-api.js"></script>
     <script type="text/javascript" src="/js/room.js"></script>
-    <script type="text/javascript">
-        $('.ui.dropdown')
-            .dropdown()
-        ;
-    </script>
 </th:block>
 </html>

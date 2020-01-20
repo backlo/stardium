@@ -43,7 +43,6 @@ public abstract class BaseAcceptanceTest {
                         .fromFormData("nickname", playerRequestDto.getNickname())
                         .with("email", playerRequestDto.getEmail())
                         .with("password", playerRequestDto.getPassword())
-                        .with("confirmPassword", playerRequestDto.getConfirmPassword())
                         .with("status", playerRequestDto.getStatusMessage()))
                 .exchange();
         return playerRequestDto.toEntity();
@@ -53,14 +52,16 @@ public abstract class BaseAcceptanceTest {
         String cookie = getNewCookie(dto);
         return webTestClient.post()
                 .uri(uri)
-                .header("Cookie", cookie);
+                .header("Cookie", cookie)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED);
     }
 
     protected WebTestClient.RequestBodySpec newSessionPut(PlayerRequestDto dto, String uri) {
         String cookie = getNewCookie(dto);
         return webTestClient.put()
                 .uri(uri)
-                .header("Cookie", cookie);
+                .header("Cookie", cookie)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED);
     }
 
     protected WebTestClient.RequestHeadersSpec newSessionGet(PlayerRequestDto dto, String uri) {
@@ -77,14 +78,16 @@ public abstract class BaseAcceptanceTest {
         String cookie = getLoginCookie(dto);
         return webTestClient.post()
                 .uri(uri)
-                .header("Cookie", cookie);
+                .header("Cookie", cookie)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED);
     }
 
     protected WebTestClient.RequestBodySpec loginSessionPut(PlayerRequestDto dto, String uri) {
         String cookie = getLoginCookie(dto);
         return webTestClient.put()
                 .uri(uri)
-                .header("Cookie", cookie);
+                .header("Cookie", cookie)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED);
     }
 
     protected WebTestClient.RequestHeadersSpec loginSessionGet(PlayerRequestDto dto, String uri) {

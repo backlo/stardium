@@ -16,6 +16,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @NoArgsConstructor
 @Getter
@@ -31,12 +32,12 @@ public class RoomRequestDto {
 
     @Future
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime startTime;
 
     @Future
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime endTime;
 
     @Min(value = 2)
@@ -64,6 +65,7 @@ public class RoomRequestDto {
                 .endTime(this.endTime)
                 .playersLimit(this.playersLimit)
                 .master(player)
+                .players(new ArrayList<>())
                 .build();
     }
 }

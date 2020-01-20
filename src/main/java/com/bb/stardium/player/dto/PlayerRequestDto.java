@@ -3,6 +3,7 @@ package com.bb.stardium.player.dto;
 import com.bb.stardium.common.util.EscapedCharacters;
 import com.bb.stardium.mediafile.domain.MediaFile;
 import com.bb.stardium.player.domain.Player;
+import com.bb.stardium.player.service.exception.MisMatchedPasswordException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,16 +16,14 @@ public class PlayerRequestDto {
     private String nickname;
     private String email;
     private String password;
-    private String confirmPassword;
     private String statusMessage;
     private String mediaFile;
 
     @Builder
-    public PlayerRequestDto(String nickname, String email, String password, String confirmPassword, String statusMessage) {
+    public PlayerRequestDto(String nickname, String email, String password, String statusMessage) {
         this.nickname = nickname;
         this.email = email;
         this.password = password;
-        this.confirmPassword = confirmPassword;
         this.statusMessage = statusMessage;
     }
 
@@ -38,7 +37,4 @@ public class PlayerRequestDto {
                 .build();
     }
 
-    public boolean isEqualPassword() {
-        return this.password.equals(this.confirmPassword);
-    }
 }

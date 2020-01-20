@@ -1,7 +1,6 @@
 package com.bb.stardium.common.web.config;
 
 import com.bb.stardium.common.web.argumentresolver.LoginArgumentResolver;
-import com.bb.stardium.common.web.argumentresolver.RedirectionArgumentResolver;
 import com.bb.stardium.common.web.interceptor.AuthenticationInterceptor;
 import com.bb.stardium.common.web.interceptor.UnAuthenticationInterceptor;
 import com.bb.stardium.player.service.PlayerService;
@@ -42,6 +41,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new LoginArgumentResolver(playerService));
-        resolvers.add(new RedirectionArgumentResolver());
     }
 }
