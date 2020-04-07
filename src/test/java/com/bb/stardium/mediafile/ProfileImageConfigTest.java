@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class MediaFileConfigTest {
+class ProfileImageConfigTest {
     @Autowired
     private ApplicationContext context;
 

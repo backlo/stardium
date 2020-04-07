@@ -1,6 +1,9 @@
 package com.bb.stardium.mediafile.service;
 
-import com.bb.stardium.mediafile.config.MediaFileResourceLocation;
+import com.bb.stardium.common.util.FileConverter;
+import com.bb.stardium.common.util.S3FileUploader;
+import com.bb.stardium.mediafile.domain.ProfileImage;
+import com.bb.stardium.mediafile.service.exception.NotImageFileException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,25 +12,39 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
+import java.util.Objects;
 
-@RequiredArgsConstructor
 @Transactional
 @Service
 public class MediaFileService {
-    private static final Logger log = LoggerFactory.getLogger(MediaFileService.class);
 
-    private final MediaFileResourceLocation mediaFileResourceLocation;
+    private final S3FileUploader fileUploader;
+    private final FileConverter fileConverter;
 
-    public String save(MultipartFile file) {
-        String fileName = UUID.randomUUID().toString() + file.getOriginalFilename();
-        File dest = new File(mediaFileResourceLocation.getLocation() + fileName);
-        try {
-            file.transferTo(dest);
-            return mediaFileResourceLocation.getUrl() + fileName;
-        } catch (IOException e) {
-            throw new IllegalStateException("Fail To handle file");
+    public MediaFileService(S3FileUploader fileUploader, FileConverter fileConverter) {
+        this.fileUploader = fileUploader;
+        this.fileConverter = fileConverter;
+    }
+
+    public ProfileImage updateProfile(MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            return null;
         }
+
+        if (!isImageMediaType(file)) {
+            throw new NotImageFileException("이미지 형식이 맞지 않습니다.");
+        }
+
+        File convertFile = fileConverter.convert(file);
+        String profileUrl = fileUploader.uploadFile(convertFile);
+        String originFileName = file.getOriginalFilename();
+
+        convertFile.delete();
+
+        return new ProfileImage(profileUrl, originFileName);
+    }
+
+    private boolean isImageMediaType(MultipartFile file) {
+        return Objects.requireNonNull(file.getContentType()).toLowerCase().startsWith("image") || !file.isEmpty();
     }
 }

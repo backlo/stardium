@@ -1,23 +1,27 @@
 package com.bb.stardium.player.web.controller;
 
 import com.bb.stardium.player.dto.PlayerRequestDto;
-import com.bb.stardium.player.dto.PlayerResponseDto;
-import com.bb.stardium.player.service.PlayerService;
-import lombok.RequiredArgsConstructor;
+import com.bb.stardium.player.service.LoginService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 
-@RequiredArgsConstructor
 @Controller
+@EnableRedisHttpSession
 public class LoginController {
-    private static final String REDIRECT = "redirect:";
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
     private static final String LOGIN = "login";
-    private static final String ROOT_PAGE = "/";
 
-    private final PlayerService playerService;
+    private final LoginService loginService;
+
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
+    }
 
     @GetMapping("/login")
     public String loginPage() {
@@ -25,15 +29,16 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(final PlayerRequestDto requestDto, final HttpSession session) {
-        final PlayerResponseDto responseDto = playerService.login(requestDto);
-        session.setAttribute(LOGIN, responseDto);
-        return REDIRECT + ROOT_PAGE;
+    public String login(PlayerRequestDto requestDto, HttpSession session) {
+        session.setAttribute(LOGIN, loginService.login(requestDto));
+        return "redirect:/";
     }
 
     @GetMapping("/logout")
     public String logout(final HttpSession session) {
         session.invalidate();
-        return REDIRECT + ROOT_PAGE;
+        log.error("logout: {}", session.getId());
+        log.error("logout: {}", session.getAttribute("login").toString());
+        return "redirect:/";
     }
 }

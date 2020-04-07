@@ -1,6 +1,6 @@
 package com.bb.stardium.mediafile.domain.repository;
 
-import com.bb.stardium.mediafile.domain.MediaFile;
+import com.bb.stardium.mediafile.domain.ProfileImage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,21 +9,21 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-class MediaFileRepositoryTest {
+class ProfileImageRepositoryTest {
     @Autowired
     private MediaFileRepository mediaFileRepository;
 
     @Test
     @DisplayName("미디어파일 CRUD")
     void findMediaFile() {
-        MediaFile mediaFile = new MediaFile("");
-        mediaFileRepository.save(mediaFile);
+        ProfileImage profileImage = new ProfileImage("");
+        mediaFileRepository.save(profileImage);
 
-        assertThat(mediaFile.getId()).isNotNull();
-        assertThat(mediaFile.getUrl()).isNotNull();
+        assertThat(profileImage.getId()).isNotNull();
+        assertThat(profileImage.getUrl()).isNotNull();
 
-        mediaFileRepository.delete(mediaFile);
-        Long id = mediaFile.getId();
+        mediaFileRepository.delete(profileImage);
+        Long id = profileImage.getId();
 
         assertThat(mediaFileRepository.findById(id).isEmpty()).isTrue();
     }

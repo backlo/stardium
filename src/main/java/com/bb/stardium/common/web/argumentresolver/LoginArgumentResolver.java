@@ -1,7 +1,7 @@
 package com.bb.stardium.common.web.argumentresolver;
 
 import com.bb.stardium.common.web.annotation.LoggedInPlayer;
-import com.bb.stardium.player.dto.PlayerResponseDto;
+import com.bb.stardium.player.dto.PlayerSessionDto;
 import com.bb.stardium.player.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -28,8 +28,11 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
                                   final NativeWebRequest webRequest,
                                   final WebDataBinderFactory binderFactory) {
         final HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        final PlayerResponseDto responseDto = (PlayerResponseDto) request.getSession().getAttribute("login");
-        return playerService.findByResponseDto(responseDto);
+        final PlayerSessionDto sessionDto = (PlayerSessionDto) request.getSession().getAttribute("login");
+
+        return playerService
+                .findById(sessionDto.getPlayerId())
+                .toPlayerResponseDtoObject();
     }
 
 }

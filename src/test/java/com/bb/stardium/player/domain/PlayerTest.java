@@ -1,6 +1,6 @@
 package com.bb.stardium.player.domain;
 
-import com.bb.stardium.mediafile.domain.MediaFile;
+import com.bb.stardium.mediafile.domain.ProfileImage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -59,7 +59,7 @@ class PlayerTest {
                 .email("a@a.com")
                 .nickname("andole")
                 .password("abcd")
-                .profile(new MediaFile(""))
+                .profile(new ProfileImage(""))
                 .build();
 
         Player persist = em.persist(player);

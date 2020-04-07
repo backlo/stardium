@@ -1,10 +1,7 @@
 package com.bb.stardium.player.dto;
 
 import com.bb.stardium.common.util.EscapedCharacters;
-import com.bb.stardium.mediafile.domain.MediaFile;
 import com.bb.stardium.player.domain.Player;
-import com.bb.stardium.player.service.exception.MisMatchedPasswordException;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,19 +10,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PlayerRequestDto {
+    private Long playerId;
     private String nickname;
     private String email;
     private String password;
     private String statusMessage;
-    private String mediaFile;
-
-    @Builder
-    public PlayerRequestDto(String nickname, String email, String password, String statusMessage) {
-        this.nickname = nickname;
-        this.email = email;
-        this.password = password;
-        this.statusMessage = statusMessage;
-    }
 
     public Player toEntity() {
         return Player.builder()
@@ -33,8 +22,6 @@ public class PlayerRequestDto {
                 .email(EscapedCharacters.of(email))
                 .password(password)
                 .statusMessage(EscapedCharacters.of(statusMessage))
-                .profile(new MediaFile(mediaFile))
                 .build();
     }
-
 }

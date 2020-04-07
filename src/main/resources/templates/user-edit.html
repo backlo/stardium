@@ -24,9 +24,10 @@
                     <div class="field">
                         <div class="ui left icon input">
                             <i class="user icon"></i>
-                            <input name="nickname" placeholder="닉네임 입력" th:value="${session.login.nickname}"
+                            <input name="nickname" placeholder="닉네임 입력" th:value="${model.nickname}"
                                    type="text"/>
-                            <input name="email" th:value="${session.login.email}" type="hidden"/>
+                            <input name="playerId" th:value="${model.playerId}" type="hidden"/>
+                            <input name="email" th:value="${model.email}" type="hidden"/>
                         </div>
                     </div>
                     <div class="field">
@@ -42,7 +43,7 @@
                         </div>
                     </div>
                     <div class="field">
-                        <textarea name="statusMessage" placeholder="상태 메세지" th:text="${session.login.statusMessage}"
+                        <textarea name="statusMessage" placeholder="상태 메세지" th:text="${model.statusMessage}"
                                   type="password">
 
                         </textarea>

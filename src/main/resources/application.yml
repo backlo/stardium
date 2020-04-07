@@ -1,0 +1,18 @@
+#aws
+cloud:
+  aws:
+    s3:
+      bucket: stardium2020
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+# redis session
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    password:
+  session:
+    store-type: redis

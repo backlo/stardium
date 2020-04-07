@@ -1,33 +1,40 @@
 package com.bb.stardium.common.web.service;
 
 import com.bb.stardium.player.domain.Player;
-import com.bb.stardium.player.dto.PlayerResponseDto;
-import com.bb.stardium.player.service.PlayerService;
+import com.bb.stardium.player.domain.repository.PlayerRepository;
+import com.bb.stardium.player.dto.PlayerSessionDto;
 import com.bb.stardium.player.service.exception.EmailNotExistException;
-import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.Objects;
 
-@RequiredArgsConstructor
 @Service
 public class SessionService {
+    private static final Logger log = LoggerFactory.getLogger(SessionService.class);
 
-    private final PlayerService playerService;
+    private final PlayerRepository playerRepository;
 
-    public boolean isLoggedIn(final HttpSession session) {
-        final PlayerResponseDto responseDto = (PlayerResponseDto) session.getAttribute("login");
-        if (Objects.isNull(responseDto)) {
-            return false;
-        }
-        return comparePlayerByDto(responseDto);
+    public SessionService(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
     }
 
-    private boolean comparePlayerByDto(final PlayerResponseDto responseDto) {
+    public boolean isLoggedIn(final HttpSession session) {
+        log.info("sessionId : {}", session.getId());
+        log.info("sessionId : {}", session.getAttribute("login"));
+        PlayerSessionDto sessionDto = (PlayerSessionDto) session.getAttribute("login");
+        if (sessionDto == null) {
+            return false;
+        }
+        return comparePlayerByDto(sessionDto);
+    }
+
+    private boolean comparePlayerByDto(final PlayerSessionDto sessionDto) {
         try {
-            final Player player = playerService.findByPlayerEmail(responseDto.getEmail());
-            return player.isSamePlayer(responseDto.getPlayerId(), responseDto.getEmail());
+            Player player = playerRepository.findById(sessionDto.getPlayerId())
+                    .orElseThrow(NoClassDefFoundError::new);
+            return player.isSamePlayer(sessionDto.getPlayerId());
         } catch (final EmailNotExistException exception) {
             return false;
         }

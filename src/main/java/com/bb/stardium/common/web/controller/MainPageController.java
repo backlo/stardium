@@ -5,7 +5,7 @@ import com.bb.stardium.bench.dto.RoomResponseDto;
 import com.bb.stardium.bench.service.RoomService;
 import com.bb.stardium.common.web.annotation.LoggedInPlayer;
 import com.bb.stardium.player.domain.Player;
-import lombok.RequiredArgsConstructor;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Controller
+@EnableRedisHttpSession
 public class MainPageController {
 
     private final RoomService roomService;
+
+    public MainPageController(RoomService roomService) {
+        this.roomService = roomService;
+    }
 
     private String homepageRooms(final Model model, final List<RoomResponseDto> rooms) {
         model.addAttribute("rooms", rooms);

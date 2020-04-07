@@ -2,7 +2,9 @@ package com.bb.stardium.player.domain;
 
 
 import com.bb.stardium.bench.domain.Room;
-import com.bb.stardium.mediafile.domain.MediaFile;
+import com.bb.stardium.mediafile.domain.ProfileImage;
+import com.bb.stardium.player.dto.PlayerResponseDto;
+import com.bb.stardium.player.dto.PlayerSessionDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,8 +14,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode(of = "id")
@@ -39,32 +40,62 @@ public class Player {
     @Column(name = "password", length = 64, nullable = false)
     private String password;
 
-    @Builder.Default
     @Column(name = "statusMessage", length = 255)
-    private String statusMessage = "";
+    private String statusMessage;
 
-    @Builder.Default
     @ManyToMany(mappedBy = "players")
     private List<Room> rooms = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private MediaFile profile;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "url", column = @Column(name = "profile_image_url")),
+            @AttributeOverride(name = "fileName", column = @Column(name = "profile_image_file_name"))
+    })
+    private ProfileImage profile = ProfileImage.defaultImage();
 
-    public void updateStatusMessage(String statusMessage) {
+    @Builder
+    public Player(String nickname, String email, String password, String statusMessage) {
+        this.nickname = nickname;
+        this.email = email;
+        this.password = password;
         this.statusMessage = statusMessage;
     }
 
-    public Player update(final Player newPlayer) {
-        this.nickname = newPlayer.nickname;
-        this.email = newPlayer.email;
-        this.password = newPlayer.password;
-        this.statusMessage = newPlayer.statusMessage;
-        this.profile = newPlayer.profile;
+    public Player checkMatchPassword(final String password) {
+        if (!this.password.equals(password)) {
+            throw new MisMatchPasswordException();
+        }
+
         return this;
     }
 
-    public boolean isMatchPassword(final String password) {
-        return this.password.equals(password);
+    public boolean isSamePlayer(long playerId) {
+        return this.id == playerId;
+    }
+
+    public PlayerResponseDto toPlayerResponseDtoObject() {
+        return PlayerResponseDto.builder()
+                .player(this)
+                .build();
+    }
+
+    public PlayerSessionDto toPlayerSessionDtoObject() {
+        return PlayerSessionDto.builder()
+                .playerId(this.id)
+                .build();
+    }
+
+    public Player update(Player editPlayer, ProfileImage profileImage) {
+        this.nickname = editPlayer.nickname;
+        this.email = editPlayer.email;
+        this.password = editPlayer.password;
+        this.statusMessage = editPlayer.statusMessage;
+
+        if (profileImage != null) {
+            this.profile = profileImage;
+        }
+
+        return this;
     }
 
     public void addRoom(Room room) {
@@ -74,9 +105,5 @@ public class Player {
     public Room removeRoom(Room room) {
         rooms.remove(room);
         return room;
-    }
-
-    public boolean isSamePlayer(final long playerId, final String email) {
-        return this.id == playerId && this.email.equals(email);
     }
 }

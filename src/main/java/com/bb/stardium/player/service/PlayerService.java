@@ -1,57 +1,61 @@
 package com.bb.stardium.player.service;
 
+import com.bb.stardium.mediafile.domain.ProfileImage;
 import com.bb.stardium.player.domain.Player;
 import com.bb.stardium.player.domain.repository.PlayerRepository;
 import com.bb.stardium.player.dto.PlayerRequestDto;
 import com.bb.stardium.player.dto.PlayerResponseDto;
-import com.bb.stardium.player.service.exception.AuthenticationFailException;
-import com.bb.stardium.player.service.exception.EmailAlreadyExistException;
-import com.bb.stardium.player.service.exception.EmailNotExistException;
-import lombok.RequiredArgsConstructor;
+import com.bb.stardium.player.dto.PlayerSessionDto;
+import com.bb.stardium.player.service.exception.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@RequiredArgsConstructor
-@Transactional
 @Service
 public class PlayerService {
+    private static final Logger log = LoggerFactory.getLogger(PlayerService.class);
 
     private final PlayerRepository playerRepository;
 
-    @Transactional(readOnly = true)
-    public Player findByPlayerEmail(final String email) {
-        return playerRepository.findByEmail(email).orElseThrow(EmailNotExistException::new);
+    public PlayerService(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
     }
 
-    @Transactional(readOnly = true)
-    public Player findByResponseDto(final PlayerResponseDto responseDto) {
-        return findByPlayerEmail(responseDto.getEmail());
-    }
-
-    public Player register(final PlayerRequestDto requestDto) {
+    @Transactional
+    public PlayerResponseDto register(final PlayerRequestDto requestDto) {
         if (playerRepository.existsByEmail(requestDto.getEmail())) {
             throw new EmailAlreadyExistException();
         }
-        return playerRepository.save(requestDto.toEntity());
+        Player newPlayer = playerRepository.save(requestDto.toEntity());
+
+        return newPlayer.toPlayerResponseDtoObject();
     }
 
-    public PlayerResponseDto login(final PlayerRequestDto requestDto) {
-        final Player player = findByPlayerEmail(requestDto.getEmail());
-        if (player.isMatchPassword(requestDto.getPassword())) {
-            return new PlayerResponseDto(player);
-        }
-        throw new AuthenticationFailException();
+    public PlayerResponseDto findPlayerById(Long id) {
+        return findById(id).toPlayerResponseDtoObject();
     }
 
-    public PlayerResponseDto update(final PlayerRequestDto requestDto, final PlayerResponseDto sessionDto) {
-        final Player player = findByPlayerEmail(requestDto.getEmail());
-        if (!player.getEmail().equals(sessionDto.getEmail())) {
-            throw new AuthenticationFailException();
+    @Transactional(readOnly = true)
+    public Player findById(Long id) {
+        return playerRepository.findById(id)
+                .orElseThrow(NoFoundPlayerIdException::new);
+    }
+
+    @Transactional
+    public PlayerResponseDto update(PlayerRequestDto requestDto, ProfileImage profileImage, PlayerSessionDto sessionDto) {
+        log.error("request: {}", requestDto.getPlayerId());
+        Player player = findById(requestDto.getPlayerId());
+
+        if (!player.isSamePlayer(sessionDto.getPlayerId())) {
+            throw new MisMatchedPlayerAndSessionException();
         }
-        player.update(requestDto.toEntity());
+
+        player.update(requestDto.toEntity(), profileImage);
         return new PlayerResponseDto(player);
     }
 
+    @Transactional(readOnly = true)
     public String findNicknameByPlayerId(final long playerId) {
         return playerRepository
                 .findById(playerId)
