@@ -1,4 +1,4 @@
-HELP.md
+
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
@@ -22,6 +22,7 @@ build/
 out/
 *.DS_Store
 
+aws.txt
 
 ### NetBeans ###
 /nbproject/private/
