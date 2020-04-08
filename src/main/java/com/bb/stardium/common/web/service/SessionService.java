@@ -33,8 +33,9 @@ public class SessionService {
     private boolean comparePlayerByDto(final PlayerSessionDto sessionDto) {
         try {
             Player player = playerRepository.findById(sessionDto.getPlayerId())
-                    .orElseThrow(NoClassDefFoundError::new);
-            return player.isSamePlayer(sessionDto.getPlayerId());
+                    .orElseThrow(EmailNotExistException::new);
+
+            return player.isSamePlayer(player.getEmail());
         } catch (final EmailNotExistException exception) {
             return false;
         }

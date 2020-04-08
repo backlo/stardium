@@ -47,7 +47,7 @@ public class PlayerService {
         log.error("request: {}", requestDto.getPlayerId());
         Player player = findById(requestDto.getPlayerId());
 
-        if (!player.isSamePlayer(sessionDto.getPlayerId())) {
+        if (!player.isSamePlayer(sessionDto.getEmail())) {
             throw new MisMatchedPlayerAndSessionException();
         }
 

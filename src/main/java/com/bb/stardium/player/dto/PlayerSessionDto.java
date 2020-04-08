@@ -10,9 +10,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class PlayerSessionDto implements Serializable {
     private Long playerId;
+    private String email;
 
     @Builder
-    public PlayerSessionDto(final Long playerId) {
+    public PlayerSessionDto(Long playerId, String email) {
         this.playerId = playerId;
+        this.email = email;
     }
 }

@@ -40,7 +40,7 @@ public class Player {
     @Column(name = "password", length = 64, nullable = false)
     private String password;
 
-    @Column(name = "statusMessage", length = 255)
+    @Column(name = "statusMessage")
     private String statusMessage;
 
     @ManyToMany(mappedBy = "players")
@@ -69,8 +69,8 @@ public class Player {
         return this;
     }
 
-    public boolean isSamePlayer(long playerId) {
-        return this.id == playerId;
+    public boolean isSamePlayer(String playerEmail) {
+        return this.email.equals(playerEmail);
     }
 
     public PlayerResponseDto toPlayerResponseDtoObject() {
