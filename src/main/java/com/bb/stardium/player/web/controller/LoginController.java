@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 @EnableRedisHttpSession
 public class LoginController {
-    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
     private static final String LOGIN = "login";
 
     private final LoginService loginService;
@@ -36,9 +35,8 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String logout(final HttpSession session) {
+        session.removeAttribute("login");
         session.invalidate();
-        log.error("logout: {}", session.getId());
-        log.error("logout: {}", session.getAttribute("login").toString());
         return "redirect:/";
     }
 }

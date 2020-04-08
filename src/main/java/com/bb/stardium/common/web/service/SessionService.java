@@ -22,23 +22,20 @@ public class SessionService {
 
     public boolean isLoggedIn(final HttpSession session) {
         log.info("sessionId : {}", session.getId());
-        log.info("sessionId : {}", session.getAttribute("login"));
+        log.info("sessionAttribute : {}", session.getAttribute("login"));
         PlayerSessionDto sessionDto = (PlayerSessionDto) session.getAttribute("login");
-        if (sessionDto == null) {
-            return false;
-        }
-        return comparePlayerByDto(sessionDto);
+        return sessionDto != null;
     }
 
-    private boolean comparePlayerByDto(final PlayerSessionDto sessionDto) {
-        try {
-            Player player = playerRepository.findById(sessionDto.getPlayerId())
-                    .orElseThrow(EmailNotExistException::new);
-
-            return player.isSamePlayer(player.getEmail());
-        } catch (final EmailNotExistException exception) {
-            return false;
-        }
-    }
+//    private boolean comparePlayerByDto(final PlayerSessionDto sessionDto) {
+//        try {
+//            Player player = playerRepository.findById(sessionDto.getPlayerId())
+//                    .orElseThrow(EmailNotExistException::new);
+//
+//            return player.isSamePlayer(player.getEmail());
+//        } catch (final EmailNotExistException exception) {
+//            return false;
+//        }
+//    }
 
 }

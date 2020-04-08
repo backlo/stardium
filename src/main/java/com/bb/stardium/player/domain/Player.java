@@ -69,6 +69,13 @@ public class Player {
         return this;
     }
 
+    public PlayerSessionDto toPlayerSessionDtoObject() {
+        return PlayerSessionDto.builder()
+                .playerId(this.id)
+                .email(this.email)
+                .build();
+    }
+
     public boolean isSamePlayer(String playerEmail) {
         return this.email.equals(playerEmail);
     }
@@ -76,12 +83,6 @@ public class Player {
     public PlayerResponseDto toPlayerResponseDtoObject() {
         return PlayerResponseDto.builder()
                 .player(this)
-                .build();
-    }
-
-    public PlayerSessionDto toPlayerSessionDtoObject() {
-        return PlayerSessionDto.builder()
-                .playerId(this.id)
                 .build();
     }
 

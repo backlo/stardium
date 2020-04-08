@@ -5,6 +5,8 @@ import com.bb.stardium.common.web.interceptor.AuthenticationInterceptor;
 import com.bb.stardium.common.web.interceptor.UnAuthenticationInterceptor;
 import com.bb.stardium.player.service.PlayerService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -16,7 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-
     private final AuthenticationInterceptor authenticationInterceptor;
     private final UnAuthenticationInterceptor unAuthenticationInterceptor;
     private final PlayerService playerService;
@@ -31,8 +32,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(authenticationInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns(unAuthExcludedPaths)
-                .excludePathPatterns(authPaths);
+                .excludePathPatterns(unAuthExcludedPaths);
 
         registry.addInterceptor(unAuthenticationInterceptor)
                 .addPathPatterns(authPaths);

@@ -45,6 +45,7 @@ public class PlayerService {
     @Transactional
     public PlayerResponseDto update(PlayerRequestDto requestDto, ProfileImage profileImage, PlayerSessionDto sessionDto) {
         log.error("request: {}", requestDto.getPlayerId());
+        log.error("request: {}", sessionDto.getEmail());
         Player player = findById(requestDto.getPlayerId());
 
         if (!player.isSamePlayer(sessionDto.getEmail())) {
