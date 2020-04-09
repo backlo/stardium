@@ -91,6 +91,7 @@ const ROOM_APP = (() => {
 
             const roomBasicInfo = {
                 title: title.value,
+                intro: intro.value,
                 address: {
                     city: city.value,
                     section: section.value,
@@ -99,7 +100,6 @@ const ROOM_APP = (() => {
                 startTime: startTime.value,
                 endTime: endTime.value,
                 playersLimit: playersLimit.value,
-                intro: intro.value,
             };
 
             const ifSucceed = (response) => {

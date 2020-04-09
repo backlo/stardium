@@ -35,7 +35,7 @@
             <div class="ui cards" id="room-list">
                 <div class="card" style="width: 100%;" th:if="${!rooms.isEmpty()}" th:each="room : ${rooms}">
                     <div class="content">
-                        <img class="right floated mini ui image" th:src="${room.master.profile.url}">
+                        <img class="right floated mini ui image" th:src="${room.master.profile.profileUrl}">
                         <div class="header" th:text="${room.title}">
                             방 제목
                         </div>

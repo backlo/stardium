@@ -1,0 +1,16 @@
+version: "3"
+services:
+  db:
+    image: mysql:8.0.17
+    container_name: stardium-local-db
+    restart: always
+    ports:
+      - "13306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: stardium_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci

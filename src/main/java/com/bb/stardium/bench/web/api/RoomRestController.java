@@ -12,15 +12,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequiredArgsConstructor
-@RestController
-@RequestMapping("/rooms")
+@RestController("/rooms")
 public class RoomRestController {
 
     private final RoomService roomService;
 
+    public RoomRestController(RoomService roomService) {
+        this.roomService = roomService;
+    }
+
     @PostMapping
-    public ResponseEntity create(@RequestBody final RoomRequestDto roomRequest, @LoggedInPlayer final Player loggedInPlayer) {
+    public ResponseEntity create(@RequestBody RoomRequestDto roomRequest, @LoggedInPlayer final Player loggedInPlayer) {
         Long roomId = roomService.create(roomRequest, loggedInPlayer);
         return ResponseEntity.ok(roomId);
     }
