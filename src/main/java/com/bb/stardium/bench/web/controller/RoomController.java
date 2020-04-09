@@ -5,7 +5,8 @@ import com.bb.stardium.bench.dto.RoomResponseDto;
 import com.bb.stardium.bench.service.RoomService;
 import com.bb.stardium.common.web.annotation.LoggedInPlayer;
 import com.bb.stardium.player.domain.Player;
-import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Controller
 @RequestMapping("/rooms")
 public class RoomController {
+    private static final Logger log = LoggerFactory.getLogger(RoomController.class);
 
     private final RoomService roomService;
+
+    public RoomController(RoomService roomService) {
+        this.roomService = roomService;
+    }
 
     @GetMapping
     public String mainRoomList(Model model) {
@@ -54,8 +59,10 @@ public class RoomController {
         }
 
         model.addAttribute("room", room);
-        return "room";
-    }
+
+        log.info("room info : {}", room.toString());
+
+        return "room";    }
 
     @GetMapping("/{roomId}/details")
     public String getDetail(@PathVariable Long roomId, Model model) {

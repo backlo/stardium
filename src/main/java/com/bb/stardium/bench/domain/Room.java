@@ -17,7 +17,6 @@ import java.util.List;
 @Setter
 @Entity
 public class Room {
-
     private static final int EMPTY_SEAT = 0;
 
     @Id
@@ -85,11 +84,11 @@ public class Room {
         return this.getStartTime().isAfter(LocalDateTime.now());
     }
 
-    public boolean hasRemainingSeat() {
-        return this.playersLimit - players.size() > EMPTY_SEAT;
-    }
-
     public boolean isReady() {
         return !hasRemainingSeat();
+    }
+
+    public boolean hasRemainingSeat() {
+        return this.playersLimit - players.size() > EMPTY_SEAT;
     }
 }

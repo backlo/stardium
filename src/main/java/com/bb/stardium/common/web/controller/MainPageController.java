@@ -5,7 +5,8 @@ import com.bb.stardium.bench.dto.RoomResponseDto;
 import com.bb.stardium.bench.service.RoomService;
 import com.bb.stardium.common.web.annotation.LoggedInPlayer;
 import com.bb.stardium.player.domain.Player;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 @Controller
-@EnableRedisHttpSession
 public class MainPageController {
-
+    private static final Logger log = LoggerFactory.getLogger(MainPageController.class);
     private final RoomService roomService;
 
     public MainPageController(RoomService roomService) {
@@ -24,6 +24,10 @@ public class MainPageController {
     }
 
     private String homepageRooms(final Model model, final List<RoomResponseDto> rooms) {
+        if (!rooms.isEmpty()) {
+            log.info("home room , {}", rooms.get(0).getMaster().getProfile().getProfileUrl());
+        }
+
         model.addAttribute("rooms", rooms);
         model.addAttribute("sections", Section.getAllSections());
         return "main-all-room";

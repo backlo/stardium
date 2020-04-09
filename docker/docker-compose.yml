@@ -3,7 +3,6 @@ services:
   db:
     image: mysql:8.0.17
     container_name: stardium-local-db
-    restart: always
     ports:
       - "13306:3306"
     environment:

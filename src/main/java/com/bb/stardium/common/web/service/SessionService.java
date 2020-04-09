@@ -14,28 +14,13 @@ import javax.servlet.http.HttpSession;
 public class SessionService {
     private static final Logger log = LoggerFactory.getLogger(SessionService.class);
 
-    private final PlayerRepository playerRepository;
-
-    public SessionService(PlayerRepository playerRepository) {
-        this.playerRepository = playerRepository;
-    }
-
     public boolean isLoggedIn(final HttpSession session) {
         log.info("sessionId : {}", session.getId());
         log.info("sessionAttribute : {}", session.getAttribute("login"));
         PlayerSessionDto sessionDto = (PlayerSessionDto) session.getAttribute("login");
+
         return sessionDto != null;
     }
 
-//    private boolean comparePlayerByDto(final PlayerSessionDto sessionDto) {
-//        try {
-//            Player player = playerRepository.findById(sessionDto.getPlayerId())
-//                    .orElseThrow(EmailNotExistException::new);
-//
-//            return player.isSamePlayer(player.getEmail());
-//        } catch (final EmailNotExistException exception) {
-//            return false;
-//        }
-//    }
 
 }

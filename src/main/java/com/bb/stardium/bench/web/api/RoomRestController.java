@@ -1,4 +1,4 @@
-package com.bb.stardium.bench.web.restcontroller;
+package com.bb.stardium.bench.web.api;
 
 
 import com.bb.stardium.bench.domain.Room;
@@ -7,14 +7,15 @@ import com.bb.stardium.bench.service.RoomService;
 import com.bb.stardium.bench.service.exception.FixedReadyRoomException;
 import com.bb.stardium.common.web.annotation.LoggedInPlayer;
 import com.bb.stardium.player.domain.Player;
-import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/rooms")
+@RestController
+@RequestMapping("/rooms")
 public class RoomRestController {
-
     private final RoomService roomService;
 
     public RoomRestController(RoomService roomService) {

@@ -11,6 +11,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
@@ -20,8 +22,9 @@ import java.util.ArrayList;
 
 @NoArgsConstructor
 @Getter
-@Setter
 public class RoomRequestDto {
+    private static final Logger log = LoggerFactory.getLogger(RoomRequestDto.class);
+
     @NotBlank
     private String title;
 
@@ -46,14 +49,13 @@ public class RoomRequestDto {
     private Player master;
 
     @Builder
-    public RoomRequestDto(@NotBlank String title, @NotBlank String intro, Address address, @Future LocalDateTime startTime, @Future LocalDateTime endTime, @Min(value = 2) int playersLimit, Player master) {
+    public RoomRequestDto(@NotBlank String title, @NotBlank String intro, Address address, @Future LocalDateTime startTime, @Future LocalDateTime endTime, @Min(value = 2) int playersLimit) {
         this.title = title;
         this.intro = intro;
         this.address = address;
         this.startTime = startTime;
         this.endTime = endTime;
         this.playersLimit = playersLimit;
-        this.master = master;
     }
 
     public Room toEntity(Player player) {
@@ -67,5 +69,35 @@ public class RoomRequestDto {
                 .master(player)
                 .players(new ArrayList<>())
                 .build();
+    }
+
+    public void setTitle(String title) {
+        log.error("set Title");
+        this.title = title;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setPlayersLimit(int playersLimit) {
+        this.playersLimit = playersLimit;
+    }
+
+    public void setMaster(Player master) {
+        this.master = master;
+        log.error("set Master end");
     }
 }
