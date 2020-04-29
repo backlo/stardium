@@ -488,7 +488,7 @@
                 };
             })
             : function (elem, i, match) {
-                // support: jQuery < 1.8
+                // config: jQuery < 1.8
                 return !!$.data(elem, match[3]);
             }
     });
@@ -19562,7 +19562,7 @@
             noAnimation: 'Element is no longer attached to DOM. Unable to animate.  Use silent setting to surpress this warning in production.',
             repeated: 'That animation is already occurring, cancelling repeated animation',
             method: 'The method you called is not defined',
-            support: 'This browser does not support CSS animations'
+            support: 'This browser does not config CSS animations'
         }
 
     };

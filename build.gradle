@@ -29,7 +29,6 @@ sourceSets {
 
 repositories {
     mavenCentral()
-    maven { url 'https://repo.spring.io/milestone' }
 }
 
 ext {
@@ -44,7 +43,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'com.h2database:h2:1.4.199'
     implementation 'org.apache.commons:commons-text:1.8'
 
 //  redis 설정
@@ -54,8 +52,18 @@ dependencies {
 // aws 설정
     implementation 'org.springframework.cloud:spring-cloud-starter-aws'
     
-    runtimeOnly 'mysql:mysql-connector-java'
+//    runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
+    
+//  r2dbc 설정
+    implementation 'org.springframework.data:spring-data-r2dbc:1.0.0.RELEASE'
+//    implementation 'io.r2dbc:r2dbc-h2:0.8.1.RELEASE'
+    implementation 'io.r2dbc:r2dbc-postgresql:0.8.1.RELEASE'
+    implementation 'com.h2database:h2:1.4.199'
+    
+//    runtimeOnly 'org.postgresql:postgresql'
+
+
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude module: 'junit'

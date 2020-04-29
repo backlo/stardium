@@ -1,8 +1,8 @@
-import com.bb.stardium.bench.domain.Address;
-import com.bb.stardium.bench.dto.RoomRequestDto;
-import com.bb.stardium.chat.dto.ChatMessageRequestDto;
-import com.bb.stardium.player.domain.Player;
-import com.bb.stardium.player.dto.PlayerRequestDto;
+import com.bb.stardium.v1.bench.domain.Address;
+import com.bb.stardium.v1.bench.dto.RoomRequestDto;
+import com.bb.stardium.v1.chat.dto.ChatMessageRequestDto;
+import com.bb.stardium.v1.player.domain.Player;
+import com.bb.stardium.v1.player.dto.PlayerRequestDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

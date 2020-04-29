@@ -1,5 +1,5 @@
-import com.bb.stardium.player.domain.Player;
-import com.bb.stardium.player.dto.PlayerRequestDto;
+import com.bb.stardium.v1.player.domain.Player;
+import com.bb.stardium.v1.player.dto.PlayerRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
