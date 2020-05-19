@@ -1,117 +1,90 @@
-plugins {
-    id 'org.springframework.boot' version '2.2.1.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-    id 'org.asciidoctor.convert' version '1.5.8'
-    id 'java'
-}
-
-group = 'com.bb'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = JavaVersion.VERSION_11
-
-configurations {
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom developmentOnly
+buildscript {
+    ext {
+        springBootVersion = '2.2.1.RELEASE'
+        dependencyManagementPlugins = '1.0.8.RELEASE'
     }
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-    acceptanceTestImplementation.extendsFrom(implementation, testImplementation)
-}
 
-sourceSets {
-    acceptanceTest {
-        compileClasspath += main.output + test.output + configurations.testRuntime
-        runtimeClasspath += output + compileClasspath
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.9.RELEASE"
     }
 }
 
-repositories {
-    mavenCentral()
+allprojects {
+    group 'com.bb'
+    version '0.0.1-SNAPSHOT'
 }
 
-ext {
-    set('snippetsDir', file('build/generated-snippets'))
-    set('springCloudVersion', "Greenwich.RELEASE")
-}
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.apache.commons:commons-text:1.8'
-
-//  redis 설정
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.session:spring-session-data-redis'
-
-// aws 설정
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws'
+subprojects {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java'
     
-//    runtimeOnly 'mysql:mysql-connector-java'
-    annotationProcessor 'org.projectlombok:lombok'
+    sourceCompatibility = 11
+
+    repositories {
+        mavenCentral()
+    }
     
-//  r2dbc 설정
-    implementation 'org.springframework.data:spring-data-r2dbc:1.0.0.RELEASE'
-//    implementation 'io.r2dbc:r2dbc-h2:0.8.1.RELEASE'
-    implementation 'io.r2dbc:r2dbc-postgresql:0.8.1.RELEASE'
-    implementation 'com.h2database:h2:1.4.199'
-    
-//    runtimeOnly 'org.postgresql:postgresql'
-
-
-
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude module: 'junit'
+    configurations {
+        developmentOnly
+        runtimeClasspath {
+            extendsFrom developmentOnly
+        }
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
     }
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.2.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.2.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.2.0'
-    testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient:+'
-    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
-}
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    test {
+        useJUnitPlatform()
     }
-}
 
-test {
-    useJUnitPlatform()
-}
+    dependencies {
+//        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//        implementation 'org.springframework.boot:spring-boot-starter-websocket'
+//        implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+//        
 
+//    r2dbc 설정
+//        implementation 'org.springframework.data:spring-data-r2dbc:1.0.0.RELEASE'
+//        implementation 'io.r2dbc:r2dbc-h2:0.8.1.RELEASE'
+//        implementation 'io.r2dbc:r2dbc-postgresql:0.8.1.RELEASE'
 
-task acceptanceTest(type: Test) {
-    description = 'Runs integration tests.'
-    group = 'verification'
+//        runtimeOnly 'mysql:mysql-connector-java'
 
-    testClassesDirs = sourceSets.acceptanceTest.output
-    classpath = sourceSets.acceptanceTest.runtimeClasspath
-}
+        annotationProcessor 'org.projectlombok:lombok'
 
-acceptanceTest {
-    dependsOn test
-    outputs.dir snippetsDir
-    useJUnitPlatform()
-}
-
-asciidoctor {
-    inputs.dir snippetsDir
-    dependsOn acceptanceTest
-}
-
-check {
-    dependsOn(acceptanceTest)
-}
-
-bootJar {
-    dependsOn asciidoctor
-    from("${asciidoctor.outputDir}/html5") {
-        into 'static/docs'
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.2.0'
+        testImplementation 'org.junit.jupiter:junit-jupiter-params:5.2.0'
+        testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.2.0'
     }
 }
+
+project(':stardium-api') {
+    dependencies {
+        implementation project(':stardium-core')
+    }
+}
+
+project(":stardium-auth") {
+    dependencies {
+        implementation project(':stardium-core')
+    }
+}
+
+project(":stardium-aws") {
+    dependencies {
+        implementation project(':stardium-core')
+    }
+}
+
+
