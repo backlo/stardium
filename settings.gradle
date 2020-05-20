@@ -1,7 +1,13 @@
 rootProject.name = 'stardium'
 
-include 'stardium-core'
-include 'stardium-auth'
-include 'stardium-aws'
-include 'stardium-api'
+include 'domain-service'
+include 'common-service'
+
+include 'auth-api'
+include 'aws-api'
+
+include 'stardium-app'
+include 'stardium-admin'
+
+include 'static-web'
 

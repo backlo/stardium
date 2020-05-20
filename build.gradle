@@ -41,18 +41,13 @@ subprojects {
     }
 
     dependencies {
-//        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 //        implementation 'org.springframework.boot:spring-boot-starter-websocket'
-//        implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-//        
-
+        
 //    r2dbc 설정
 //        implementation 'org.springframework.data:spring-data-r2dbc:1.0.0.RELEASE'
 //        implementation 'io.r2dbc:r2dbc-h2:0.8.1.RELEASE'
 //        implementation 'io.r2dbc:r2dbc-postgresql:0.8.1.RELEASE'
-
-//        runtimeOnly 'mysql:mysql-connector-java'
-
+        
         annotationProcessor 'org.projectlombok:lombok'
 
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
