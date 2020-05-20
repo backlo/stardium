@@ -29,12 +29,8 @@ subprojects {
     repositories {
         mavenCentral()
     }
-    
+
     configurations {
-        developmentOnly
-        runtimeClasspath {
-            extendsFrom developmentOnly
-        }
         compileOnly {
             extendsFrom annotationProcessor
         }
@@ -68,23 +64,3 @@ subprojects {
         testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.2.0'
     }
 }
-
-project(':stardium-api') {
-    dependencies {
-        implementation project(':stardium-core')
-    }
-}
-
-project(":stardium-auth") {
-    dependencies {
-        implementation project(':stardium-core')
-    }
-}
-
-project(":stardium-aws") {
-    dependencies {
-        implementation project(':stardium-core')
-    }
-}
-
-

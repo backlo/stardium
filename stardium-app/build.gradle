@@ -1,0 +1,4 @@
+dependencies {
+    implementation project(":auth-api")
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}
