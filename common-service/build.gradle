@@ -1,0 +1,6 @@
+bootJar { enabled = false }
+jar { enabled = true }
+
+dependencies {
+    implementation 'org.apache.commons:commons-text:1.8'
+}
