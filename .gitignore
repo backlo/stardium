@@ -22,8 +22,6 @@ build/
 out/
 *.DS_Store
 
-aws.txt
-
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -36,3 +34,4 @@ aws.txt
 
 ### secret key ###
 application-security-service.yml
+aws.txt
