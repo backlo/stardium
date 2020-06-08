@@ -1,4 +1,4 @@
-package com.bb.stardium.domain_service;
+package com.bb.stardium;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

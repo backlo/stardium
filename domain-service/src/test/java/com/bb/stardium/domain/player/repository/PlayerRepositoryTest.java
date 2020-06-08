@@ -1,7 +1,6 @@
-package com.bb.stardium.player.domain.repository;
+package com.bb.stardium.domain.player.repository;
 
-import com.bb.stardium.domain_service.club.player.domain.Player;
-import com.bb.stardium.domain_service.club.player.domain.repository.PlayerRepository;
+import com.bb.stardium.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
