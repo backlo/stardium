@@ -18,7 +18,7 @@ class PlayerControllerTest extends BaseAcceptanceTest {
                 .expectStatus()
                 .isOk()
                 .expectBody(String.class)
-                .consumeWith(document("user/player-new",
+                .consumeWith(document("stardium.player/stardium.player-new",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())));
     }
@@ -35,7 +35,7 @@ class PlayerControllerTest extends BaseAcceptanceTest {
                 .exchange()
                 .expectStatus().isFound()
                 .expectBody(String.class)
-                .consumeWith(document("user/player-post",
+                .consumeWith(document("stardium.player/stardium.player-post",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())));
     }
@@ -49,7 +49,7 @@ class PlayerControllerTest extends BaseAcceptanceTest {
                 .expectStatus()
                 .isFound()
                 .expectBody(String.class)
-                .consumeWith(document("user/player-edit",
+                .consumeWith(document("stardium.player/stardium.player-edit",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())));
     }
@@ -63,7 +63,7 @@ class PlayerControllerTest extends BaseAcceptanceTest {
                 .is3xxRedirection()
                 .expectHeader().valueMatches("Location", ".*\\/login.*")
                 .expectBody(String.class)
-                .consumeWith(document("user/player-edit-no-session",
+                .consumeWith(document("stardium.player/stardium.player-edit-no-session",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())));
     }
@@ -85,7 +85,7 @@ class PlayerControllerTest extends BaseAcceptanceTest {
                 .expectStatus()
                 .is3xxRedirection()
                 .expectBody(String.class)
-                .consumeWith(document("user/player-update",
+                .consumeWith(document("stardium.player/stardium.player-update",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())));
     }
@@ -102,7 +102,7 @@ class PlayerControllerTest extends BaseAcceptanceTest {
                         .with("statusMessage", "야호!!"))
                 .exchange().expectStatus().is3xxRedirection()
                 .expectBody(String.class)
-                .consumeWith(document("user/player-update-no-session",
+                .consumeWith(document("stardium.player/stardium.player-update-no-session",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())));
     }

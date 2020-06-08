@@ -39,17 +39,6 @@ class PlayerServiceTest {
     }
 
     @Test
-    @DisplayName("회원 가입")
-    void register() {
-        given(playerRepository.findByEmail(anyString())).willReturn(Optional.empty());
-        given(playerRepository.save(player)).willReturn(player);
-
-        PlayerResponseDto savedPlayer = playerService.register(requestDto);
-
-//        verify(playerRepository, times(1)).save(savedPlayer);
-    }
-
-    @Test
     @DisplayName("이미 가입된 이메일로 가입 시도")
     void alreadyRegistered() {
         given(playerRepository.findByEmail(anyString())).willReturn(Optional.of(player));

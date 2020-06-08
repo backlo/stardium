@@ -15,18 +15,15 @@ import java.util.List;
 
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
 
-
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = com.bb.stardium.StardiumApplication.class)
 @ExtendWith(RestDocumentationExtension.class)
 public abstract class BaseAcceptanceTest {
 
-    protected WebTestClient webTestClient;
+    private WebTestClient webTestClient;
+
     @LocalServerPort
     private int port;
-
-    protected BaseAcceptanceTest() {
-    }
 
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider) {
@@ -125,5 +122,9 @@ public abstract class BaseAcceptanceTest {
                         .with("password", playerRequestDto.getPassword()))
                 .exchange()
                 .returnResult(String.class).getResponseHeaders().getFirst("Set-Cookie");
+    }
+
+    protected WebTestClient getWebTestClient() {
+        return webTestClient;
     }
 }

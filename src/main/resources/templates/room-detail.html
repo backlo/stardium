@@ -22,7 +22,7 @@
 <th:block layout:fragment="content-body">
     <div class="ui container">
         <input id="room-id" th:value="${room.id}" type="hidden">
-        <input id="player-id" th:value="${session.login.playerId}" type="hidden">
+        <input id="stardium.player-id" th:value="${session.login.playerId}" type="hidden">
 
         <div class="ui form">
             <div class="field">
@@ -38,13 +38,13 @@
 
             <div class="field">
                 <h3 class="ui dividing header">Member</h3>
-                <div class="ui two cards" th:each="player : ${room.players}">
+                <div class="ui two cards" th:each="stardium.player : ${room.players}">
                     <div class="ui fluid card">
                         <div class="image">
-                            <img alt="player-profile" th:src="${player.profile.url}">
+                            <img alt="stardium.player-profile" th:src="${stardium.player.profile.url}">
                         </div>
                         <div class="content">
-                            <div class="header" style="text-align: center;" th:text="${player.nickname}">강백호</div>
+                            <div class="header" style="text-align: center;" th:text="${stardium.player.nickname}">강백호</div>
                         </div>
                     </div>
                 </div>

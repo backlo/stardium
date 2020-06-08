@@ -5,7 +5,7 @@ const chatBox = document.getElementById("chat-box");
 const chatInput = document.getElementById("chat-input");
 const sendButton = document.getElementById("chat-send-button");
 const roomId = document.getElementById("room-id").value;
-const playerId = document.getElementById("player-id").value;
+const playerId = document.getElementById("stardium.player-id").value;
 
 const makeChatMessageBlock = (messageBody) =>
 `<div class="comment">

@@ -67,7 +67,7 @@ class RoomServiceTest {
 
         player = Player.builder()
                 .id(2L)
-                .nickname("player")
+                .nickname("stardium.player")
                 .email(PLAYER_EMAIL)
                 .password("password")
                 .rooms(new ArrayList<>())

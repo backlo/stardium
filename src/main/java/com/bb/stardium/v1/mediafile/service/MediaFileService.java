@@ -1,9 +1,9 @@
 package com.bb.stardium.v1.mediafile.service;
 
-import com.bb.stardium.v1.common.util.FileConverter;
-import com.bb.stardium.v1.common.util.S3FileUploader;
 import com.bb.stardium.v1.mediafile.domain.ProfileImage;
 import com.bb.stardium.v1.mediafile.service.exception.NotImageFileException;
+import com.bb.stardium.v2.media.util.FileConverter;
+import com.bb.stardium.v2.media.util.S3FileUploader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;

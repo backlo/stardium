@@ -48,7 +48,7 @@ public class PlayerController {
         PlayerResponseDto playerResponseDto = playerService.findPlayerById(sessionDto.getPlayerId());
 
         model.addAttribute("model", playerResponseDto);
-        return "user-edit.html";
+        return "stardium.player-edit.html";
     }
 
     @PostMapping("/edit")

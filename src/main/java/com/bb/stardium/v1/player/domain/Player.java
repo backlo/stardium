@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor]
 @Getter
 @EqualsAndHashCode(of = "id")
 @Entity

@@ -23,7 +23,7 @@ public class OauthController {
 
     @GetMapping("/kakao")
     public String getToken(@RequestParam("code") String code, Model model) {
-        Mono<ResponseEntity<KakaoAccessTokenDto>> responseEntityMono = WebClient.create("https://kauth.kakao.com")
+        Mono<ResponseEntity<KakaoAccessTokenDto>> responseEnti tyMono = WebClient.create("https://kauth.kakao.com")
                 .post()
                 .uri(uriBuilder -> uriBuilder
                         .path("/oauth/token")
@@ -36,7 +36,7 @@ public class OauthController {
 
         Mono<String> authorization = WebClient.create("https://kapi.kakao.com")
                 .get()
-                .uri(uriBuilder -> uriBuilder.path("/v2/user/me").build())
+                .uri(uriBuilder -> uriBuilder.path("/v2/stardium.player/me").build())
                 .header("Authorization", "Bearer " + responseEntityMono.block().getBody().getAccessToken())
                 .retrieve()
                 .bodyToMono(String.class);

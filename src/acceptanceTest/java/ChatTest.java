@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = com.bb.stardium.StardiumApplication.class)
 @AutoConfigureWebTestClient
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class ChatTest extends BaseAcceptanceTest {
+    public class ChatTest extends BaseAcceptanceTest {
 
     private static final int TIME_LIMIT = 5;
     private static final String SOCKET_SEND_URL = "/chat/";
