@@ -1,4 +1,4 @@
-buildscript {
+ buildscript {
     ext {
         springBootVersion = '2.2.1.RELEASE'
         dependencyManagementPlugins = '1.0.8.RELEASE'
