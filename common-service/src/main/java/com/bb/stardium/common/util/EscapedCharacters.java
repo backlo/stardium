@@ -1,4 +1,4 @@
-package com.bb.stardium.domain.util;
+package com.bb.stardium.common.util;
 
 import org.apache.commons.text.translate.AggregateTranslator;
 import org.apache.commons.text.translate.CharSequenceTranslator;
