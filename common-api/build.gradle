@@ -1,0 +1,13 @@
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    implementation project(":domain-service")
+    implementation 'org.springframework:spring-web'
+    implementation 'org.springframework.security:spring-security-core'
+}
