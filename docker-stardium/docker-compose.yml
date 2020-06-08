@@ -1,8 +1,8 @@
 version: "3"
 services:
-  db:
+  domain_db:
     image: postgres
-    container_name: postgreSQL
+    container_name: StardiumPostgreSQL
     ports:
       - "15432:5432"
     environment:
