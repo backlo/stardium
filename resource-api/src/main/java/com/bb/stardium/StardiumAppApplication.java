@@ -9,7 +9,7 @@ public class StardiumAppApplication {
     private static final String APP_PROPERTIES = "spring.config.location=" +
             "classpath:/application-app-api.yml" +
             ",classpath:/application-domain-service.yml" +
-            ",classpath:/application-security.yml";
+            ",classpath:/application-security-service.yml";
 
     public static void main(final String[] args) {
         new SpringApplicationBuilder(StardiumAppApplication.class)

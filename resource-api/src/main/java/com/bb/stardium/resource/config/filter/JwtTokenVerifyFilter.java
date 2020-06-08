@@ -1,6 +1,6 @@
 package com.bb.stardium.resource.config.filter;
 
-import com.bb.stardium.error.ErrorResponse;
+import com.bb.stardium.error.model.ErrorResponse;
 import com.bb.stardium.security.service.SecurityService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
