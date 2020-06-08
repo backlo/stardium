@@ -1,6 +1,6 @@
-package com.bb.stardium.domain.club.domain.repository;
+package com.bb.stardium.domain.club.repository;
 
-import com.bb.stardium.domain.club.domain.Club;
+import com.bb.stardium.domain.club.Club;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

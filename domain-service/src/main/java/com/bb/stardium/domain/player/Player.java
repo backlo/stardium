@@ -1,6 +1,7 @@
-package com.bb.stardium.domain.player.domain;
+package com.bb.stardium.domain.player;
 
 import com.bb.stardium.domain.match.Match;
+import com.bb.stardium.service.player.dto.PlayerDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,7 +16,6 @@ import java.util.List;
 @Entity
 @EqualsAndHashCode(of = "email")
 public class Player {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,7 +32,7 @@ public class Player {
     @Column(name = "email", length = 64, nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password", length = 64, nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "statusMessage")
@@ -46,20 +46,27 @@ public class Player {
     private List<Match> clubs = new ArrayList<>();
 
     @Builder
-    public Player(String nickname, String email, String password, String statusMessage) {
+    public Player(String nickname, String email, String password) {
         this.nickname = nickname;
         this.email = email;
         this.password = password;
-        this.statusMessage = statusMessage;
     }
 
-    public Player update(Player updatePlayer) {
-        this.nickname = updatePlayer.getNickname();
-        this.email = updatePlayer.getEmail();
-        this.password = updatePlayer.getPassword();
-        this.statusMessage = updatePlayer.getStatusMessage();
-        this.profile = updatePlayer.getProfile();
+    public Player update(PlayerDto updatePlayerDto) {
+        if (!updatePlayerDto.getPassword().isEmpty()) {
+            this.password = updatePlayerDto.getPassword();
+        }
+        if (!updatePlayerDto.getNickname().isEmpty()) {
+            this.nickname = updatePlayerDto.getNickname();
+        }
+        if (!updatePlayerDto.getStatusMessage().isEmpty()) {
+            this.statusMessage = updatePlayerDto.getStatusMessage();
+        }
+        if (!updatePlayerDto.getProfile().isEmpty()) {
+            this.profile = updatePlayerDto.getProfile();
+        }
 
         return this;
     }
+
 }

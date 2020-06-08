@@ -1,7 +1,7 @@
-package com.bb.stardium.domain.match.domain;
+package com.bb.stardium.domain.match;
 
 import com.bb.stardium.domain.club.Club;
-import com.bb.stardium.domain.player.domain.Player;
+import com.bb.stardium.domain.player.Player;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

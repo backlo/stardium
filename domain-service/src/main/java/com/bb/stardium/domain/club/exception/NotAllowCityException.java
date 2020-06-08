@@ -1,4 +1,4 @@
-package com.bb.stardium.domain.club.domain.exception;
+package com.bb.stardium.domain.club.exception;
 
 public class NotAllowCityException extends RuntimeException {
     public NotAllowCityException() {

@@ -1,9 +1,6 @@
-package com.bb.stardium.domain.player.domain;
+package com.bb.stardium.domain.player;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -18,8 +15,13 @@ public class PlayerProfileImage {
     @Column(name = "profile_url", nullable = false)
     private String profileUrl;
 
+    @Builder
     public PlayerProfileImage(String profileUrl) {
         this.profileUrl = profileUrl;
+    }
+
+    public boolean isEmpty() {
+        return profileUrl.isEmpty();
     }
 
     public static PlayerProfileImage defaultImage() {

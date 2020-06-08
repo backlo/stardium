@@ -1,4 +1,4 @@
-package com.bb.stardium.domain.club.domain;
+package com.bb.stardium.domain.club;
 
 import java.util.Arrays;
 import java.util.List;

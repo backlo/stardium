@@ -1,4 +1,4 @@
-package com.bb.stardium.service.player;
+package com.bb.stardium.service.player.exception;
 
 public class PlayerNotFoundException extends RuntimeException {
     public PlayerNotFoundException() {
