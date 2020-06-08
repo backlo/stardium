@@ -1,4 +1,4 @@
-package com.bb.stardium.error;
+package com.bb.stardium.error.model;
 
 import lombok.Builder;
 import lombok.Getter;

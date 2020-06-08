@@ -1,4 +1,4 @@
-package com.bb.stardium.error;
+package com.bb.stardium.error.model;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

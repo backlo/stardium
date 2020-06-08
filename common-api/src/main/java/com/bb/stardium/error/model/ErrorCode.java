@@ -1,6 +1,7 @@
-package com.bb.stardium.error;
+package com.bb.stardium.error.model;
 
-import com.bb.stardium.service.player.exception.EmailAndNickNameAlreadyExistException;
+import com.bb.stardium.service.player.exception.EmailAlreadyExistException;
+import com.bb.stardium.service.player.exception.NicknameAlreadyExistException;
 import com.bb.stardium.service.player.exception.PlayerNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 
@@ -9,8 +10,9 @@ import java.util.Arrays;
 public enum ErrorCode {
     AUTHORIZATION_EXCEPTION(IllegalAccessException.class, 100),
     PLAYER_NOT_FOUND_EXCEPTION(PlayerNotFoundException.class, 101),
-    EMAIL_ALREADY_EXIST_EXCEPTION(EmailAndNickNameAlreadyExistException.class, 102),
-    BAD_CREDENTIALS_EXCEPTION(BadCredentialsException.class, 103);
+    EMAIL_ALREADY_EXIST_EXCEPTION(EmailAlreadyExistException.class, 102),
+    NICKNAME_ALREADY_EXIST_EXCEPTION(NicknameAlreadyExistException.class, 103),
+    BAD_CREDENTIALS_EXCEPTION(BadCredentialsException.class, 104);
 
     private final Object exceptionClazz;
     private final int code;
