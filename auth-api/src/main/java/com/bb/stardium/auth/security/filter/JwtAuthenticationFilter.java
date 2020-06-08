@@ -44,7 +44,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             return this.getAuthenticationManager().authenticate(authRequest);
         } catch (IOException e) {
-            log.info(e.getMessage());
             throw new AuthenticationServiceException("Can not read request Content");
         }
     }

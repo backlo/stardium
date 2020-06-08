@@ -1,13 +1,15 @@
 package com.bb.stardium.auth.security.filter;
 
 import com.bb.stardium.auth.security.filter.dto.PlayerViewModel;
+import com.bb.stardium.auth.security.filter.exception.FieldsEmptyException;
 import com.bb.stardium.auth.security.wrapper.CopyHttpServletRequest;
-import com.bb.stardium.error.ErrorResponse;
+import com.bb.stardium.error.model.ErrorResponse;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -35,18 +37,28 @@ public class PasswordEncoderFilter extends OncePerRequestFilter {
             PlayerViewModel playerViewModel = new ObjectMapper()
                     .readValue(copyRequest.getInputStream(), PlayerViewModel.class);
 
+            if (isEmptyOneOfFields(playerViewModel)) {
+                throw new FieldsEmptyException();
+            }
+
             String encodePassword = passwordEncoder.encode(playerViewModel.getPassword());
 
             request.setAttribute("encodedPassword", encodePassword);
 
             chain.doFilter(copyRequest, response);
 
-        } catch (ServletException exception) {
+        } catch (FieldsEmptyException | ServletException exception) {
             exceptionHandler(response, exception);
         }
     }
 
-    private void exceptionHandler(HttpServletResponse response, ServletException exception) throws IOException {
+    private boolean isEmptyOneOfFields(PlayerViewModel playerViewModel) {
+        return StringUtils.isEmpty(playerViewModel.getEmail()) ||
+                StringUtils.isEmpty(playerViewModel.getPassword()) ||
+                StringUtils.isEmpty(playerViewModel.getNickname());
+    }
+
+    private void exceptionHandler(HttpServletResponse response, Exception exception) throws IOException {
         String responseError = new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(

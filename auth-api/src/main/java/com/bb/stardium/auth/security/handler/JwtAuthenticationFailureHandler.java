@@ -1,6 +1,6 @@
 package com.bb.stardium.auth.security.handler;
 
-import com.bb.stardium.error.ErrorResponse;
+import com.bb.stardium.error.model.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
