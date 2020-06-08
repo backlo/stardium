@@ -3,10 +3,9 @@ package com.bb.stardium.service.player;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.domain.player.repository.PlayerRepository;
 import com.bb.stardium.service.player.dto.PlayerDto;
-import com.bb.stardium.service.player.exception.EmailAndNickNameAlreadyExistException;
+import com.bb.stardium.service.player.exception.EmailAlreadyExistException;
+import com.bb.stardium.service.player.exception.NicknameAlreadyExistException;
 import com.bb.stardium.service.player.exception.PlayerNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,17 +20,21 @@ public class PlayerService {
 
     @Transactional
     public Player registrationPlayer(PlayerDto newPlayerInfo) {
-        if (isExistsByEmailAndNickname(newPlayerInfo)) {
-            throw new EmailAndNickNameAlreadyExistException();
-        }
+        Player newPlayer = checkEmailAndNickname(newPlayerInfo).toEntity();
 
-        Player newPlayer = newPlayerInfo.toEntity();
         return playerRepository.save(newPlayer);
     }
 
     @Transactional(readOnly = true)
-    boolean isExistsByEmailAndNickname(PlayerDto playerDto) {
-        return playerRepository.existsByEmailOrNickname(playerDto.getEmail(), playerDto.getNickname());
+    PlayerDto checkEmailAndNickname(PlayerDto playerDto) {
+        if (playerRepository.existsByEmail(playerDto.getEmail())) {
+            throw new EmailAlreadyExistException();
+        }
+        if (playerRepository.existsByNickname(playerDto.getNickname())) {
+            throw new NicknameAlreadyExistException();
+        }
+
+        return playerDto;
     }
 
     @Transactional(readOnly = true)
@@ -56,7 +59,7 @@ public class PlayerService {
     @Transactional
     public Player editPlayer(Long playerId, PlayerDto updatePlayerInfo) {
         if (isExistByNickname(updatePlayerInfo)) {
-            throw new EmailAndNickNameAlreadyExistException();
+            throw new NicknameAlreadyExistException();
         }
 
         Player player = findPlayer(playerId);
