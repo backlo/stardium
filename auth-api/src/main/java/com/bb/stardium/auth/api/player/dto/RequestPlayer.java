@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PlayerRequest {
+public class RequestPlayer {
 
     @NotBlank(message = "email를 적어주세요!")
     private String email;

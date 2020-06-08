@@ -1,4 +1,4 @@
-package com.bb.stardium.auth.api.error;
+package com.bb.stardium.auth.api.player.handler;
 
 import com.bb.stardium.error.ErrorResponse;
 import com.bb.stardium.service.player.exception.EmailAndNickNameAlreadyExistException;

@@ -35,4 +35,4 @@ aws.txt
 .vscode/
 
 ### secret key ###
-application-security.yml
+application-security-service.yml

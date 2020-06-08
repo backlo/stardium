@@ -1,6 +1,7 @@
 package com.bb.stardium.auth.api.player;
 
-import com.bb.stardium.auth.api.player.dto.PlayerRequest;
+import com.bb.stardium.auth.api.player.dto.RequestPlayer;
+import com.bb.stardium.auth.api.player.dto.ResponsePlayer;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.service.player.PlayerService;
 import com.bb.stardium.service.player.dto.PlayerDto;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/players")
 public class PlayerApiController {
-    private static final Logger log = LoggerFactory.getLogger(PlayerApiController.class);
-
     private final PlayerService playerService;
 
     public PlayerApiController(final PlayerService playerService) {
@@ -21,13 +20,16 @@ public class PlayerApiController {
     }
 
     @PostMapping
-    public ResponseEntity<Player> registrationPlayer(@RequestBody PlayerRequest playerRequest,
+    public ResponseEntity<ResponsePlayer> registrationPlayer(@RequestBody RequestPlayer requestPlayer,
                                                      @RequestAttribute("encodedPassword") String encodedPassword) {
-        PlayerDto playerDto = playerRequest.toEntity(encodedPassword);
+        PlayerDto playerDto = requestPlayer.toEntity(encodedPassword);
 
         Player registered = playerService.registrationPlayer(playerDto);
-        log.info("password : {}", registered.getPassword());
-        return ResponseEntity.ok(registered);
+        return ResponseEntity.ok(
+                ResponsePlayer.builder()
+                        .email(registered.getEmail())
+                .build()
+        );
     }
 
     @GetMapping("/{id}")
@@ -35,17 +37,4 @@ public class PlayerApiController {
         Player foundPlayer = playerService.findPlayer(id);
         return ResponseEntity.ok(foundPlayer);
     }
-
-//    @PutMapping
-//    public ResponseEntity<Player> updatePlayer(@RequestBody PlayerUpdateRequest updateRequest,) {
-//        Player updatedPlayer = playerService.editPlayer(authPlayer.getId(), updateRequest.toEntity());
-//        return ResponseEntity.ok(updatedPlayer);
-//    }
-
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Boolean> deletePlayer(@PathVariable Long id) {
-//        boolean flag = playerService.withdrawPlayer(id);
-//
-//        return ResponseEntity.ok(flag);
-//    }
 }
