@@ -20,7 +20,9 @@ public class PlayerService {
 
     @Transactional
     public Player registrationPlayer(PlayerDto newPlayerInfo) {
-        Player newPlayer = checkEmailAndNickname(newPlayerInfo).toEntity();
+        Player newPlayer = Player.builder()
+                .playerDto(checkEmailAndNickname(newPlayerInfo))
+                .build();
 
         return playerRepository.save(newPlayer);
     }
@@ -36,10 +38,6 @@ public class PlayerService {
 
         return playerDto;
     }
-
-
-
-
 
 
     // TODO 다시 고치기

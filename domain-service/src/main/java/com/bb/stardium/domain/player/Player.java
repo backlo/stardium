@@ -26,11 +26,11 @@ public class Player {
     @UpdateTimestamp
     private OffsetDateTime updateTime;
 
-    @Column(name = "nickname", length = 64, nullable = false, unique = true)
-    private String nickname;
-
     @Column(name = "email", length = 64, nullable = false, unique = true)
     private String email;
+
+    @Column(name = "nickname", length = 64, nullable = false, unique = true)
+    private String nickname;
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -46,10 +46,10 @@ public class Player {
     private List<Match> clubs = new ArrayList<>();
 
     @Builder
-    public Player(String nickname, String email, String password) {
-        this.nickname = nickname;
-        this.email = email;
-        this.password = password;
+    public Player(PlayerDto playerDto) {
+        this.nickname = playerDto.getNickname();
+        this.email = playerDto.getEmail();
+        this.password = playerDto.getPassword();
     }
 
     public Player update(PlayerDto updatePlayerDto) {

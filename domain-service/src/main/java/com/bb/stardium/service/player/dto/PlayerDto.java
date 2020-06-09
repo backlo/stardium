@@ -27,12 +27,4 @@ public class PlayerDto {
                 .profileUrl(profile)
                 .build();
     }
-
-    public Player toEntity() {
-        return Player.builder()
-                .email(this.email)
-                .password(this.password)
-                .nickname(this.nickname)
-                .build();
-    }
 }
