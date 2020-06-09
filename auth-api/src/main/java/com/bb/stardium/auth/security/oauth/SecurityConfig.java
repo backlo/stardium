@@ -26,13 +26,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
 //
 //    @Override
-//    protected void config(AuthenticationManagerBuilder auth) throws Exception {
+//    protected void security(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.userDetailsService(userDetailsService)
 //                .passwordEncoder(encoder());
 //    }
 //
 //    @Override
-//    protected void config(HttpSecurity http) throws Exception {
+//    protected void security(HttpSecurity http) throws Exception {
 //        http
 //                .cors().disable()
 //                .csrf().disable()

@@ -1,6 +1,6 @@
-package com.bb.stardium.resource.config.handler;
+package com.bb.stardium.resource.security.handler;
 
-import com.bb.stardium.resource.config.annotation.AuthorizePlayer;
+import com.bb.stardium.resource.security.annotation.AuthorizePlayer;
 import com.bb.stardium.service.player.PlayerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -37,6 +37,12 @@ public class PlayerService {
         return playerDto;
     }
 
+
+
+
+
+
+    // TODO 다시 고치기
     @Transactional(readOnly = true)
     public Player findPlayer(Long id) {
         return playerRepository

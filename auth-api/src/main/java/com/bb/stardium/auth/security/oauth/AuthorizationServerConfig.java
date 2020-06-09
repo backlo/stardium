@@ -21,7 +21,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //    }
 //
 //    @Override
-//    public void config(ClientDetailsServiceConfigurer clients) throws Exception {
+//    public void security(ClientDetailsServiceConfigurer clients) throws Exception {
 //        clients
 //                .inMemory()
 //                .withClient("stardium-client")
@@ -36,7 +36,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //    }
 //
 //    @Override
-//    public void config(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+//    public void security(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 //        endpoints.tokenStore(tokenStore)
 //                .authenticationManager(authenticationManager);
 //    }

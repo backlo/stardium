@@ -1,4 +1,4 @@
-package com.bb.stardium.resource.config.filter;
+package com.bb.stardium.resource.security.filter;
 
 import com.bb.stardium.error.model.ErrorResponse;
 import com.bb.stardium.security.service.SecurityService;
@@ -45,11 +45,13 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
             String authorities = securityService.extractAuthorities(token);
 
             if (!securityService.isTokenExpired(token)) {
+
+
                 UserDetails userDetails = securityService.loadUserByUsername(email);
 
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
-                        null,
+                        userDetails.getPassword(),
                         List.of(new SimpleGrantedAuthority(authorities))
                 );
 
@@ -58,14 +60,16 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
                                 .buildDetails(request)
                 );
 
-                log.info("JwtTokenVerifyFilter password : {}", userDetails.getPassword());
-                log.info("JwtTokenVerifyFilter authorities : {}", userDetails.getAuthorities());
-
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+                if (SecurityContextHolder.getContext().getAuthentication() != null) {
+                    log.error("Security Context Get Authentication not null : {}", SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+                }
+
                 request.setAttribute(AUTHORIZATION_SUBJECT, subject);
+                super.doFilter(request, response, chain);
             }
 
-            super.doFilter(request, response, chain);
         } catch (ServletException | IOException e) {
             exceptionHandler(response, e);
         }

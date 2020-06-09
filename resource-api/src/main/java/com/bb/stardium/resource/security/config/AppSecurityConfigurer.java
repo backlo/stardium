@@ -1,7 +1,7 @@
-package com.bb.stardium.resource.config;
+package com.bb.stardium.resource.security.config;
 
-import com.bb.stardium.resource.config.filter.JwtTokenVerifyFilter;
-import com.bb.stardium.resource.config.handler.AuthorizationArgumentResolver;
+import com.bb.stardium.resource.security.filter.JwtTokenVerifyFilter;
+import com.bb.stardium.resource.security.handler.AuthorizationArgumentResolver;
 import com.bb.stardium.security.service.SecurityService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

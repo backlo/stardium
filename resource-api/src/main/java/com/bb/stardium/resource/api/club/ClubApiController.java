@@ -3,7 +3,7 @@ package com.bb.stardium.resource.api.club;
 import com.bb.stardium.domain.club.Club;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.resource.api.club.dto.ClubRequest;
-import com.bb.stardium.resource.config.annotation.AuthorizePlayer;
+import com.bb.stardium.resource.security.annotation.AuthorizePlayer;
 import com.bb.stardium.service.club.ClubService;
 import com.bb.stardium.service.club.dto.ClubDto;
 import org.slf4j.Logger;
