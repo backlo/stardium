@@ -2,6 +2,7 @@ package com.bb.stardium.domain.club;
 
 import com.bb.stardium.domain.match.Match;
 import com.bb.stardium.domain.player.Player;
+import com.bb.stardium.service.club.dto.ClubDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -51,7 +52,7 @@ public class Club {
     @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "master_id")
     private Player master;
 
@@ -61,14 +62,14 @@ public class Club {
     private List<Match> players = new ArrayList<>();
 
     @Builder
-    public Club(String title, String intro, Address address, int playersLimit, LocalDateTime startTime, LocalDateTime endTime, Player master) {
-        this.title = title;
-        this.intro = intro;
-        this.address = address;
-        this.playersLimit = playersLimit;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.master = master;
+    public Club(ClubDto clubDto) {
+        this.title = clubDto.getTitle();
+        this.intro = clubDto.getIntro();
+        this.address = clubDto.getAddress();
+        this.playersLimit = clubDto.getPlayerLimit();
+        this.startTime = clubDto.getStartTime();
+        this.endTime = clubDto.getEndTime();
+        this.master = clubDto.getMaster();
     }
 
     public Club update(Club updateClub) {

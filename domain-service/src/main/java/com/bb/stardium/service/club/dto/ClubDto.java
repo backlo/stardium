@@ -1,7 +1,6 @@
 package com.bb.stardium.service.club.dto;
 
 import com.bb.stardium.domain.club.Address;
-import com.bb.stardium.domain.club.Club;
 import com.bb.stardium.domain.player.Player;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +24,6 @@ public class ClubDto {
         this.title = title;
         this.intro = intro;
         this.address = convertAddress(city, section, detail);
-
         this.playerLimit = playerLimit;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -37,18 +35,6 @@ public class ClubDto {
                 .city(city)
                 .section(section)
                 .detail(detail)
-                .build();
-    }
-
-    public Club toEntity() {
-        return Club.builder()
-                .title(this.title)
-                .intro(this.intro)
-                .address(this.address)
-                .playersLimit(this.playerLimit)
-                .startTime(this.startTime)
-                .endTime(this.endTime)
-                .master(this.master)
                 .build();
     }
 }

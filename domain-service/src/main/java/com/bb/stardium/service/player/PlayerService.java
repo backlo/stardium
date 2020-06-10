@@ -39,6 +39,12 @@ public class PlayerService {
         return playerDto;
     }
 
+    @Transactional(readOnly = true)
+    public Player findPlayerByEmail(String email) {
+        return playerRepository.findByEmail(email)
+                .orElseThrow(PlayerNotFoundException::new);
+    }
+
 
     // TODO 다시 고치기
     @Transactional(readOnly = true)
@@ -51,12 +57,6 @@ public class PlayerService {
     @Transactional(readOnly = true)
     public Player findPlayerById(Long id) {
         return playerRepository.findById(id)
-                .orElseThrow(PlayerNotFoundException::new);
-    }
-
-    @Transactional(readOnly = true)
-    public Player findPlayerByEmail(String email) {
-        return playerRepository.findByEmail(email)
                 .orElseThrow(PlayerNotFoundException::new);
     }
 
