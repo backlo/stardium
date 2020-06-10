@@ -1,4 +1,4 @@
-package com.bb.stardium.auth.security.filter.exception;
+package com.bb.stardium.error.exception;
 
 public class FieldsEmptyException extends RuntimeException {
     public FieldsEmptyException() {
