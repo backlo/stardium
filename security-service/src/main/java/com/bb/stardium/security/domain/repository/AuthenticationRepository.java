@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Repository
 public class AuthenticationRepository {
 
-    private static final String FIND_PLAYER_QUERY = "SELECT NEW com.bb.stardium.security.domain.LoginViewModel(p.id, p.email, p.password) FROM Player p WHERE p.email = :email";
+    private static final String FIND_PLAYER_QUERY = "SELECT NEW com.bb.stardium.security.domain.LoginViewModel(p.email, p.password) FROM Player p WHERE p.email = :email";
 
     @PersistenceContext
     private final EntityManager em;

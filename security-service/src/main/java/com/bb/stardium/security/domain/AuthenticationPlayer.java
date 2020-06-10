@@ -9,7 +9,6 @@ import java.util.Collection;
 
 @Getter
 public class AuthenticationPlayer implements UserDetails {
-    private Long id;
     private String username;
     private String password;
     private boolean isEnabled;
@@ -18,8 +17,7 @@ public class AuthenticationPlayer implements UserDetails {
     private boolean isCredentialsNonExpired;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public AuthenticationPlayer(Long id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
+    public AuthenticationPlayer(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
         this.authorities = authorities;

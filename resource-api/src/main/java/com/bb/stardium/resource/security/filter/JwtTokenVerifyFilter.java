@@ -25,7 +25,7 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
     private static final Logger log = LoggerFactory.getLogger(JwtTokenVerifyFilter.class);
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String AUTHORIZATION_SUBJECT = "Subject";
+    private static final String AUTHORIZATION_EMAIL = "Authorize_Email";
 
     private final SecurityService securityService;
 
@@ -34,19 +34,16 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         log.info("JwtTokenVerifyFilter : 시작");
         try {
             String authorizationHeader = request.getHeader(AUTHORIZATION_HEADER);
 
             String token = authorizationHeader.substring(7);
-            String email = securityService.extractEmail(token);
-            String subject = securityService.extractSubject(token);
+            String email = securityService.extractSubject(token);
             String authorities = securityService.extractAuthorities(token);
 
             if (!securityService.isTokenExpired(token)) {
-
-
                 UserDetails userDetails = securityService.loadUserByUsername(email);
 
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -61,25 +58,21 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
                 );
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                request.setAttribute(AUTHORIZATION_EMAIL, email);
 
-                if (SecurityContextHolder.getContext().getAuthentication() != null) {
-                    log.error("Security Context Get Authentication not null : {}", SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-                }
-
-                request.setAttribute(AUTHORIZATION_SUBJECT, subject);
                 super.doFilter(request, response, chain);
             }
-
-        } catch (ServletException | IOException e) {
-            exceptionHandler(response, e);
+        } catch (IllegalAccessException e) {
+            exceptionHandling(response, e);
         }
     }
 
-    private void exceptionHandler(HttpServletResponse response, Exception exception) throws IOException {
+    private void exceptionHandling(HttpServletResponse response, IllegalAccessException e) throws IOException {
+        log.info("JwtException : {}", e.getMessage());
         String responseError = new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
                 .writeValueAsString(
-                        new ErrorResponse(HttpStatus.FORBIDDEN, exception)
+                        new ErrorResponse(HttpStatus.FORBIDDEN, e)
                 );
 
         response.setContentType("application/json");

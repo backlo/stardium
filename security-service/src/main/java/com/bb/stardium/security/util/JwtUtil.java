@@ -2,6 +2,7 @@ package com.bb.stardium.security.util;
 
 import com.bb.stardium.security.domain.AuthenticationPlayer;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,10 +30,9 @@ public class JwtUtil {
 
     public String generateToken(AuthenticationPlayer player) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("email", player.getUsername());
         claims.put("role", player.getRoles());
 
-        return createToken(claims, String.valueOf(player.getId()));
+        return createToken(claims, player.getUsername());
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
@@ -47,37 +47,33 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String extractEmail(String token) {
-        return extractClaim(token, claims -> claims.get("email", String.class));
+    public Boolean isTokenExpired(String token) throws JwtException {
+        return extractExpiration(token)
+                .before(new Date());
     }
 
-    public String extractAuthorities(String token) {
+    private Date extractExpiration(String token) throws JwtException {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    public String extractAuthorities(String token) throws JwtException {
         return extractClaim(token, claims -> claims.get("role", String.class));
     }
 
-    public String extractSubject(String token) {
+    public String extractSubject(String token) throws JwtException {
         return extractClaim(token, Claims::getSubject);
     }
 
-    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) throws JwtException {
         Claims claims = extractAllClaims(token);
 
         return claimsResolver.apply(claims);
     }
 
-    private Claims extractAllClaims(String token) {
+    private Claims extractAllClaims(String token) throws JwtException {
         return Jwts.parser()
                 .setSigningKey(key.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(token)
                 .getBody();
-    }
-
-    public Boolean isTokenExpired(String token) {
-        return extractExpiration(token)
-                .before(new Date());
-    }
-
-    private Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
     }
 }

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class AuthorizationArgumentResolver implements HandlerMethodArgumentResolver {
     private static final Logger log = LoggerFactory.getLogger(AuthorizationArgumentResolver.class);
-    private static final String AUTHORIZATION_SUBJECT = "Subject";
+    private static final String AUTHORIZATION_EMAIL = "Authorize_Email";
 
     private final PlayerService playerService;
 
@@ -36,10 +36,12 @@ public class AuthorizationArgumentResolver implements HandlerMethodArgumentResol
                                   WebDataBinderFactory binderFactory) {
 
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        log.info("resolveArgument Email : {}", request.getAttribute(AUTHORIZATION_SUBJECT));
-        Long id = Long.valueOf((String) request.getAttribute(AUTHORIZATION_SUBJECT));
 
-        return playerService.findPlayerById(id);
+        String email = (String) request.getAttribute(AUTHORIZATION_EMAIL);
+
+        log.info("resolveArgument Email : email -> {}", email);
+
+        return playerService.findPlayerByEmail(email);
     }
 
 }

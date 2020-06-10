@@ -4,6 +4,7 @@ import com.bb.stardium.security.domain.AuthenticationPlayer;
 import com.bb.stardium.security.domain.LoginViewModel;
 import com.bb.stardium.security.domain.repository.AuthenticationRepository;
 import com.bb.stardium.security.util.JwtUtil;
+import io.jsonwebtoken.JwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -33,27 +34,35 @@ public class SecurityService implements UserDetailsService {
         return jwtUtil.generateToken(player);
     }
 
-    public String extractEmail(String token) {
-        return jwtUtil.extractEmail(token);
+    public String extractAuthorities(String token) throws IllegalAccessException {
+        try {
+            return jwtUtil.extractAuthorities(token);
+        } catch (JwtException e) {
+            throw new IllegalAccessException(e.getMessage());
+        }
     }
 
-    public String extractAuthorities(String token) {
-        return jwtUtil.extractAuthorities(token);
+    public String extractSubject(String token) throws IllegalAccessException {
+        try {
+            return jwtUtil.extractSubject(token);
+        } catch (JwtException e) {
+            throw new IllegalAccessException(e.getMessage());
+        }
     }
 
-    public String extractSubject(String token) {
-        return jwtUtil.extractSubject(token);
-    }
-
-    public boolean isTokenExpired(String token) {
-        return jwtUtil.isTokenExpired(token);
+    public boolean isTokenExpired(String token) throws IllegalAccessException {
+        try {
+            return jwtUtil.isTokenExpired(token);
+        } catch (JwtException e) {
+            throw new IllegalAccessException(e.getMessage());
+        }
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         try {
             LoginViewModel player = authenticationRepository.findByEmail(email);
-            return new AuthenticationPlayer(player.getId(), player.getEmail(), player.getPassword(), getAuthorities());
+            return new AuthenticationPlayer(player.getEmail(), player.getPassword(), getAuthorities());
         } catch (Exception ex) {
             log.error("Query Error : {}", ex.getMessage());
             throw new BadCredentialsException("이메일이 존재하지 않습니다.");

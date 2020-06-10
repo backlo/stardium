@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ClubRequest {
+public class RequestClub {
 
     @NotBlank(message = "title 를 적어주세요!")
     private String title;
