@@ -1,6 +1,7 @@
 package com.bb.stardium.auth.security.config;
 
 import com.bb.stardium.auth.security.filter.JwtAuthenticationFilter;
+import com.bb.stardium.auth.security.filter.JwtAuthorizationFilter;
 import com.bb.stardium.auth.security.filter.PasswordEncoderFilter;
 import com.bb.stardium.auth.security.handler.JwtAuthenticationFailureHandler;
 import com.bb.stardium.auth.security.handler.JwtAuthenticationSuccessHandler;
@@ -21,7 +22,6 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.Filter;
@@ -60,6 +60,7 @@ public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter impleme
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/players").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers("/players/**").hasRole("USER")
                 .antMatchers("/*").denyAll()
                 .anyRequest().authenticated()
                 .and()
@@ -68,7 +69,8 @@ public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter impleme
                 .formLogin().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilter(jwtAuthenticationFilter());
+        http.addFilterAfter(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
     }
 
     @Bean
@@ -92,6 +94,11 @@ public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter impleme
 
         jwtAuthenticationFilter.afterPropertiesSet();
         return jwtAuthenticationFilter;
+    }
+
+    @Bean
+    public JwtAuthorizationFilter jwtAuthorizationFilter() {
+        return new JwtAuthorizationFilter(securityService);
     }
 
     @Bean

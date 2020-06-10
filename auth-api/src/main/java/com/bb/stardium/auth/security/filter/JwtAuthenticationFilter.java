@@ -1,7 +1,7 @@
 package com.bb.stardium.auth.security.filter;
 
+import com.bb.stardium.auth.security.filter.dto.LoginViewModel;
 import com.bb.stardium.auth.security.wrapper.CopyHttpServletRequest;
-import com.bb.stardium.security.domain.LoginViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

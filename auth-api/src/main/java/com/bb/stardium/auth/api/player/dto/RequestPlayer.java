@@ -24,11 +24,12 @@ public class RequestPlayer {
     private String statusMessage;
     private String profile;
 
-    public PlayerDto toEntity(String encodePassword) {
+    public PlayerDto toEntity(String encodePassword, String role) {
         return PlayerDto.builder()
                 .email(this.email)
                 .password(encodePassword)
                 .nickname(this.nickname)
+                .role(role)
                 .statusMessage(this.statusMessage)
                 .profile(this.profile)
                 .build();

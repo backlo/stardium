@@ -1,7 +1,7 @@
 package com.bb.stardium.auth.api.player.handler;
 
-import com.bb.stardium.error.model.ErrorResponse;
 import com.bb.stardium.error.handler.AbstractApiExceptionHandler;
+import com.bb.stardium.error.model.ErrorResponse;
 import com.bb.stardium.service.player.exception.EmailAlreadyExistException;
 import com.bb.stardium.service.player.exception.NicknameAlreadyExistException;
 import com.bb.stardium.service.player.exception.PlayerNotFoundException;
