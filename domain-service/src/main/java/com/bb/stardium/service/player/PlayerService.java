@@ -6,7 +6,6 @@ import com.bb.stardium.service.player.dto.PlayerDto;
 import com.bb.stardium.service.player.exception.EmailAlreadyExistException;
 import com.bb.stardium.service.player.exception.NicknameAlreadyExistException;
 import com.bb.stardium.service.player.exception.PlayerNotFoundException;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,25 +44,14 @@ public class PlayerService {
                 .orElseThrow(PlayerNotFoundException::new);
     }
 
-
-
-
-
-    // TODO 다시 고치기
-    @Transactional(readOnly = true)
-    public Player findPlayerById(Long id) {
-        return playerRepository.findById(id)
-                .orElseThrow(PlayerNotFoundException::new);
-    }
-
     @Transactional
-    public Player editPlayer(Long playerId, PlayerDto updatePlayerInfo) {
+    public Player editPlayer(PlayerDto updatePlayerInfo) {
         if (isExistByNickname(updatePlayerInfo)) {
             throw new NicknameAlreadyExistException();
         }
 
-        Player player = findPlayerById(playerId);
-        return player.update(updatePlayerInfo);
+        return findPlayerByEmail(updatePlayerInfo.getEmail())
+                .update(updatePlayerInfo);
     }
 
     @Transactional(readOnly = true)

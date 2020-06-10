@@ -1,5 +1,6 @@
 package com.bb.stardium.auth.api.player;
 
+import com.bb.stardium.auth.api.player.dto.RequestEditPlayer;
 import com.bb.stardium.auth.api.player.dto.RequestPlayer;
 import com.bb.stardium.auth.api.player.dto.ResponseMyProfile;
 import com.bb.stardium.auth.api.player.dto.ResponsePlayer;
@@ -35,9 +36,22 @@ public class PlayerApiController {
     @GetMapping("/profile")
     public ResponseEntity<ResponseMyProfile> getMyProfile(@RequestAttribute("AuthorizeEmail") String email) {
         Player myProfile = playerService.findPlayerByEmail(email);
+
         return ResponseEntity.ok(
                 ResponseMyProfile.builder()
                         .player(myProfile)
                         .build());
+    }
+
+    @PutMapping("/profile")
+    public ResponseEntity<ResponseMyProfile> editMyProfile(@RequestBody RequestEditPlayer requestEditPlayer,
+                                                           @RequestAttribute("AuthorizeEmail") String email) {
+        Player updatedPlayer = playerService.editPlayer(requestEditPlayer.toEntity(email));
+
+        return ResponseEntity.ok(
+                ResponseMyProfile.builder()
+                        .player(updatedPlayer)
+                        .build()
+        );
     }
 }

@@ -36,7 +36,7 @@ public class Player {
     private String password;
 
     @Column(name = "statusMessage")
-    private String statusMessage;
+    private String statusMessage = "";
 
     @Column(name = "role")
     private String role;
@@ -57,16 +57,16 @@ public class Player {
     }
 
     public Player update(PlayerDto updatePlayerDto) {
-        if (!updatePlayerDto.getPassword().isEmpty()) {
+        if (!updatePlayerDto.isEmptyPassword()) {
             this.password = updatePlayerDto.getPassword();
         }
-        if (!updatePlayerDto.getNickname().isEmpty()) {
+        if (!updatePlayerDto.isEmptyNickname()) {
             this.nickname = updatePlayerDto.getNickname();
         }
-        if (!updatePlayerDto.getStatusMessage().isEmpty()) {
+        if (!updatePlayerDto.isEmptyStatusMessage()) {
             this.statusMessage = updatePlayerDto.getStatusMessage();
         }
-        if (!updatePlayerDto.getProfile().isEmpty()) {
+        if (!updatePlayerDto.isEmptyProfile()) {
             this.profile = updatePlayerDto.getProfile();
         }
 

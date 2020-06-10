@@ -8,14 +8,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RequestPlayerUpdate {
+public class RequestEditPlayer {
     private String password;
     private String nickname;
     private String statusMessage;
     private String profile;
 
-    public PlayerDto toEntity() {
+    public PlayerDto toEntity(String email) {
         return PlayerDto.builder()
+                .email(email)
                 .password(this.password)
                 .nickname(this.nickname)
                 .statusMessage(this.statusMessage)

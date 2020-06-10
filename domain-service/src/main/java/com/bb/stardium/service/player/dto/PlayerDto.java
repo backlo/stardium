@@ -3,6 +3,7 @@ package com.bb.stardium.service.player.dto;
 import com.bb.stardium.domain.player.PlayerProfileImage;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.util.StringUtils;
 
 @Getter
 public class PlayerDto {
@@ -27,5 +28,21 @@ public class PlayerDto {
         return PlayerProfileImage.builder()
                 .profileUrl(profile)
                 .build();
+    }
+
+    public boolean isEmptyPassword() {
+        return StringUtils.isEmpty(this.password);
+    }
+
+    public boolean isEmptyNickname() {
+        return StringUtils.isEmpty(this.nickname);
+    }
+
+    public boolean isEmptyStatusMessage() {
+        return StringUtils.isEmpty(this.statusMessage);
+    }
+
+    public boolean isEmptyProfile() {
+        return StringUtils.isEmpty(this.profile.getProfileUrl());
     }
 }

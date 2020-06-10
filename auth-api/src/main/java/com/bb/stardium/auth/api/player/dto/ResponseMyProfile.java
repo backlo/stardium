@@ -17,6 +17,6 @@ public class ResponseMyProfile {
         this.email = player.getEmail();
         this.nickname = player.getNickname();
         this.profile = player.getProfile();
-        this.statusMessage = player.getStatusMessage() == null ? "" : player.getStatusMessage();
+        this.statusMessage = player.getStatusMessage();
     }
 }

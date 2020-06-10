@@ -1,7 +1,6 @@
 package com.bb.stardium.domain.player;
 
 import lombok.*;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -19,10 +18,6 @@ public class PlayerProfileImage {
     @Builder
     public PlayerProfileImage(String profileUrl) {
         this.profileUrl = profileUrl;
-    }
-
-    boolean isEmpty() {
-        return StringUtils.isEmpty(profileUrl);
     }
 
     static PlayerProfileImage defaultImage() {

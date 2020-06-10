@@ -35,42 +35,58 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("JwtAuthorizationFilter : 시작");
         try {
-            if (!request.getRequestURI().startsWith("/players/")) {
-                throw new AuthenticationServiceException("Authorization uri not supported : " + request.getRequestURI());
+            if (!isCreatePlayerUriAndMethod(request)) {
+                checkPlayerReadAndUpdateUri(request);
+
+                String authorizationHeader = ValidateAuthorizationHeader(request);
+
+                String token = authorizationHeader.substring(7);
+                String email = securityService.extractEmail(token);
+
+                checkEmailAndSecurityContextAndExpiredToken(request, token, email);
             }
-
-            String authorizationHeader = request.getHeader(AUTHORIZATION_HEADER);
-
-            if (authorizationHeader == null || authorizationHeader.startsWith("Bearer ")) {
-                throw new AuthenticationServiceException("Invalid Jwt Token : Can't Accessed");
-            }
-
-            String token = authorizationHeader.substring(7);
-            String email = securityService.extractEmail(token);
-
-            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = securityService.loadUserByUsername(email);
-                if (!securityService.isTokenExpired(token)) {
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            userDetails.getPassword(),
-                            userDetails.getAuthorities()
-                    );
-                    authenticationToken.setDetails(
-                            new WebAuthenticationDetailsSource()
-                                    .buildDetails(request)
-                    );
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                    request.setAttribute(AUTHORIZATION_EMAIL, email);
-                }
-            }
-
             super.doFilter(request, response, filterChain);
-        } catch (AuthenticationServiceException |
-                IllegalAccessException e) {
+        } catch (AuthenticationServiceException | IllegalAccessException e) {
             exceptionHandling(response, e);
         }
+    }
 
+    private boolean isCreatePlayerUriAndMethod(HttpServletRequest request) {
+        return request.getRequestURI().equals("/players") && request.getMethod().equals("POST");
+    }
+
+    private void checkPlayerReadAndUpdateUri(HttpServletRequest request) {
+        if (!request.getRequestURI().startsWith("/players/")) {
+            throw new AuthenticationServiceException("Authorization uri not supported : " + request.getRequestURI());
+        }
+    }
+
+    private String ValidateAuthorizationHeader(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION_HEADER);
+
+        if (authorizationHeader == null || authorizationHeader.startsWith("Bearer ")) {
+            throw new AuthenticationServiceException("Invalid Jwt Token : Can't Accessed");
+        }
+        return authorizationHeader;
+    }
+
+    private void checkEmailAndSecurityContextAndExpiredToken(HttpServletRequest request, String token, String email) throws IllegalAccessException {
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = securityService.loadUserByUsername(email);
+            if (!securityService.isTokenExpired(token)) {
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        userDetails.getPassword(),
+                        userDetails.getAuthorities()
+                );
+                authenticationToken.setDetails(
+                        new WebAuthenticationDetailsSource()
+                                .buildDetails(request)
+                );
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                request.setAttribute(AUTHORIZATION_EMAIL, email);
+            }
+        }
     }
 
     private void exceptionHandling(HttpServletResponse response, Exception e) throws IOException {
