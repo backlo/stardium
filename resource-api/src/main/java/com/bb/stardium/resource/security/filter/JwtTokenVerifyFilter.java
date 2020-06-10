@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -19,13 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 public class JwtTokenVerifyFilter extends OncePerRequestFilter {
     private static final Logger log = LoggerFactory.getLogger(JwtTokenVerifyFilter.class);
-
     private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String AUTHORIZATION_EMAIL = "Authorize_Email";
+    private static final String AUTHORIZATION_EMAIL = "AuthorizeEmail";
 
     private final SecurityService securityService;
 
@@ -39,29 +37,33 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
         try {
             String authorizationHeader = request.getHeader(AUTHORIZATION_HEADER);
 
-            String token = authorizationHeader.substring(7);
-            String email = securityService.extractSubject(token);
-            String authorities = securityService.extractAuthorities(token);
-
-            if (!securityService.isTokenExpired(token)) {
-                UserDetails userDetails = securityService.loadUserByUsername(email);
-
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        userDetails.getPassword(),
-                        List.of(new SimpleGrantedAuthority(authorities))
-                );
-
-                authenticationToken.setDetails(
-                        new WebAuthenticationDetailsSource()
-                                .buildDetails(request)
-                );
-
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                request.setAttribute(AUTHORIZATION_EMAIL, email);
-
-                super.doFilter(request, response, chain);
+            if (authorizationHeader == null || authorizationHeader.startsWith("Bearer ")) {
+                throw new AuthenticationServiceException("Invalid Jwt Token : Can't Accessed");
             }
+
+            String token = authorizationHeader.substring(7);
+            String email = securityService.extractEmail(token);
+
+            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = securityService.loadUserByUsername(email);
+                if (!securityService.isTokenExpired(token)) {
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            userDetails.getPassword(),
+                            userDetails.getAuthorities()
+                    );
+
+                    authenticationToken.setDetails(
+                            new WebAuthenticationDetailsSource()
+                                    .buildDetails(request)
+                    );
+
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    request.setAttribute(AUTHORIZATION_EMAIL, email);
+                }
+            }
+
+            super.doFilter(request, response, chain);
         } catch (IllegalAccessException e) {
             exceptionHandling(response, e);
         }

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class AuthorizationArgumentResolver implements HandlerMethodArgumentResolver {
     private static final Logger log = LoggerFactory.getLogger(AuthorizationArgumentResolver.class);
-    private static final String AUTHORIZATION_EMAIL = "Authorize_Email";
+    private static final String AUTHORIZATION_EMAIL = "AuthorizeEmail";
 
     private final PlayerService playerService;
 
