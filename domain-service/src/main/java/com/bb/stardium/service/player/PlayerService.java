@@ -46,14 +46,10 @@ public class PlayerService {
     }
 
 
-    // TODO 다시 고치기
-    @Transactional(readOnly = true)
-    public Player findPlayer(Long id) {
-        return playerRepository
-                .findById(id)
-                .orElseThrow(PlayerNotFoundException::new);
-    }
 
+
+
+    // TODO 다시 고치기
     @Transactional(readOnly = true)
     public Player findPlayerById(Long id) {
         return playerRepository.findById(id)
@@ -66,7 +62,7 @@ public class PlayerService {
             throw new NicknameAlreadyExistException();
         }
 
-        Player player = findPlayer(playerId);
+        Player player = findPlayerById(playerId);
         return player.update(updatePlayerInfo);
     }
 
@@ -75,14 +71,4 @@ public class PlayerService {
         return playerRepository.existsByNickname(updatePlayerDto.getNickname());
     }
 
-    @Transactional
-    @Modifying
-    public boolean withdrawPlayer(Long id) {
-        if (playerRepository.existsById(id)) {
-            playerRepository.deleteById(id);
-            return true;
-        }
-
-        return false;
-    }
 }

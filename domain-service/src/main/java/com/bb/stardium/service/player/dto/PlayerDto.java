@@ -1,6 +1,5 @@
 package com.bb.stardium.service.player.dto;
 
-import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.domain.player.PlayerProfileImage;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,14 +9,16 @@ public class PlayerDto {
     private final String email;
     private final String password;
     private final String nickname;
+    private final String role;
     private final String statusMessage;
     private final PlayerProfileImage profile;
 
     @Builder
-    public PlayerDto(String email, String password, String nickname, String statusMessage, String profile) {
+    public PlayerDto(String email, String password, String nickname, String role, String statusMessage, String profile) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
+        this.role = role;
         this.statusMessage = statusMessage;
         this.profile = convertPlayerProfileImage(profile);
     }

@@ -38,6 +38,9 @@ public class Player {
     @Column(name = "statusMessage")
     private String statusMessage;
 
+    @Column(name = "role")
+    private String role;
+
     @Embedded
     @AttributeOverride(name = "url", column = @Column(name = "profile_image_url"))
     private PlayerProfileImage profile = PlayerProfileImage.defaultImage();
@@ -50,6 +53,7 @@ public class Player {
         this.nickname = playerDto.getNickname();
         this.email = playerDto.getEmail();
         this.password = playerDto.getPassword();
+        this.role = playerDto.getRole();
     }
 
     public Player update(PlayerDto updatePlayerDto) {

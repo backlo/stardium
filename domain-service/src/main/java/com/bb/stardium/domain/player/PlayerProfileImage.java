@@ -21,11 +21,11 @@ public class PlayerProfileImage {
         this.profileUrl = profileUrl;
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return StringUtils.isEmpty(profileUrl);
     }
 
-    public static PlayerProfileImage defaultImage() {
+    static PlayerProfileImage defaultImage() {
         return new PlayerProfileImage(DEFAULT_PROFILE_IMAGE_URL);
     }
 }
