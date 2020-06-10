@@ -1,7 +1,7 @@
 package com.bb.stardium.auth.security.filter;
 
 import com.bb.stardium.auth.security.filter.dto.PlayerViewModel;
-import com.bb.stardium.auth.security.filter.exception.FieldsEmptyException;
+import com.bb.stardium.error.exception.FieldsEmptyException;
 import com.bb.stardium.auth.security.wrapper.CopyHttpServletRequest;
 import com.bb.stardium.error.model.ErrorResponse;
 import org.codehaus.jackson.map.ObjectMapper;

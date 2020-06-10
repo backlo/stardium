@@ -32,9 +32,9 @@ public class PlayerApiController {
         );
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Player> findPlayer(@PathVariable Long id) {
-        Player foundPlayer = playerService.findPlayer(id);
-        return ResponseEntity.ok(foundPlayer);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Player> findPlayer(@PathVariable Long id) {
+//        Player foundPlayer = playerService.findPlayer(id);
+//        return ResponseEntity.ok(foundPlayer);
+//    }
 }
