@@ -30,7 +30,6 @@ public class JwtUtil {
 
     public String generateToken(AuthenticationPlayer player) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", player.getRoles());
 
         return createToken(claims, player.getUsername());
     }
@@ -54,10 +53,6 @@ public class JwtUtil {
 
     private Date extractExpiration(String token) throws JwtException {
         return extractClaim(token, Claims::getExpiration);
-    }
-
-    public String extractAuthorities(String token) throws JwtException {
-        return extractClaim(token, claims -> claims.get("role", String.class));
     }
 
     public String extractSubject(String token) throws JwtException {

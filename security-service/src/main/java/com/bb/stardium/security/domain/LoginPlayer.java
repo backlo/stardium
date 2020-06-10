@@ -7,13 +7,15 @@ import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
-public class LoginViewModel {
+public class LoginPlayer {
     private String email;
     private String password;
+    private String role;
 
     @Builder
-    public LoginViewModel(String email, String password) {
+    public LoginPlayer(String email, String password, String role) {
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 }

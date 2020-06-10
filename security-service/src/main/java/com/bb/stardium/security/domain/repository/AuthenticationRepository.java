@@ -1,6 +1,6 @@
 package com.bb.stardium.security.domain.repository;
 
-import com.bb.stardium.security.domain.LoginViewModel;
+import com.bb.stardium.security.domain.LoginPlayer;
 import org.hibernate.hql.internal.ast.QuerySyntaxException;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Repository
 public class AuthenticationRepository {
 
-    private static final String FIND_PLAYER_QUERY = "SELECT NEW com.bb.stardium.security.domain.LoginViewModel(p.email, p.password) FROM Player p WHERE p.email = :email";
+    private static final String FIND_PLAYER_QUERY = "SELECT NEW com.bb.stardium.security.domain.LoginPlayer(p.email, p.password, p.role) FROM Player p WHERE p.email = :email";
 
     @PersistenceContext
     private final EntityManager em;
@@ -18,9 +18,9 @@ public class AuthenticationRepository {
         this.em = em;
     }
 
-    public LoginViewModel findByEmail(String email) throws QuerySyntaxException {
-        TypedQuery<LoginViewModel> query =
-                em.createQuery(FIND_PLAYER_QUERY, LoginViewModel.class)
+    public LoginPlayer findByEmail(String email) throws QuerySyntaxException {
+        TypedQuery<LoginPlayer> query =
+                em.createQuery(FIND_PLAYER_QUERY, LoginPlayer.class)
                 .setParameter("email", email);
 
         return query.getSingleResult();
