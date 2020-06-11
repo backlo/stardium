@@ -1,4 +1,4 @@
-package com.bb.stardium.resource.security.handler;
+package com.bb.stardium.resource.security.resolver;
 
 import com.bb.stardium.resource.security.annotation.AuthorizePlayer;
 import com.bb.stardium.service.player.PlayerService;

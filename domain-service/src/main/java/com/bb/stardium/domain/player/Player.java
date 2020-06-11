@@ -57,19 +57,10 @@ public class Player {
     }
 
     public Player update(PlayerDto updatePlayerDto) {
-        if (!updatePlayerDto.isEmptyPassword()) {
-            this.password = updatePlayerDto.getPassword();
-        }
-        if (!updatePlayerDto.isEmptyNickname()) {
-            this.nickname = updatePlayerDto.getNickname();
-        }
-        if (!updatePlayerDto.isEmptyStatusMessage()) {
-            this.statusMessage = updatePlayerDto.getStatusMessage();
-        }
-        if (!updatePlayerDto.isEmptyProfile()) {
-            this.profile = updatePlayerDto.getProfile();
-        }
-
+        this.password = updatePlayerDto.getPassword();
+        this.nickname = updatePlayerDto.getNickname();
+        this.statusMessage = updatePlayerDto.getStatusMessage();
+        this.profile = updatePlayerDto.getProfile();
         return this;
     }
 

@@ -3,6 +3,7 @@ package com.bb.stardium.auth.security.config;
 import com.bb.stardium.auth.security.filter.JwtAuthenticationFilter;
 import com.bb.stardium.auth.security.filter.JwtAuthorizationFilter;
 import com.bb.stardium.auth.security.filter.PasswordEncoderFilter;
+import com.bb.stardium.auth.security.resolver.LoginPlayerArgumentResolver;
 import com.bb.stardium.auth.security.handler.JwtAuthenticationFailureHandler;
 import com.bb.stardium.auth.security.handler.JwtAuthenticationSuccessHandler;
 import com.bb.stardium.auth.security.provider.JwtAuthenticationProvider;
@@ -22,6 +23,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.Filter;
@@ -31,14 +33,21 @@ import java.util.List;
 @EnableWebSecurity
 public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
     private final SecurityService securityService;
+    private final LoginPlayerArgumentResolver loginPlayerArgumentResolver;
 
-    public AuthSecurityConfigurer(SecurityService securityService) {
+    public AuthSecurityConfigurer(SecurityService securityService, LoginPlayerArgumentResolver loginPlayerArgumentResolver) {
         this.securityService = securityService;
+        this.loginPlayerArgumentResolver = loginPlayerArgumentResolver;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(loginPlayerArgumentResolver);
     }
 
     @Bean
