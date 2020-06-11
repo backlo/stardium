@@ -4,6 +4,7 @@ import com.bb.stardium.domain.club.Club;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.resource.api.club.dto.RequestClub;
 import com.bb.stardium.resource.api.club.dto.RequestClubPage;
+import com.bb.stardium.resource.api.club.dto.ResponseClub;
 import com.bb.stardium.resource.api.club.dto.ResponseClubPage;
 import com.bb.stardium.resource.security.annotation.AuthorizePlayer;
 import com.bb.stardium.service.club.ClubService;
@@ -22,11 +23,16 @@ public class ClubApiController {
     }
 
     @PostMapping
-    public ResponseEntity<Club> createClub(@RequestBody RequestClub requestClub, @AuthorizePlayer Player authPlayer) {
+    public ResponseEntity<ResponseClub> createClub(@RequestBody RequestClub requestClub,
+                                                   @AuthorizePlayer Player authPlayer) {
         ClubDto clubDto = requestClub.toEntity(authPlayer);
         Club newClub = clubService.createClub(clubDto);
 
-        return ResponseEntity.ok(newClub);
+        return ResponseEntity.ok(
+                ResponseClub.builder()
+                        .club(newClub)
+                        .build()
+        );
     }
 
     @GetMapping
