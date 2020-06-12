@@ -9,6 +9,8 @@ import com.bb.stardium.resource.api.club.dto.ResponseClubPage;
 import com.bb.stardium.resource.security.annotation.AuthorizePlayer;
 import com.bb.stardium.service.club.ClubService;
 import com.bb.stardium.service.club.dto.ClubDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/clubs")
 public class ClubApiController {
+    private static final Logger log = LoggerFactory.getLogger(ClubApiController.class);
     private final ClubService clubService;
 
     public ClubApiController(ClubService clubService) {
@@ -46,9 +49,17 @@ public class ClubApiController {
         );
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Club> getClub(@PathVariable Long id) {
-//
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseClub> getClubById(@PathVariable Long id) {
+        log.info("들어옴");
+        Club club = clubService.findById(id);
+
+        return ResponseEntity.ok(
+                ResponseClub.builder()
+                    .club(club)
+                .build()
+        );
+    }
+
 
 }

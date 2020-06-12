@@ -37,7 +37,7 @@ public class AppSecurityConfigurer extends WebSecurityConfigurerAdapter implemen
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/clubs/**").hasRole("USER")
+                .antMatchers("/clubs/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
@@ -47,7 +47,6 @@ public class AppSecurityConfigurer extends WebSecurityConfigurerAdapter implemen
 
         http
                 .addFilterAfter(jwtTokenParsingFilter(), UsernamePasswordAuthenticationFilter.class);
-
     }
 
     @Bean

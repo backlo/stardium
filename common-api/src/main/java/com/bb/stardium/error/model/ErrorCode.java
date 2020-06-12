@@ -2,6 +2,7 @@ package com.bb.stardium.error.model;
 
 import com.bb.stardium.domain.club.exception.NotAllowCityException;
 import com.bb.stardium.error.exception.FieldsEmptyException;
+import com.bb.stardium.service.club.exception.NotFoundClubsException;
 import com.bb.stardium.service.player.exception.EmailAlreadyExistException;
 import com.bb.stardium.service.player.exception.NicknameAlreadyExistException;
 import com.bb.stardium.service.player.exception.PlayerNotFoundException;
@@ -16,7 +17,8 @@ public enum ErrorCode {
     NICKNAME_ALREADY_EXIST_EXCEPTION(NicknameAlreadyExistException.class, 103),
     FIELD_EMPTY_EXCEPTION(FieldsEmptyException.class, 104),
 
-    NOT_ALLOW_CITY_EXCEPTION(NotAllowCityException.class, 200);
+    NOT_ALLOW_CITY_EXCEPTION(NotAllowCityException.class, 200),
+    NOT_FOUND_CLUB_EXCEPTION(NotFoundClubsException.class, 201);
 
     private final Object exceptionClazz;
     private final int code;
