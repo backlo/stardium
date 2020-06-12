@@ -2,6 +2,7 @@ package com.bb.stardium.resource.api.club;
 
 import com.bb.stardium.domain.club.Club;
 import com.bb.stardium.domain.player.Player;
+import com.bb.stardium.error.exception.IllegalPageFormException;
 import com.bb.stardium.resource.api.club.dto.RequestClub;
 import com.bb.stardium.resource.api.club.dto.RequestClubPage;
 import com.bb.stardium.resource.api.club.dto.ResponseClub;
@@ -40,13 +41,16 @@ public class ClubApiController {
 
     @GetMapping
     public ResponseEntity<ResponseClubPage> getAllClubList(RequestClubPage pageable) {
-        Page<Club> clubs = clubService.findAllClubs(pageable.of());
-
-        return ResponseEntity.ok(
-                ResponseClubPage.builder()
-                        .clubs(clubs)
-                        .build()
-        );
+        try {
+            Page<Club> clubs = clubService.findAllClubs(pageable.of());
+            return ResponseEntity.ok(
+                    ResponseClubPage.builder()
+                            .clubs(clubs)
+                            .build()
+            );
+        } catch (IllegalArgumentException e) {
+            throw new IllegalPageFormException();
+        }
     }
 
     @GetMapping("/{id}")
@@ -56,8 +60,21 @@ public class ClubApiController {
 
         return ResponseEntity.ok(
                 ResponseClub.builder()
-                    .club(club)
-                .build()
+                        .club(club)
+                        .build()
+        );
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseClub> editClub(@PathVariable Long id, @AuthorizePlayer Player player,
+                                                 @RequestBody RequestClub requestClub) {
+        ClubDto editClubDto = requestClub.toEntity();
+        Club editedClub = clubService.editClub(editClubDto, id, player);
+
+        return ResponseEntity.ok(
+                ResponseClub.builder()
+                        .club(editedClub)
+                        .build()
         );
     }
 

@@ -1,11 +1,13 @@
 package com.bb.stardium.domain.club;
 
+import com.bb.stardium.domain.club.exception.MasterAndClubNotMatchedException;
 import com.bb.stardium.domain.match.Match;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.service.club.dto.ClubDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -66,21 +68,28 @@ public class Club {
         this.title = clubDto.getTitle();
         this.intro = clubDto.getIntro();
         this.address = clubDto.getAddress();
-        this.playersLimit = clubDto.getPlayerLimit();
+        this.playersLimit = clubDto.getPlayersLimit();
         this.startTime = clubDto.getStartTime();
         this.endTime = clubDto.getEndTime();
         this.master = clubDto.getMaster();
     }
 
-    public Club update(Club updateClub) {
-        this.title = updateClub.getTitle();
-        this.intro = updateClub.getIntro();
-        this.address = updateClub.getAddress();
-        this.startTime = updateClub.getStartTime();
-        this.endTime = updateClub.getEndTime();
-        this.playersLimit = updateClub.getPlayersLimit();
+    public Club update(ClubDto editClubDto) {
+        this.title = editClubDto.getTitle();
+        this.intro = editClubDto.getIntro();
+        this.address = editClubDto.getAddress();
+        this.startTime = editClubDto.getStartTime();
+        this.endTime = editClubDto.getEndTime();
+        this.playersLimit = editClubDto.getPlayersLimit();
 
         return this;
     }
 
+    public Club checkMasterAndLoginPlayer(Player loginPlayer) {
+        if (StringUtils.isEmpty(loginPlayer.getEmail()) || this.master != loginPlayer) {
+            throw new MasterAndClubNotMatchedException();
+        }
+
+        return this;
+    }
 }

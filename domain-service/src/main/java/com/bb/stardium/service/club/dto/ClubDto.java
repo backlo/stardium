@@ -12,19 +12,19 @@ public class ClubDto {
     private final String title;
     private final String intro;
     private final Address address;
-    private final int playerLimit;
+    private final int playersLimit;
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
     private final Player master;
 
     @Builder
     public ClubDto(String title, String intro, String city,
-                   String section, String detail, int playerLimit,
+                   String section, String detail, int playersLimit,
                    LocalDateTime startTime, LocalDateTime endTime, Player master) {
         this.title = title;
         this.intro = intro;
         this.address = convertAddress(city, section, detail);
-        this.playerLimit = playerLimit;
+        this.playersLimit = playersLimit;
         this.startTime = startTime;
         this.endTime = endTime;
         this.master = master;

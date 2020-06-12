@@ -45,7 +45,7 @@ public class RequestClub {
     private LocalDateTime endTime;
 
     @Min(value = 2, message = "2인 이상이어야 합니다.")
-    private int playerLimit;
+    private int playersLimit;
 
     public ClubDto toEntity(Player master) {
         return ClubDto.builder()
@@ -56,8 +56,21 @@ public class RequestClub {
                 .detail(this.detail)
                 .startTime(this.startTime)
                 .endTime(this.endTime)
-                .playerLimit(this.playerLimit)
+                .playersLimit(this.playersLimit)
                 .master(master)
+                .build();
+    }
+
+    public ClubDto toEntity() {
+        return ClubDto.builder()
+                .title(this.title)
+                .intro(this.intro)
+                .city(this.city)
+                .section(this.section)
+                .detail(this.detail)
+                .startTime(this.startTime)
+                .endTime(this.endTime)
+                .playersLimit(this.playersLimit)
                 .build();
     }
 

@@ -2,6 +2,7 @@ package com.bb.stardium.service.club;
 
 import com.bb.stardium.domain.club.Club;
 import com.bb.stardium.domain.club.repository.ClubRepository;
+import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.service.club.dto.ClubDto;
 import com.bb.stardium.service.club.exception.NotFoundClubsException;
 import org.springframework.data.domain.Page;
@@ -37,4 +38,12 @@ public class ClubService {
                 .orElseThrow(NotFoundClubsException::new);
     }
 
+    @Transactional
+    public Club editClub(ClubDto clubDto, Long id, Player loginPlayer) {
+        Club club = clubRepository.findById(id)
+                .orElseThrow(NotFoundClubsException::new);
+
+        return club.checkMasterAndLoginPlayer(loginPlayer)
+                .update(clubDto);
+    }
 }
