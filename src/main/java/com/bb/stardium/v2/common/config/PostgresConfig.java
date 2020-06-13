@@ -19,7 +19,6 @@ public class PostgresConfig extends AbstractR2dbcConfiguration {
     @Bean
     @Override
     public ConnectionFactory connectionFactory() {
-        log.info("들어옴");
         return new PostgresqlConnectionFactory(PostgresqlConnectionConfiguration.builder()
                 .host("localhost")
                 .port(15432)

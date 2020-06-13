@@ -5,15 +5,3 @@ spring:
     password:
   session:
     store-type: redis
-
-#aws
-cloud:
-  aws:
-    s3:
-      bucket: stardium2020
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
-
-
