@@ -14,7 +14,6 @@ public class RequestEditPlayer {
     private String password;
     private String nickname;
     private String statusMessage;
-    private String profile;
 
     public PlayerDto toEntity(Player player) {
         return PlayerDto.builder()
@@ -22,11 +21,10 @@ public class RequestEditPlayer {
                 .password(checkRequestField(this.password, player.getPassword()))
                 .nickname(checkRequestField(this.nickname, player.getNickname()))
                 .statusMessage(checkRequestField(this.statusMessage, player.getStatusMessage()))
-                .profile(checkRequestField(this.profile, player.getProfile().getProfileUrl()))
                 .build();
     }
 
     private String checkRequestField(String requestField, String playerField) {
-        return StringUtils.isEmpty(requestField) ? playerField: requestField;
+        return StringUtils.isEmpty(requestField) ? playerField : requestField;
     }
 }

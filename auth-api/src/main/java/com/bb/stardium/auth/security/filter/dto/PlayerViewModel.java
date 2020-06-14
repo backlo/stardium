@@ -5,13 +5,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class PlayerViewModel {
-    private String email;
-    private String password;
-    private String nickname;
+public abstract class PlayerViewModel {
+    String password;
+    String nickname;
 
-    public PlayerViewModel parsePlayerViewModel(String encodePassword) {
-        this.password = encodePassword;
-        return this;
-    }
 }

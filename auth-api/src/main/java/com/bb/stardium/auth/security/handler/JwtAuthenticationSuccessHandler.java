@@ -1,7 +1,7 @@
 package com.bb.stardium.auth.security.handler;
 
 import com.bb.stardium.auth.security.handler.dto.TokenResponse;
-import com.bb.stardium.security.domain.AuthenticationPlayer;
+import com.bb.stardium.security.model.AuthenticationPlayer;
 import com.bb.stardium.security.service.SecurityService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;

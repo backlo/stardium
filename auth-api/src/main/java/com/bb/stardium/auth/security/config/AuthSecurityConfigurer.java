@@ -1,13 +1,14 @@
 package com.bb.stardium.auth.security.config;
 
 import com.bb.stardium.auth.security.filter.JwtAuthenticationFilter;
-import com.bb.stardium.auth.security.filter.JwtAuthorizationFilter;
 import com.bb.stardium.auth.security.filter.PasswordEncoderFilter;
-import com.bb.stardium.auth.security.resolver.LoginPlayerArgumentResolver;
 import com.bb.stardium.auth.security.handler.JwtAuthenticationFailureHandler;
 import com.bb.stardium.auth.security.handler.JwtAuthenticationSuccessHandler;
 import com.bb.stardium.auth.security.provider.JwtAuthenticationProvider;
+import com.bb.stardium.interceptor.resolver.AuthorizePlayerArgumentResolver;
+import com.bb.stardium.security.config.filter.JwtVerifyFilter;
 import com.bb.stardium.security.service.SecurityService;
+import com.bb.stardium.service.player.PlayerService;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,17 +28,19 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
 public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
     private final SecurityService securityService;
-    private final LoginPlayerArgumentResolver loginPlayerArgumentResolver;
+    private final PlayerService playerService;
 
-    public AuthSecurityConfigurer(SecurityService securityService, LoginPlayerArgumentResolver loginPlayerArgumentResolver) {
+    public AuthSecurityConfigurer(SecurityService securityService, PlayerService playerService) {
         this.securityService = securityService;
-        this.loginPlayerArgumentResolver = loginPlayerArgumentResolver;
+        this.playerService = playerService;
     }
 
     @Override
@@ -47,7 +50,12 @@ public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter impleme
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(loginPlayerArgumentResolver);
+        resolvers.add(authorizePlayerArgumentResolver());
+    }
+
+    @Bean
+    public AuthorizePlayerArgumentResolver authorizePlayerArgumentResolver() {
+        return new AuthorizePlayerArgumentResolver(playerService);
     }
 
     @Bean
@@ -79,18 +87,17 @@ public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter impleme
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilter(jwtAuthenticationFilter());
-        http.addFilterAfter(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
+        http.addFilterAfter(authJwtVerifyFilter(), JwtAuthenticationFilter.class);
     }
 
     @Bean
     public FilterRegistrationBean passwordEncoderFilter() {
-        FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(new PasswordEncoderFilter(passwordEncoder()));
-        bean.setUrlPatterns(
-                List.of("/players")
-        );
+        Map<String, String> includeRequest = new HashMap<>();
+        includeRequest.put("/players", "POST");
+        includeRequest.put("/players/profile", "PUT");
 
-        return bean;
+        PasswordEncoderFilter filter = new PasswordEncoderFilter(passwordEncoder(), includeRequest);
+        return new FilterRegistrationBean<Filter>(filter);
     }
 
     @Bean
@@ -102,12 +109,16 @@ public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter impleme
         jwtAuthenticationFilter.setAuthenticationFailureHandler(jwtAuthenticationFailureHandler());
 
         jwtAuthenticationFilter.afterPropertiesSet();
+
         return jwtAuthenticationFilter;
     }
 
     @Bean
-    public JwtAuthorizationFilter jwtAuthorizationFilter() {
-        return new JwtAuthorizationFilter(securityService);
+    public JwtVerifyFilter authJwtVerifyFilter() {
+        Map<String, String> ignoreUri = new HashMap<>();
+        ignoreUri.put("/players", "POST");
+
+        return new JwtVerifyFilter(securityService, ignoreUri);
     }
 
     @Bean

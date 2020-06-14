@@ -1,15 +1,17 @@
 package com.bb.stardium.auth.security.filter;
 
+import com.bb.stardium.auth.security.filter.dto.PlayerCreateViewModel;
+import com.bb.stardium.auth.security.filter.dto.PlayerEditViewModel;
 import com.bb.stardium.auth.security.filter.dto.PlayerViewModel;
-import com.bb.stardium.auth.security.wrapper.CopyHttpServletRequest;
 import com.bb.stardium.error.exception.FieldsEmptyException;
 import com.bb.stardium.error.model.ErrorResponse;
+import com.bb.stardium.util.CopyHttpServletRequest;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -19,14 +21,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 @WebFilter("/players")
 public class PasswordEncoderFilter extends OncePerRequestFilter {
     private static final Logger log = LoggerFactory.getLogger(PasswordEncoderFilter.class);
     private final PasswordEncoder passwordEncoder;
+    private final Map<String, String> includeRequest;
 
-    public PasswordEncoderFilter(PasswordEncoder passwordEncoder) {
+    public PasswordEncoderFilter(PasswordEncoder passwordEncoder, Map<String, String> includeRequest) {
         this.passwordEncoder = passwordEncoder;
+        this.includeRequest = includeRequest;
     }
 
     @Override
@@ -34,28 +39,26 @@ public class PasswordEncoderFilter extends OncePerRequestFilter {
         log.info("PasswordEncoderFilter : 시작");
         try {
             HttpServletRequest copyRequest = new CopyHttpServletRequest(request);
-            PlayerViewModel playerViewModel = new ObjectMapper()
-                    .readValue(copyRequest.getInputStream(), PlayerViewModel.class);
+            PlayerViewModel playerCreateViewModel;
 
-            if (isEmptyOneOfFields(playerViewModel)) {
-                throw new FieldsEmptyException();
+            if (request.getMethod().equals("POST")) {
+                playerCreateViewModel = new ObjectMapper()
+                        .readValue(copyRequest.getInputStream(), PlayerCreateViewModel.class)
+                        .checkNullField();
+            } else {
+                playerCreateViewModel = new ObjectMapper()
+                        .readValue(copyRequest.getInputStream(), PlayerEditViewModel.class);
             }
 
-            String encodePassword = passwordEncoder.encode(playerViewModel.getPassword());
+            String encodePassword = passwordEncoder.encode(playerCreateViewModel.getPassword());
 
             request.setAttribute("encodedPassword", encodePassword);
 
             chain.doFilter(copyRequest, response);
 
-        } catch (FieldsEmptyException | ServletException exception) {
+        } catch (FieldsEmptyException | ServletException | UnrecognizedPropertyException exception) {
             exceptionHandler(response, exception);
         }
-    }
-
-    private boolean isEmptyOneOfFields(PlayerViewModel playerViewModel) {
-        return StringUtils.isEmpty(playerViewModel.getEmail()) ||
-                StringUtils.isEmpty(playerViewModel.getPassword()) ||
-                StringUtils.isEmpty(playerViewModel.getNickname());
     }
 
     private void exceptionHandler(HttpServletResponse response, Exception exception) throws IOException {
@@ -73,6 +76,9 @@ public class PasswordEncoderFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return !(request.getMethod().equals("POST") && request.getRequestURI().equals("/players"));
+        return includeRequest.entrySet().stream()
+                .noneMatch(map ->
+                        map.getKey().equals(request.getRequestURI()) && map.getValue().equals(request.getMethod())
+                );
     }
 }
