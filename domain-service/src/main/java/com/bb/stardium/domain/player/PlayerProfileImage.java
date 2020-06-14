@@ -1,16 +1,22 @@
 package com.bb.stardium.domain.player;
 
+import com.bb.stardium.service.player.exception.InvalidProfileUrlException;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(of = {"profileUrl"})
 public class PlayerProfileImage {
-    private static final String DEFAULT_PROFILE_IMAGE_URL = "https://stardium2020.s3.ap-northeast-2.amazonaws.com/profile-image/default_profile_img.png";
+
+    private static final String PREFIX_PROFILE_DIRECTORY = "https://stardium2020.s3.ap-northeast-2.amazonaws.com/profile-image/";
+    private static final String DEFAULT_IMAGE_NAME = "default_profile_img.png";
 
     @Column(name = "profile_url", nullable = false)
     private String profileUrl;
@@ -20,7 +26,17 @@ public class PlayerProfileImage {
         this.profileUrl = profileUrl;
     }
 
-    static PlayerProfileImage defaultImage() {
-        return new PlayerProfileImage(DEFAULT_PROFILE_IMAGE_URL);
+    public PlayerProfileImage createDefaultImage() {
+        this.profileUrl = PREFIX_PROFILE_DIRECTORY + DEFAULT_IMAGE_NAME;
+        return this;
+    }
+
+    public PlayerProfileImage update(String profileUrl) {
+        if (StringUtils.isEmpty(profileUrl) || !profileUrl.startsWith(PREFIX_PROFILE_DIRECTORY)) {
+            throw new InvalidProfileUrlException();
+        }
+
+        this.profileUrl = profileUrl;
+        return this;
     }
 }

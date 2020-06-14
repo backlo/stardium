@@ -43,7 +43,7 @@ public class Player {
 
     @Embedded
     @AttributeOverride(name = "url", column = @Column(name = "profile_image_url"))
-    private PlayerProfileImage profile = PlayerProfileImage.defaultImage();
+    private PlayerProfileImage profile = PlayerProfileImage.builder().build().createDefaultImage();
 
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Match> clubs = new ArrayList<>();
@@ -60,8 +60,13 @@ public class Player {
         this.password = updatePlayerDto.getPassword();
         this.nickname = updatePlayerDto.getNickname();
         this.statusMessage = updatePlayerDto.getStatusMessage();
-        this.profile = updatePlayerDto.getProfile();
         return this;
+    }
+
+    public String updateProfile(PlayerDto updateProfile) {
+        PlayerProfileImage image = this.profile.update(updateProfile.getProfile());
+
+        return image.getProfileUrl();
     }
 
 }

@@ -62,4 +62,10 @@ public class PlayerService {
         return playerRepository.existsByNickname(updatePlayerDto.getNickname());
     }
 
+    @Transactional
+    public String editPlayerProfileImage(PlayerDto updatePlayerDto) {
+        Player editPlayer = findPlayerByEmail(updatePlayerDto.getEmail());
+        return editPlayer.updateProfile(updatePlayerDto);
+    }
+
 }
