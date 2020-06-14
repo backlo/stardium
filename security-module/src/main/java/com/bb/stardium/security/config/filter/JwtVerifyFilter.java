@@ -1,4 +1,4 @@
-package com.bb.stardium.auth.security.filter;
+package com.bb.stardium.security.config.filter;
 
 import com.bb.stardium.error.model.ErrorResponse;
 import com.bb.stardium.security.service.SecurityService;
@@ -19,54 +19,44 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
-public class JwtAuthorizationFilter extends OncePerRequestFilter {
-    private static final Logger log = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
+public class JwtVerifyFilter extends OncePerRequestFilter {
+    private static final Logger log = LoggerFactory.getLogger(JwtVerifyFilter.class);
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String AUTHORIZATION_EMAIL = "AuthorizeEmail";
 
     private final SecurityService securityService;
+    private final Map<String, String> ignoreRequest;
 
-    public JwtAuthorizationFilter(SecurityService securityService) {
+    public JwtVerifyFilter(SecurityService securityService, Map<String, String> ignoreRequest) {
         this.securityService = securityService;
+        this.ignoreRequest = ignoreRequest;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        log.info("JwtAuthorizationFilter : 시작");
+        log.info("Jwt Verify Filter : 시작");
         try {
-            if (!isCreatePlayerUriAndMethod(request)) {
-                checkPlayerReadAndUpdateUri(request);
+            String authorizationHeader = validateAuthorizationHeader(request);
 
-                String authorizationHeader = ValidateAuthorizationHeader(request);
+            String token = authorizationHeader.substring(7);
+            String email = securityService.extractEmail(token);
 
-                String token = authorizationHeader.substring(7);
-                String email = securityService.extractEmail(token);
-
-                checkEmailAndSecurityContextAndExpiredToken(request, token, email);
-            }
+            checkEmailAndSecurityContextAndExpiredToken(request, token, email);
             super.doFilter(request, response, filterChain);
-        } catch (AuthenticationServiceException | IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             exceptionHandling(response, e);
         }
     }
 
-    private boolean isCreatePlayerUriAndMethod(HttpServletRequest request) {
-        return request.getRequestURI().equals("/players") && request.getMethod().equals("POST");
-    }
-
-    private void checkPlayerReadAndUpdateUri(HttpServletRequest request) {
-        if (!request.getRequestURI().startsWith("/players/")) {
-            throw new AuthenticationServiceException("Authorization uri not supported : " + request.getRequestURI());
-        }
-    }
-
-    private String ValidateAuthorizationHeader(HttpServletRequest request) {
+    private String validateAuthorizationHeader(HttpServletRequest request) {
         String authorizationHeader = request.getHeader(AUTHORIZATION_HEADER);
 
         if (authorizationHeader == null || authorizationHeader.startsWith("Bearer ")) {
             throw new AuthenticationServiceException("Invalid Jwt Token : Can't Accessed");
         }
+
         return authorizationHeader;
     }
 
@@ -89,7 +79,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         }
     }
 
-    private void exceptionHandling(HttpServletResponse response, Exception e) throws IOException {
+    private void exceptionHandling(HttpServletResponse response, IllegalAccessException e) throws IOException {
         log.info("JwtException : {}", e.getMessage());
         String responseError = new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
@@ -101,5 +91,13 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
 
         response.getWriter().write(responseError);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return ignoreRequest.entrySet().stream()
+                .anyMatch(map ->
+                        map.getKey().equals(request.getRequestURI()) && map.getValue().equals(request.getMethod())
+                );
     }
 }

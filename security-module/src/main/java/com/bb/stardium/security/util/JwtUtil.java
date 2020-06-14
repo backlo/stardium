@@ -1,6 +1,6 @@
 package com.bb.stardium.security.util;
 
-import com.bb.stardium.security.domain.AuthenticationPlayer;
+import com.bb.stardium.security.model.AuthenticationPlayer;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;

@@ -1,8 +1,8 @@
 package com.bb.stardium.security.service;
 
-import com.bb.stardium.security.domain.AuthenticationPlayer;
-import com.bb.stardium.security.domain.LoginPlayer;
-import com.bb.stardium.security.domain.repository.AuthenticationRepository;
+import com.bb.stardium.security.model.AuthenticationPlayer;
+import com.bb.stardium.security.model.LoginPlayer;
+import com.bb.stardium.security.dao.AuthenticationDao;
 import com.bb.stardium.security.util.JwtUtil;
 import io.jsonwebtoken.JwtException;
 import org.slf4j.Logger;
@@ -22,11 +22,11 @@ import java.util.List;
 public class SecurityService implements UserDetailsService {
     private static final Logger log = LoggerFactory.getLogger(SecurityService.class);
 
-    private final AuthenticationRepository authenticationRepository;
+    private final AuthenticationDao authenticationDao;
     private final JwtUtil jwtUtil;
 
-    public SecurityService(AuthenticationRepository authenticationRepository, JwtUtil jwtUtil) {
-        this.authenticationRepository = authenticationRepository;
+    public SecurityService(AuthenticationDao authenticationDao, JwtUtil jwtUtil) {
+        this.authenticationDao = authenticationDao;
         this.jwtUtil = jwtUtil;
     }
 
@@ -53,7 +53,7 @@ public class SecurityService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         try {
-            LoginPlayer player = authenticationRepository.findByEmail(email);
+            LoginPlayer player = authenticationDao.findByEmail(email);
             return new AuthenticationPlayer(player.getEmail(),
                     player.getPassword(),
                     setAuthorities(player.getRole())

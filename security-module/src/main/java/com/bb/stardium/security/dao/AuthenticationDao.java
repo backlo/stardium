@@ -1,20 +1,20 @@
-package com.bb.stardium.security.domain.repository;
+package com.bb.stardium.security.dao;
 
-import com.bb.stardium.security.domain.LoginPlayer;
+import com.bb.stardium.security.model.LoginPlayer;
 import org.hibernate.hql.internal.ast.QuerySyntaxException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
 
 @Repository
-public class AuthenticationRepository {
+public class AuthenticationDao {
 
-    private static final String FIND_PLAYER_QUERY = "SELECT NEW com.bb.stardium.security.domain.LoginPlayer(p.email, p.password, p.role) FROM Player p WHERE p.email = :email";
+    private static final String FIND_PLAYER_QUERY = "SELECT NEW com.bb.stardium.security.model.LoginPlayer(p.email, p.password, p.role) FROM Player p WHERE p.email = :email";
 
     @PersistenceContext
     private final EntityManager em;
 
-    public AuthenticationRepository(EntityManager em) {
+    public AuthenticationDao(EntityManager em) {
         this.em = em;
     }
 

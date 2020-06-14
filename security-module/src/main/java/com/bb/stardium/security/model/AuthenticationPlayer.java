@@ -1,10 +1,9 @@
-package com.bb.stardium.security.domain;
+package com.bb.stardium.security.model;
 
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 @Getter
@@ -25,16 +24,5 @@ public class AuthenticationPlayer implements UserDetails {
         this.isAccountNonExpired = true;
         this.isAccountNonLocked = true;
         this.isCredentialsNonExpired = true;
-    }
-
-    public String getRoles() {
-        try {
-            return authorities.stream()
-                    .findFirst()
-                    .orElseThrow(IllegalAccessException::new)
-                    .getAuthority();
-        } catch (IllegalAccessException e) {
-            return "ROLE_DENY";
-        }
     }
 }

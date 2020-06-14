@@ -1,9 +1,8 @@
-package com.bb.stardium.security.domain;
+package com.bb.stardium.security.model;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
