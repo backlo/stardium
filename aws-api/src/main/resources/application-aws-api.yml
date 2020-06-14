@@ -1,0 +1,14 @@
+server:
+  port: 8082
+
+cloud:
+  aws:
+    s3:
+      bucket: stardium2020
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+s3:
+  directory: profile-image/
