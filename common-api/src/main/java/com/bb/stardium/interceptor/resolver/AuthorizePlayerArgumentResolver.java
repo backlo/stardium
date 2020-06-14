@@ -1,9 +1,8 @@
-package com.bb.stardium.auth.security.resolver;
+package com.bb.stardium.interceptor.resolver;
 
-import com.bb.stardium.auth.security.annotation.LoginPlayer;
+import com.bb.stardium.interceptor.annotation.AuthorizePlayer;
 import com.bb.stardium.service.player.PlayerService;
 import org.springframework.core.MethodParameter;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -11,19 +10,18 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Component
-public class LoginPlayerArgumentResolver implements HandlerMethodArgumentResolver {
+public class AuthorizePlayerArgumentResolver implements HandlerMethodArgumentResolver {
     private static final String AUTHORIZATION_EMAIL = "AuthorizeEmail";
 
     private final PlayerService playerService;
 
-    public LoginPlayerArgumentResolver(PlayerService playerService) {
+    public AuthorizePlayerArgumentResolver(PlayerService playerService) {
         this.playerService = playerService;
     }
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(LoginPlayer.class);
+        return parameter.hasParameterAnnotation(AuthorizePlayer.class);
     }
 
     @Override

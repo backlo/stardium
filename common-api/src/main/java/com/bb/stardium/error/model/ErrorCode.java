@@ -2,18 +2,17 @@ package com.bb.stardium.error.model;
 
 import com.bb.stardium.domain.club.exception.MasterAndClubNotMatchedException;
 import com.bb.stardium.domain.club.exception.NotAllowCityException;
-import com.bb.stardium.error.exception.FieldsEmptyException;
-import com.bb.stardium.error.exception.IllegalPageFormException;
+import com.bb.stardium.error.exception.*;
 import com.bb.stardium.service.club.exception.NotFoundClubsException;
 import com.bb.stardium.service.player.exception.EmailAlreadyExistException;
 import com.bb.stardium.service.player.exception.NicknameAlreadyExistException;
 import com.bb.stardium.service.player.exception.PlayerNotFoundException;
-import org.springframework.security.authentication.BadCredentialsException;
+import com.bb.stardium.service.player.exception.InvalidProfileUrlException;
 
 import java.util.Arrays;
 
 public enum ErrorCode {
-    NOT_ALLOW_AUTHORIZE_EXCEPTION(BadCredentialsException.class, 100),
+    NOT_ALLOW_AUTHORIZE_EXCEPTION(RuntimeException.class, 100),
     PLAYER_NOT_FOUND_EXCEPTION(PlayerNotFoundException.class, 101),
     EMAIL_ALREADY_EXIST_EXCEPTION(EmailAlreadyExistException.class, 102),
     NICKNAME_ALREADY_EXIST_EXCEPTION(NicknameAlreadyExistException.class, 103),
@@ -22,7 +21,13 @@ public enum ErrorCode {
     NOT_ALLOW_CITY_EXCEPTION(NotAllowCityException.class, 200),
     NOT_FOUND_CLUB_EXCEPTION(NotFoundClubsException.class, 201),
     MASTER_AND_CLUB_NOT_MATCHED_EXCEPTION(MasterAndClubNotMatchedException.class, 202),
-    ILLEGAL_PAGE_FORM_EXCEPTION(IllegalPageFormException.class, 203);
+    ILLEGAL_PAGE_FORM_EXCEPTION(IllegalPageFormException.class, 203),
+
+    FILE_CONVERT_EXCEPTION(FileConvertException.class, 300),
+    FILE_UPLOAD_EXCEPTION(FileUploadException.class, 301),
+    MULTIPART_FILE_EMPTY_EXCEPTION(MultipartFileEmptyException.class, 302),
+    NOT_IMAGE_FORM_EXCEPTION(NotImageFormException.class, 303),
+    INVALID_PROFILE_URL_EXCEPTION(InvalidProfileUrlException.class, 304);
 
     private final Object exceptionClazz;
     private final int code;

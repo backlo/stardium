@@ -1,4 +1,4 @@
-package com.bb.stardium.resource.security.annotation;
+package com.bb.stardium.interceptor.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

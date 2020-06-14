@@ -1,4 +1,4 @@
-package com.bb.stardium.auth.security.wrapper;
+package com.bb.stardium.util;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 
