@@ -1,5 +1,6 @@
 package com.bb.stardium.resource.api.club;
 
+import com.bb.stardium.interceptor.annotation.AuthorizePlayer;
 import com.bb.stardium.domain.club.Club;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.error.exception.IllegalPageFormException;
@@ -7,7 +8,6 @@ import com.bb.stardium.resource.api.club.dto.RequestClub;
 import com.bb.stardium.resource.api.club.dto.RequestClubPage;
 import com.bb.stardium.resource.api.club.dto.ResponseClub;
 import com.bb.stardium.resource.api.club.dto.ResponseClubPage;
-import com.bb.stardium.resource.security.annotation.AuthorizePlayer;
 import com.bb.stardium.service.club.ClubService;
 import com.bb.stardium.service.club.dto.ClubDto;
 import org.slf4j.Logger;
