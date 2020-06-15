@@ -1,6 +1,7 @@
 package com.bb.stardium.auth.security.filter;
 
 import com.bb.stardium.auth.security.filter.dto.LoginViewModel;
+import com.bb.stardium.auth.security.filter.dto.core.PlayerViewModel;
 import com.bb.stardium.util.CopyHttpServletRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -33,7 +34,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         try {
             HttpServletRequest copyRequest = new CopyHttpServletRequest(request);
-            LoginViewModel credentials = new ObjectMapper()
+            PlayerViewModel credentials = new ObjectMapper()
                     .readValue(copyRequest.getInputStream(), LoginViewModel.class);
 
             String username = StringUtils.isEmpty(credentials.getEmail()) ? "" : credentials.getEmail().trim();

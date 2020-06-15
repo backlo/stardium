@@ -1,13 +1,12 @@
 package com.bb.stardium.auth.security.filter.dto;
 
+import com.bb.stardium.auth.security.filter.dto.core.PlayerViewModel;
 import com.bb.stardium.error.exception.FieldsEmptyException;
 import lombok.Getter;
 import org.springframework.util.StringUtils;
 
 @Getter
 public class PlayerCreateViewModel extends PlayerViewModel {
-    private String email;
-
     public PlayerViewModel checkNullField() {
         if (isEmptyOneOfFields()) {
             throw new FieldsEmptyException();

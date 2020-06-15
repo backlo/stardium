@@ -45,7 +45,7 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
 
             checkEmailAndSecurityContextAndExpiredToken(request, token, email);
             super.doFilter(request, response, filterChain);
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException | AuthenticationServiceException e) {
             exceptionHandling(response, e);
         }
     }
@@ -79,7 +79,7 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
         }
     }
 
-    private void exceptionHandling(HttpServletResponse response, IllegalAccessException e) throws IOException {
+    private void exceptionHandling(HttpServletResponse response, Exception e) throws IOException {
         log.info("JwtException : {}", e.getMessage());
         String responseError = new ObjectMapper()
                 .writerWithDefaultPrettyPrinter()
