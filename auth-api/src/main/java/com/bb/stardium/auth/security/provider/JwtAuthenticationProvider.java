@@ -2,7 +2,7 @@ package com.bb.stardium.auth.security.provider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -31,7 +31,7 @@ public class JwtAuthenticationProvider extends DaoAuthenticationProvider {
                 .orElseThrow(() -> new UsernameNotFoundException("Not Found Email"));
 
         if (!getPasswordEncoder().matches(tokenPassword, userDetails.getPassword())) {
-            throw new BadCredentialsException("비밀번호가 맞지 않습니다.");
+            throw new AuthenticationServiceException("비밀번호가 일치 하지 않습니다.");
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
@@ -39,7 +39,7 @@ public class JwtAuthenticationProvider extends DaoAuthenticationProvider {
 
     @Override
     public boolean supports(Class<?> authentication) {
-        log.info("Authentication provider : 사용자 서포트 ");
+        log.info("Authentication provider : 사용자 서포트");
 
         return UsernamePasswordAuthenticationToken.class.equals(authentication);
     }

@@ -4,6 +4,7 @@ import com.bb.stardium.auth.security.filter.JwtAuthenticationFilter;
 import com.bb.stardium.auth.security.filter.PasswordEncoderFilter;
 import com.bb.stardium.auth.security.handler.JwtAuthenticationFailureHandler;
 import com.bb.stardium.auth.security.handler.JwtAuthenticationSuccessHandler;
+import com.bb.stardium.auth.security.handler.JwtLogoutSuccessHandler;
 import com.bb.stardium.auth.security.provider.JwtAuthenticationProvider;
 import com.bb.stardium.interceptor.resolver.AuthorizePlayerArgumentResolver;
 import com.bb.stardium.security.config.filter.JwtVerifyFilter;
@@ -24,6 +25,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -78,6 +80,7 @@ public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter impleme
                 .antMatchers(HttpMethod.POST, "/players").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers("/players/**").hasRole("USER")
+                .antMatchers(HttpMethod.GET,"/logout").hasRole("USER")
                 .antMatchers("/*").denyAll()
                 .anyRequest().authenticated()
                 .and()
@@ -85,6 +88,10 @@ public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter impleme
                 .csrf().disable()
                 .formLogin().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.logout()
+                .logoutUrl("/logout")
+                .logoutSuccessHandler(jwtLogoutSuccessHandler());
 
         http.addFilter(jwtAuthenticationFilter());
         http.addFilterAfter(authJwtVerifyFilter(), JwtAuthenticationFilter.class);
@@ -129,6 +136,11 @@ public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter impleme
     @Bean
     public AuthenticationFailureHandler jwtAuthenticationFailureHandler() {
         return new JwtAuthenticationFailureHandler();
+    }
+
+    @Bean
+    public LogoutSuccessHandler jwtLogoutSuccessHandler() {
+        return new JwtLogoutSuccessHandler();
     }
 
     @Bean
