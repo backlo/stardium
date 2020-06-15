@@ -39,16 +39,7 @@ public class PasswordEncoderFilter extends OncePerRequestFilter {
         log.info("PasswordEncoderFilter : 시작");
         try {
             HttpServletRequest copyRequest = new CopyHttpServletRequest(request);
-            PlayerViewModel playerCreateViewModel;
-
-            if (request.getMethod().equals("POST")) {
-                playerCreateViewModel = new ObjectMapper()
-                        .readValue(copyRequest.getInputStream(), PlayerCreateViewModel.class)
-                        .checkNullField();
-            } else {
-                playerCreateViewModel = new ObjectMapper()
-                        .readValue(copyRequest.getInputStream(), PlayerEditViewModel.class);
-            }
+            PlayerViewModel playerCreateViewModel = checkingRequest(copyRequest);
 
             String encodePassword = passwordEncoder.encode(playerCreateViewModel.getPassword());
 
@@ -59,6 +50,13 @@ public class PasswordEncoderFilter extends OncePerRequestFilter {
         } catch (FieldsEmptyException | ServletException | UnrecognizedPropertyException exception) {
             exceptionHandler(response, exception);
         }
+    }
+
+    private PlayerViewModel checkingRequest(HttpServletRequest copyRequest) throws IOException {
+        return copyRequest.getMethod().equals("POST") ?
+                new ObjectMapper().readValue(copyRequest.getInputStream(), PlayerCreateViewModel.class).checkNullField() :
+                new ObjectMapper().readValue(copyRequest.getInputStream(), PlayerEditViewModel.class);
+
     }
 
     private void exceptionHandler(HttpServletResponse response, Exception exception) throws IOException {
