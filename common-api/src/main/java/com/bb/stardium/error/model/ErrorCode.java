@@ -4,10 +4,7 @@ import com.bb.stardium.domain.club.exception.MasterAndClubNotMatchedException;
 import com.bb.stardium.domain.club.exception.NotAllowCityException;
 import com.bb.stardium.error.exception.*;
 import com.bb.stardium.service.club.exception.NotFoundClubsException;
-import com.bb.stardium.service.player.exception.EmailAlreadyExistException;
-import com.bb.stardium.service.player.exception.NicknameAlreadyExistException;
-import com.bb.stardium.service.player.exception.PlayerNotFoundException;
-import com.bb.stardium.service.player.exception.InvalidProfileUrlException;
+import com.bb.stardium.service.player.exception.*;
 
 import java.util.Arrays;
 
@@ -27,7 +24,9 @@ public enum ErrorCode {
     FILE_UPLOAD_EXCEPTION(FileUploadException.class, 301),
     MULTIPART_FILE_EMPTY_EXCEPTION(MultipartFileEmptyException.class, 302),
     NOT_IMAGE_FORM_EXCEPTION(NotImageFormException.class, 303),
-    INVALID_PROFILE_URL_EXCEPTION(InvalidProfileUrlException.class, 304);
+    INVALID_PROFILE_URL_EXCEPTION(InvalidProfileUrlException.class, 304),
+
+    PLAYER_ALREADY_JOIN_CLUB_EXCEPTION(PlayerAlreadyJoinClubException.class, 400);
 
     private final Object exceptionClazz;
     private final int code;
