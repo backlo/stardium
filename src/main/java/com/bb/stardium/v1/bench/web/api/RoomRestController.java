@@ -20,12 +20,6 @@ public class RoomRestController {
         this.roomService = roomService;
     }
 
-    @PostMapping
-    public ResponseEntity create(@RequestBody RoomRequestDto roomRequest, @LoggedInPlayer final Player loggedInPlayer) {
-        Long roomId = roomService.create(roomRequest, loggedInPlayer);
-        return ResponseEntity.ok(roomId);
-    }
-
     @PostMapping("/join/{roomId}")
     public ResponseEntity join(@PathVariable Long roomId, @LoggedInPlayer final Player loggedInPlayer) {
         final Room joinRoom = roomService.join(loggedInPlayer, roomId);
