@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class ApiExceptionHandler extends AbstractApiExceptionHandler {
+public class AwsApiExceptionHandler extends AbstractApiExceptionHandler {
 
     @ExceptionHandler({FileConvertException.class, FileUploadException.class, MultipartFileEmptyException.class, NotImageFormException.class})
     public ResponseEntity<Object> handleS3FileUploadError(Exception ex) {

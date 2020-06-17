@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class ApiExceptionHandler extends AbstractApiExceptionHandler {
+public class AuthApiExceptionHandler extends AbstractApiExceptionHandler {
 
     @ExceptionHandler({EmailAlreadyExistException.class, NicknameAlreadyExistException.class, PlayerNotFoundException.class})
     public ResponseEntity<Object> handlePlayerNotFound(Exception ex) {
