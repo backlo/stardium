@@ -2,12 +2,10 @@ package com.bb.stardium.domain.player;
 
 import com.bb.stardium.service.player.exception.InvalidProfileUrlException;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Transient;
 
 @Embeddable
 @Getter

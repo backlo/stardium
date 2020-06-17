@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class ClubDto {
+    private final Long id;
     private final String title;
     private final String intro;
     private final Address address;
@@ -18,9 +19,10 @@ public class ClubDto {
     private final Player master;
 
     @Builder
-    public ClubDto(String title, String intro, String city,
+    public ClubDto(Long id, String title, String intro, String city,
                    String section, String detail, int playersLimit,
                    LocalDateTime startTime, LocalDateTime endTime, Player master) {
+        this.id = id;
         this.title = title;
         this.intro = intro;
         this.address = convertAddress(city, section, detail);

@@ -6,7 +6,6 @@ import com.bb.stardium.service.player.dto.PlayerDto;
 import com.bb.stardium.service.player.exception.EmailAlreadyExistException;
 import com.bb.stardium.service.player.exception.NicknameAlreadyExistException;
 import com.bb.stardium.service.player.exception.PlayerNotFoundException;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

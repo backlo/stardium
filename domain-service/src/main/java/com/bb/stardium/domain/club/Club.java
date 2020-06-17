@@ -4,6 +4,7 @@ import com.bb.stardium.domain.club.exception.MasterAndClubNotMatchedException;
 import com.bb.stardium.domain.match.Match;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.service.club.dto.ClubDto;
+import com.bb.stardium.domain.club.exception.PlayerAlreadyJoinClubException;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,7 +21,6 @@ import java.util.List;
 @Entity
 @EqualsAndHashCode(of = "id")
 public class Club {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -54,14 +54,12 @@ public class Club {
     @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "master_id")
     private Player master;
 
-    @OneToMany(mappedBy = "player",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<Match> players = new ArrayList<>();
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Match> joinPlayers = new ArrayList<>();
 
     @Builder
     public Club(ClubDto clubDto) {
@@ -72,6 +70,7 @@ public class Club {
         this.startTime = clubDto.getStartTime();
         this.endTime = clubDto.getEndTime();
         this.master = clubDto.getMaster();
+        joinMatch(this.master);
     }
 
     public Club update(ClubDto editClubDto) {
@@ -92,4 +91,26 @@ public class Club {
 
         return this;
     }
+
+    public boolean joinMatch(Player authPlayer) {
+        Match match = Match.builder()
+                .player(authPlayer)
+                .club(checkJoinPlayer(authPlayer))
+                .build();
+
+        return joinPlayers.add(match) & authPlayer.addMatch(match);
+    }
+
+    private Club checkJoinPlayer(Player authPlayer) {
+        boolean isJoinPlayer = joinPlayers.stream()
+                .anyMatch(match -> match.isJoinPlayer(authPlayer));
+
+        if (isJoinPlayer) {
+            throw new PlayerAlreadyJoinClubException();
+        }
+
+        return this;
+    }
+
+
 }

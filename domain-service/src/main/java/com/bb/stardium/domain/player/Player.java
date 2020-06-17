@@ -45,8 +45,8 @@ public class Player {
     @AttributeOverride(name = "url", column = @Column(name = "profile_image_url"))
     private PlayerProfileImage profile = PlayerProfileImage.builder().build().createDefaultImage();
 
-    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Match> clubs = new ArrayList<>();
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Match> joinClubs = new ArrayList<>();
 
     @Builder
     public Player(PlayerDto playerDto) {
@@ -69,4 +69,7 @@ public class Player {
         return image.getProfileUrl();
     }
 
+    public boolean addMatch(Match match) {
+        return joinClubs.add(match);
+    }
 }

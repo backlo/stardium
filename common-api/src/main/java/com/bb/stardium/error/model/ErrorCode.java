@@ -2,6 +2,7 @@ package com.bb.stardium.error.model;
 
 import com.bb.stardium.domain.club.exception.MasterAndClubNotMatchedException;
 import com.bb.stardium.domain.club.exception.NotAllowCityException;
+import com.bb.stardium.domain.club.exception.PlayerAlreadyJoinClubException;
 import com.bb.stardium.error.exception.*;
 import com.bb.stardium.service.club.exception.NotFoundClubsException;
 import com.bb.stardium.service.player.exception.*;
