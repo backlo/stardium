@@ -45,6 +45,8 @@ public class AppSecurityConfigurer extends WebSecurityConfigurerAdapter implemen
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/clubs/**").hasRole("USER")
+                .antMatchers("/matches/**").hasRole("USER")
+                .antMatchers("/**").denyAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

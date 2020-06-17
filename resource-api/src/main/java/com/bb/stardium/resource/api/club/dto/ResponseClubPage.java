@@ -31,7 +31,7 @@ public class ResponseClubPage {
                 .stream()
                 .filter(Objects::nonNull)
                 .map(club -> ResponseClub.builder()
-                            .club(club)
+                        .club(club)
                         .build()
                 ).collect(Collectors.toList());
         this.pageable = clubs.getPageable();

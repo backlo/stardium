@@ -15,7 +15,7 @@ public class RequestClubPage {
     private String properties;
 
     public void setPage(int page) {
-        this.page = page <= 0 ? 5 : page;
+        this.page = page <= 0 ? 1 : page;
     }
 
     public void setSize(int size) {

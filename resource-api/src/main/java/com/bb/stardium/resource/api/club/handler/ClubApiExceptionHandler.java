@@ -6,16 +6,13 @@ import com.bb.stardium.error.exception.IllegalPageFormException;
 import com.bb.stardium.error.handler.AbstractApiExceptionHandler;
 import com.bb.stardium.error.model.ErrorResponse;
 import com.bb.stardium.service.club.exception.NotFoundClubsException;
-import com.bb.stardium.service.player.exception.EmailAlreadyExistException;
-import com.bb.stardium.service.player.exception.NicknameAlreadyExistException;
-import com.bb.stardium.service.player.exception.PlayerNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class ApiExceptionHandler extends AbstractApiExceptionHandler {
+public class ClubApiExceptionHandler extends AbstractApiExceptionHandler {
 
     @ExceptionHandler({NotAllowCityException.class, NotFoundClubsException.class, IllegalPageFormException.class})
     public ResponseEntity<Object> handleBadRequestClubRequest(Exception ex) {

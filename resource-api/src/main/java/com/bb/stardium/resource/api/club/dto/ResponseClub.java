@@ -30,9 +30,9 @@ public class ResponseClub {
         this.startTime = club.getStartTime();
         this.endTime = club.getEndTime();
         this.master = ResponseClubMaster.builder()
-                    .master(club.getMaster())
+                .master(club.getMaster())
                 .build();
-        this.joinPlayerCount = club.getPlayers().size();
+        this.joinPlayerCount = club.getJoinPlayers().size();
     }
 
     @Getter
