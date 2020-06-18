@@ -1,8 +1,6 @@
 package com.bb.stardium.error.model;
 
-import com.bb.stardium.domain.club.exception.MasterAndClubNotMatchedException;
-import com.bb.stardium.domain.club.exception.NotAllowCityException;
-import com.bb.stardium.domain.club.exception.PlayerAlreadyJoinClubException;
+import com.bb.stardium.domain.club.exception.*;
 import com.bb.stardium.error.exception.*;
 import com.bb.stardium.service.club.exception.NotFoundClubsException;
 import com.bb.stardium.service.player.exception.*;
@@ -27,7 +25,9 @@ public enum ErrorCode {
     NOT_IMAGE_FORM_EXCEPTION(NotImageFormException.class, 303),
     INVALID_PROFILE_URL_EXCEPTION(InvalidProfileUrlException.class, 304),
 
-    PLAYER_ALREADY_JOIN_CLUB_EXCEPTION(PlayerAlreadyJoinClubException.class, 400);
+    PLAYER_ALREADY_JOIN_CLUB_EXCEPTION(PlayerAlreadyJoinClubException.class, 400),
+    NOT_FOUND_MATCH_EXCEPTION(NotFoundMatchException.class, 401),
+    PLAYER_NOT_EXIST_CLUB_EXCEPTION(PlayerNotExistClubException.class, 402);
 
     private final Object exceptionClazz;
     private final int code;
