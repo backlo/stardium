@@ -14,4 +14,11 @@ public class MatchService {
 
         return matchClub.joinMatch(matchDto.getPlayer());
     }
+
+    @Transactional
+    public Boolean exitPlayerToClub(MatchDto matchDto) {
+        Club matchClub = matchDto.getClub();
+
+        return matchClub.exitMatch(matchDto.getPlayer());
+    }
 }

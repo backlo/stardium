@@ -1,10 +1,12 @@
 package com.bb.stardium.domain.club;
 
 import com.bb.stardium.domain.club.exception.MasterAndClubNotMatchedException;
+import com.bb.stardium.domain.club.exception.NotFoundMatchException;
+import com.bb.stardium.domain.club.exception.PlayerAlreadyJoinClubException;
+import com.bb.stardium.domain.club.exception.PlayerNotExistClubException;
 import com.bb.stardium.domain.match.Match;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.service.club.dto.ClubDto;
-import com.bb.stardium.domain.club.exception.PlayerAlreadyJoinClubException;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -112,5 +114,25 @@ public class Club {
         return this;
     }
 
+    public Boolean exitMatch(Player authPlayer) {
+        Club club = checkExitPlayer(authPlayer);
 
+        Match findMatch = joinPlayers.stream()
+                .filter(match -> match.isSamePlayerAndClub(club, authPlayer))
+                .findFirst()
+                .orElseThrow(NotFoundMatchException::new);
+
+        return joinPlayers.remove(findMatch) & authPlayer.removeMatch(findMatch);
+    }
+
+    private Club checkExitPlayer(Player authPlayer) {
+        boolean isNotJoinPlayer = joinPlayers.stream()
+                .anyMatch(match -> !match.isJoinPlayer(authPlayer));
+
+        if (isNotJoinPlayer) {
+            throw new PlayerNotExistClubException();
+        }
+
+        return this;
+    }
 }

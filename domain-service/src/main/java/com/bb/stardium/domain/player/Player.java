@@ -72,4 +72,8 @@ public class Player {
     public boolean addMatch(Match match) {
         return joinClubs.add(match);
     }
+
+    public boolean removeMatch(Match match) {
+        return joinClubs.remove(match);
+    }
 }

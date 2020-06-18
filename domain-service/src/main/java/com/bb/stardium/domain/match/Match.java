@@ -2,10 +2,7 @@ package com.bb.stardium.domain.match;
 
 import com.bb.stardium.domain.club.Club;
 import com.bb.stardium.domain.player.Player;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @IdClass(MatchId.class)
+@EqualsAndHashCode(of = {"player", "club"})
 public class Match {
     @Id
     @ManyToOne
@@ -32,5 +30,9 @@ public class Match {
 
     public boolean isJoinPlayer(Player player) {
         return this.player.equals(player);
+    }
+
+    public boolean isSamePlayerAndClub(Club club, Player authPlayer) {
+        return club.equals(this.club) && authPlayer.equals(this.player);
     }
 }
