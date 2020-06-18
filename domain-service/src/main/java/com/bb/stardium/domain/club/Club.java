@@ -1,9 +1,6 @@
 package com.bb.stardium.domain.club;
 
-import com.bb.stardium.domain.club.exception.MasterAndClubNotMatchedException;
-import com.bb.stardium.domain.club.exception.NotFoundMatchException;
-import com.bb.stardium.domain.club.exception.PlayerAlreadyJoinClubException;
-import com.bb.stardium.domain.club.exception.PlayerNotExistClubException;
+import com.bb.stardium.domain.club.exception.*;
 import com.bb.stardium.domain.match.Match;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.service.club.dto.ClubDto;
@@ -95,12 +92,20 @@ public class Club {
     }
 
     public boolean joinMatch(Player authPlayer) {
-        Match match = Match.builder()
+        Match match = createMatchByPlayerAndClub(authPlayer);
+
+        return joinPlayers.add(match) & authPlayer.addMatch(match);
+    }
+
+    private Match createMatchByPlayerAndClub(Player authPlayer) {
+        if (playersLimit == joinPlayers.size()) {
+            throw new PassLimitPlayersException();
+        }
+
+        return Match.builder()
                 .player(authPlayer)
                 .club(checkJoinPlayer(authPlayer))
                 .build();
-
-        return joinPlayers.add(match) & authPlayer.addMatch(match);
     }
 
     private Club checkJoinPlayer(Player authPlayer) {
