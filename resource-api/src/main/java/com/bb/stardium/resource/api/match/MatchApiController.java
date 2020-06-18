@@ -24,8 +24,8 @@ public class MatchApiController {
         this.clubService = clubService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ResponseMatch> matchClub(@PathVariable Long id, @AuthorizePlayer Player authPlayer) {
+    @GetMapping("/{id}/in")
+    public ResponseEntity<ResponseMatch> joinMatch(@PathVariable Long id, @AuthorizePlayer Player authPlayer) {
         MatchDto matchDto = MatchDto.builder()
                 .club(clubService.findById(id))
                 .player(authPlayer)
@@ -36,6 +36,22 @@ public class MatchApiController {
         return ResponseEntity.ok(
                 ResponseMatch.builder()
                         .flag(joinFlag)
+                        .build()
+        );
+    }
+
+    @GetMapping("/{id}/out")
+    public ResponseEntity<ResponseMatch> exitMatch(@PathVariable Long id, @AuthorizePlayer Player authPlayer) {
+        MatchDto matchDto = MatchDto.builder()
+                .club(clubService.findById(id))
+                .player(authPlayer)
+                .build();
+
+        Boolean exitFlag = matchService.exitPlayerToClub(matchDto);
+
+        return ResponseEntity.ok(
+                ResponseMatch.builder()
+                        .flag(exitFlag)
                         .build()
         );
     }

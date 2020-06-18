@@ -1,5 +1,7 @@
 package com.bb.stardium.resource.api.match.handler;
 
+import com.bb.stardium.domain.club.exception.NotFoundMatchException;
+import com.bb.stardium.domain.club.exception.PlayerNotExistClubException;
 import com.bb.stardium.error.handler.AbstractApiExceptionHandler;
 import com.bb.stardium.error.model.ErrorResponse;
 import com.bb.stardium.domain.club.exception.PlayerAlreadyJoinClubException;
@@ -15,6 +17,13 @@ public class MatchApiExceptionHandler extends AbstractApiExceptionHandler {
     public ResponseEntity<Object> handleBadRequestMatchRequest(Exception ex) {
         return buildResponseEntity(
                 new ErrorResponse(HttpStatus.BAD_REQUEST, ex)
+        );
+    }
+
+    @ExceptionHandler({NotFoundMatchException.class, PlayerNotExistClubException.class})
+    public ResponseEntity<Object> handleForbiddenMatchRequest(Exception ex) {
+        return buildResponseEntity(
+                new ErrorResponse(HttpStatus.FORBIDDEN, ex)
         );
     }
 }
