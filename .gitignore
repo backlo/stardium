@@ -32,6 +32,18 @@ out/
 ### VS Code ###
 .vscode/
 
+### querydsl ###
+generated
+
 ### secret key ###
 application-security-service.yml
 aws.txt
+auth-api/src/test/
+aws-api/src/test/
+common-api/src/main/generated/
+common-api/src/main/resources/
+common-api/src/test/
+domain-service/src/main/generated/
+domain-service/src/test/java/com/bb/stardium/domain/club/
+resource-api/src/test/
+security-module/src/test/
