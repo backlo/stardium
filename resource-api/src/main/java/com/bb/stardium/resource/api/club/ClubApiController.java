@@ -5,9 +5,10 @@ import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.error.exception.IllegalPageFormException;
 import com.bb.stardium.interceptor.annotation.AuthorizePlayer;
 import com.bb.stardium.resource.api.club.dto.RequestClub;
-import com.bb.stardium.resource.api.club.dto.RequestClubPage;
+import com.bb.stardium.resource.api.common.dto.RequestPage;
 import com.bb.stardium.resource.api.club.dto.ResponseClub;
-import com.bb.stardium.resource.api.club.dto.ResponseClubPage;
+import com.bb.stardium.resource.api.common.dto.ResponseClubPageImpl;
+import com.bb.stardium.resource.api.common.dto.ResponsePage;
 import com.bb.stardium.service.club.ClubService;
 import com.bb.stardium.service.club.dto.ClubDto;
 import org.springframework.data.domain.Page;
@@ -37,12 +38,12 @@ public class ClubApiController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseClubPage> getAllClubList(RequestClubPage pageable) {
+    public ResponseEntity<ResponsePage> getAllClubList(RequestPage pageable) {
         try {
             Page<Club> clubs = clubService.findAllClubs(pageable.of());
             return ResponseEntity.ok(
-                    ResponseClubPage.builder()
-                            .clubs(clubs)
+                    ResponseClubPageImpl.builder()
+                            .clubPageInfo(clubs)
                             .build()
             );
         } catch (IllegalArgumentException e) {

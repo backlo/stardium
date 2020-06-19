@@ -1,4 +1,4 @@
-package com.bb.stardium.resource.api.club.dto;
+package com.bb.stardium.resource.api.common.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import org.springframework.util.StringUtils;
 
 @Getter
 @NoArgsConstructor
-public class RequestClubPage {
+public class RequestPage {
     private int page;
     private int size;
     private Sort.Direction direction;

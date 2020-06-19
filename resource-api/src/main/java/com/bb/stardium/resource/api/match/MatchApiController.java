@@ -1,11 +1,17 @@
 package com.bb.stardium.resource.api.match;
 
+import com.bb.stardium.domain.match.Match;
 import com.bb.stardium.domain.player.Player;
+import com.bb.stardium.error.exception.IllegalPageFormException;
 import com.bb.stardium.interceptor.annotation.AuthorizePlayer;
+import com.bb.stardium.resource.api.common.dto.RequestPage;
+import com.bb.stardium.resource.api.common.dto.ResponseMatchPageImpl;
+import com.bb.stardium.resource.api.common.dto.ResponsePage;
 import com.bb.stardium.resource.api.match.dto.ResponseMatch;
 import com.bb.stardium.service.club.ClubService;
 import com.bb.stardium.service.match.MatchService;
 import com.bb.stardium.service.match.dto.MatchDto;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,5 +60,19 @@ public class MatchApiController {
                         .flag(exitFlag)
                         .build()
         );
+    }
+
+    @GetMapping
+    public ResponseEntity<ResponsePage> getPlayerMatchClubs(RequestPage pageable, @AuthorizePlayer Player authPlayer) {
+        try {
+            Page<Match> matches = matchService.getPlayerClubs(pageable.of(), authPlayer);
+            return ResponseEntity.ok(
+                    ResponseMatchPageImpl.builder()
+                            .matchPageInfo(matches)
+                            .build()
+            );
+        } catch (IllegalArgumentException e) {
+            throw new IllegalPageFormException();
+        }
     }
 }
