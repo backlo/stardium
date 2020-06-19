@@ -1,7 +1,6 @@
 rootProject.name = 'stardium'
 
 include 'domain-service'
-include 'common-service'
 include 'security-module'
 
 include 'auth-api'

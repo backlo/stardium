@@ -1,7 +1,25 @@
 bootJar { enabled = false }
 jar { enabled = true }
 
+def querydslSrcDir = 'src/main/generated'
+
+querydsl {
+    library = "com.querydsl:querydsl-apt"
+    jpa = true
+    querydslSourcesDir = querydslSrcDir
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', querydslSrcDir]
+        }
+    }
+}
+
 dependencies {
+    implementation 'com.querydsl:querydsl-jpa'
+    implementation 'com.querydsl:querydsl-apt'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     runtimeOnly 'org.postgresql:postgresql:42.2.9'

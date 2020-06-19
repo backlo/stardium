@@ -7,7 +7,7 @@ import com.bb.stardium.aws.util.S3UploadUtils;
 import com.bb.stardium.aws.util.media.FileConverter;
 import com.bb.stardium.aws.util.media.S3FileUploader;
 import com.bb.stardium.interceptor.resolver.AuthorizePlayerArgumentResolver;
-import com.bb.stardium.security.config.filter.JwtVerifyFilter;
+import com.bb.stardium.security.filter.JwtVerifyFilter;
 import com.bb.stardium.security.service.SecurityService;
 import com.bb.stardium.service.player.PlayerService;
 import org.springframework.beans.factory.annotation.Value;

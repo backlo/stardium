@@ -7,7 +7,7 @@ import com.bb.stardium.auth.security.handler.JwtAuthenticationSuccessHandler;
 import com.bb.stardium.auth.security.handler.JwtLogoutSuccessHandler;
 import com.bb.stardium.auth.security.provider.JwtAuthenticationProvider;
 import com.bb.stardium.interceptor.resolver.AuthorizePlayerArgumentResolver;
-import com.bb.stardium.security.config.filter.JwtVerifyFilter;
+import com.bb.stardium.security.filter.JwtVerifyFilter;
 import com.bb.stardium.security.service.SecurityService;
 import com.bb.stardium.service.player.PlayerService;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

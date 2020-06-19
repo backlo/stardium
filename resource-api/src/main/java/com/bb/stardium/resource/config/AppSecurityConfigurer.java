@@ -1,7 +1,7 @@
 package com.bb.stardium.resource.config;
 
 import com.bb.stardium.interceptor.resolver.AuthorizePlayerArgumentResolver;
-import com.bb.stardium.security.config.filter.JwtVerifyFilter;
+import com.bb.stardium.security.filter.JwtVerifyFilter;
 import com.bb.stardium.security.service.SecurityService;
 import com.bb.stardium.service.player.PlayerService;
 import org.springframework.context.annotation.Bean;

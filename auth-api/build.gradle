@@ -30,7 +30,6 @@ check {
 
 dependencies {
     implementation project(":domain-service")
-    implementation project(":common-service")
     implementation project(":security-module")
     implementation project(":common-api")
     

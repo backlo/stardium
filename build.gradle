@@ -6,12 +6,19 @@
 
     repositories {
         mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
     }
 
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath "io.spring.gradle:dependency-management-plugin:1.0.9.RELEASE"
+        classpath "gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10"
     }
+}
+ 
+ext {
+    projectGroup = 'com.jojoldu.bns'
+    projectVersion = '0.0.1-'+new Date().format("yyyyMMddHHmmss") 
 }
 
 allprojects {
@@ -20,14 +27,16 @@ allprojects {
 }
 
 subprojects {
+    apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
-    apply plugin: 'java'
+    apply plugin: "com.ewerk.gradle.plugins.querydsl"
     
     sourceCompatibility = 11
 
     repositories {
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 
     configurations {
@@ -38,6 +47,15 @@ subprojects {
 
     test {
         useJUnitPlatform()
+    }
+
+
+    compileQuerydsl{
+        options.annotationProcessorPath = configurations.querydsl
+    }
+
+    configurations {
+        querydsl.extendsFrom compileClasspath
     }
 
     dependencies {

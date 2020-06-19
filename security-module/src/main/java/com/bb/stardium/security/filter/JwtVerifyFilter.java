@@ -1,4 +1,4 @@
-package com.bb.stardium.security.config.filter;
+package com.bb.stardium.security.filter;
 
 import com.bb.stardium.error.model.ErrorResponse;
 import com.bb.stardium.security.service.SecurityService;
