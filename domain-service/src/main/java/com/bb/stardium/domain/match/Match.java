@@ -3,8 +3,10 @@ package com.bb.stardium.domain.match;
 import com.bb.stardium.domain.club.Club;
 import com.bb.stardium.domain.player.Player;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,6 +23,9 @@ public class Match {
     @ManyToOne
     @JoinColumn(name = "club_id")
     private Club club;
+
+    @CreationTimestamp
+    private OffsetDateTime createTime;
 
     @Builder
     public Match(Player player, Club club) {
