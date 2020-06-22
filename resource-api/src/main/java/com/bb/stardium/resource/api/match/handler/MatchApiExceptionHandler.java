@@ -1,7 +1,7 @@
 package com.bb.stardium.resource.api.match.handler;
 
 import com.bb.stardium.domain.club.exception.NotFoundMatchException;
-import com.bb.stardium.domain.club.exception.PassLimitPlayersException;
+import com.bb.stardium.domain.club.exception.OverLimitPlayersSizeException;
 import com.bb.stardium.domain.club.exception.PlayerNotExistClubException;
 import com.bb.stardium.error.handler.AbstractApiExceptionHandler;
 import com.bb.stardium.error.model.ErrorResponse;
@@ -21,7 +21,7 @@ public class MatchApiExceptionHandler extends AbstractApiExceptionHandler {
         );
     }
 
-    @ExceptionHandler({NotFoundMatchException.class, PlayerNotExistClubException.class, PassLimitPlayersException.class})
+    @ExceptionHandler({NotFoundMatchException.class, PlayerNotExistClubException.class, OverLimitPlayersSizeException.class})
     public ResponseEntity<Object> handleForbiddenMatchRequest(Exception ex) {
         return buildResponseEntity(
                 new ErrorResponse(HttpStatus.FORBIDDEN, ex)

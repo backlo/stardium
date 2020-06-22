@@ -99,7 +99,7 @@ public class Club {
 
     private Match createMatchByPlayerAndClub(Player authPlayer) {
         if (playersLimit == joinPlayers.size()) {
-            throw new PassLimitPlayersException();
+            throw new OverLimitPlayersSizeException();
         }
 
         return Match.builder()
@@ -109,10 +109,7 @@ public class Club {
     }
 
     private Club checkJoinPlayer(Player authPlayer) {
-        boolean isJoinPlayer = joinPlayers.stream()
-                .anyMatch(match -> match.isJoinPlayer(authPlayer));
-
-        if (isJoinPlayer) {
+        if (isJoinPlayer(authPlayer)) {
             throw new PlayerAlreadyJoinClubException();
         }
 
@@ -131,13 +128,15 @@ public class Club {
     }
 
     private Club checkExitPlayer(Player authPlayer) {
-        boolean isNotJoinPlayer = joinPlayers.stream()
-                .anyMatch(match -> !match.isJoinPlayer(authPlayer));
-
-        if (isNotJoinPlayer) {
+        if (!isJoinPlayer(authPlayer)) {
             throw new PlayerNotExistClubException();
         }
 
         return this;
+    }
+
+    private boolean isJoinPlayer(Player authPlayer) {
+        return joinPlayers.stream()
+                .anyMatch(match -> match.isJoinPlayer(authPlayer));
     }
 }

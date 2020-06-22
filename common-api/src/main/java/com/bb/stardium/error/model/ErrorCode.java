@@ -29,7 +29,7 @@ public enum ErrorCode {
     PLAYER_ALREADY_JOIN_CLUB_EXCEPTION(PlayerAlreadyJoinClubException.class, 400),
     NOT_FOUND_MATCH_EXCEPTION(NotFoundMatchException.class, 401),
     PLAYER_NOT_EXIST_CLUB_EXCEPTION(PlayerNotExistClubException.class, 402),
-    PASS_LIMIT_PLAYERS_EXCEPTION(PassLimitPlayersException.class, 403);
+    OVER_LIMIT_PLAYERS_SIZE_EXCEPTION(OverLimitPlayersSizeException.class, 403);
 
     private final Object exceptionClazz;
     private final int code;
