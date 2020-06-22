@@ -1,6 +1,6 @@
 package com.bb.stardium.auth.security.config;
 
-import com.bb.stardium.interceptor.resolver.AuthorizePlayerArgumentResolver;
+import com.bb.stardium.resolver.AuthorizePlayerArgumentResolver;
 import com.bb.stardium.service.player.PlayerService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

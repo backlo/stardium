@@ -3,7 +3,7 @@ package com.bb.stardium.resource.api.club;
 import com.bb.stardium.domain.club.Club;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.error.exception.IllegalPageFormException;
-import com.bb.stardium.interceptor.annotation.AuthorizePlayer;
+import com.bb.stardium.resolver.annotation.AuthorizePlayer;
 import com.bb.stardium.resource.api.club.dto.RequestClub;
 import com.bb.stardium.resource.api.common.dto.RequestPage;
 import com.bb.stardium.resource.api.club.dto.ResponseClub;

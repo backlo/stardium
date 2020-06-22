@@ -3,7 +3,7 @@ package com.bb.stardium.resource.api.match;
 import com.bb.stardium.domain.match.Match;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.error.exception.IllegalPageFormException;
-import com.bb.stardium.interceptor.annotation.AuthorizePlayer;
+import com.bb.stardium.resolver.annotation.AuthorizePlayer;
 import com.bb.stardium.resource.api.common.dto.RequestPage;
 import com.bb.stardium.resource.api.common.dto.ResponseMatchPageImpl;
 import com.bb.stardium.resource.api.common.dto.ResponsePage;

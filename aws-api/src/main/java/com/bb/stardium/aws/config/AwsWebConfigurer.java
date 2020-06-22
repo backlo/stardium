@@ -7,7 +7,7 @@ import com.bb.stardium.aws.support.interceptor.MultipartRequestInterceptor;
 import com.bb.stardium.aws.util.S3UploadUtils;
 import com.bb.stardium.aws.util.media.FileConverter;
 import com.bb.stardium.aws.util.media.S3FileUploader;
-import com.bb.stardium.interceptor.resolver.AuthorizePlayerArgumentResolver;
+import com.bb.stardium.resolver.AuthorizePlayerArgumentResolver;
 import com.bb.stardium.service.player.PlayerService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

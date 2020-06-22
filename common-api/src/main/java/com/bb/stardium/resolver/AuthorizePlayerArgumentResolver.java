@@ -1,6 +1,6 @@
-package com.bb.stardium.interceptor.resolver;
+package com.bb.stardium.resolver;
 
-import com.bb.stardium.interceptor.annotation.AuthorizePlayer;
+import com.bb.stardium.resolver.annotation.AuthorizePlayer;
 import com.bb.stardium.service.player.PlayerService;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;

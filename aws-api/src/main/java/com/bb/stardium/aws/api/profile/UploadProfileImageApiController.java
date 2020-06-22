@@ -3,7 +3,7 @@ package com.bb.stardium.aws.api.profile;
 import com.bb.stardium.aws.api.profile.dto.ResponseUploadImage;
 import com.bb.stardium.aws.util.S3UploadUtils;
 import com.bb.stardium.domain.player.Player;
-import com.bb.stardium.interceptor.annotation.AuthorizePlayer;
+import com.bb.stardium.resolver.annotation.AuthorizePlayer;
 import com.bb.stardium.service.player.PlayerService;
 import com.bb.stardium.service.player.dto.PlayerEditDto;
 import org.springframework.http.MediaType;

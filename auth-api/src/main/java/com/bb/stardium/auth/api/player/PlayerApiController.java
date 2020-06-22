@@ -4,7 +4,7 @@ import com.bb.stardium.auth.api.player.dto.RequestEditPlayer;
 import com.bb.stardium.auth.api.player.dto.RequestPlayer;
 import com.bb.stardium.auth.api.player.dto.ResponseMyProfile;
 import com.bb.stardium.auth.api.player.dto.ResponsePlayer;
-import com.bb.stardium.interceptor.annotation.AuthorizePlayer;
+import com.bb.stardium.resolver.annotation.AuthorizePlayer;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.service.player.PlayerService;
 import com.bb.stardium.service.player.dto.PlayerDto;

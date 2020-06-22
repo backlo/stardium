@@ -1,6 +1,6 @@
 package com.bb.stardium.resource.config;
 
-import com.bb.stardium.interceptor.resolver.AuthorizePlayerArgumentResolver;
+import com.bb.stardium.resolver.AuthorizePlayerArgumentResolver;
 import com.bb.stardium.security.filter.JwtVerifyFilter;
 import com.bb.stardium.security.service.SecurityService;
 import com.bb.stardium.service.player.PlayerService;
