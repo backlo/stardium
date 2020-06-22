@@ -1,6 +1,7 @@
 package com.bb.stardium.domain.player;
 
 import com.bb.stardium.service.player.dto.PlayerDto;
+import com.bb.stardium.service.player.dto.PlayerEditDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,13 @@ class PlayerTest {
             .nickname("member")
             .password("password")
             .build();
-    private final PlayerDto updatePlayerDto = PlayerDto.builder()
-            .email("member@gmail.com")
+
+    private final PlayerEditDto updatePlayerDto = PlayerEditDto.builder()
             .nickname("member")
             .password("password")
             .statusMessage("status-change")
             .build();
+
     @Autowired
     private TestEntityManager em;
 
