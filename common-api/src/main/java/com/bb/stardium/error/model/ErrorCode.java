@@ -24,6 +24,7 @@ public enum ErrorCode {
     MULTIPART_FILE_EMPTY_EXCEPTION(MultipartFileEmptyException.class, 302),
     NOT_IMAGE_FORM_EXCEPTION(NotImageFormException.class, 303),
     INVALID_PROFILE_URL_EXCEPTION(InvalidProfileUrlException.class, 304),
+    NOT_ALLOW_IMAGE_FILE_EXCEPTION(NotAllowImageFileException.class, 305),
 
     PLAYER_ALREADY_JOIN_CLUB_EXCEPTION(PlayerAlreadyJoinClubException.class, 400),
     NOT_FOUND_MATCH_EXCEPTION(NotFoundMatchException.class, 401),
