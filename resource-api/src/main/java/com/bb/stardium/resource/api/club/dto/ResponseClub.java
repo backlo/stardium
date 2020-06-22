@@ -6,8 +6,6 @@ import com.bb.stardium.domain.player.Player;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
 @Getter
 public class ResponseClub {
     private Long id;
@@ -15,8 +13,8 @@ public class ResponseClub {
     private String intro;
     private Address address;
     private Integer playersLimit;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private String startTime;
+    private String endTime;
     private ResponseClubMaster master;
     private Integer joinPlayerCount;
 
@@ -27,8 +25,8 @@ public class ResponseClub {
         this.intro = club.getIntro();
         this.address = club.getAddress();
         this.playersLimit = club.getPlayersLimit();
-        this.startTime = club.getStartTime();
-        this.endTime = club.getEndTime();
+        this.startTime = club.getStartTime().toString();
+        this.endTime = club.getEndTime().toString();
         this.master = ResponseClubMaster.builder()
                 .master(club.getMaster())
                 .build();
