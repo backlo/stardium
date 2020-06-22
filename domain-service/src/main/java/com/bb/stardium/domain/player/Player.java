@@ -2,6 +2,7 @@ package com.bb.stardium.domain.player;
 
 import com.bb.stardium.domain.match.Match;
 import com.bb.stardium.service.player.dto.PlayerDto;
+import com.bb.stardium.service.player.dto.PlayerEditDto;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -56,14 +57,14 @@ public class Player {
         this.role = playerDto.getRole();
     }
 
-    public Player update(PlayerDto updatePlayerDto) {
+    public Player update(PlayerEditDto updatePlayerDto) {
         this.password = updatePlayerDto.getPassword();
         this.nickname = updatePlayerDto.getNickname();
         this.statusMessage = updatePlayerDto.getStatusMessage();
         return this;
     }
 
-    public String updateProfile(PlayerDto updateProfile) {
+    public String updateProfile(PlayerEditDto updateProfile) {
         PlayerProfileImage image = this.profile.update(updateProfile.getProfile());
 
         return image.getProfileUrl();

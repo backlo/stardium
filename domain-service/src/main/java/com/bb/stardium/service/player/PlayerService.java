@@ -3,6 +3,7 @@ package com.bb.stardium.service.player;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.domain.player.repository.PlayerRepository;
 import com.bb.stardium.service.player.dto.PlayerDto;
+import com.bb.stardium.service.player.dto.PlayerEditDto;
 import com.bb.stardium.service.player.exception.EmailAlreadyExistException;
 import com.bb.stardium.service.player.exception.NicknameAlreadyExistException;
 import com.bb.stardium.service.player.exception.PlayerNotFoundException;
@@ -45,8 +46,8 @@ public class PlayerService {
     }
 
     @Transactional
-    public Player editPlayer(PlayerDto updatePlayerInfo) {
-        Player editPlayer = findPlayerByEmail(updatePlayerInfo.getEmail());
+    public Player editPlayer(PlayerEditDto updatePlayerInfo) {
+        Player editPlayer = updatePlayerInfo.getAuthPlayer();
 
         if (isExistByNickname(updatePlayerInfo) &&
                 !editPlayer.getNickname().equals(updatePlayerInfo.getNickname())) {
@@ -57,13 +58,13 @@ public class PlayerService {
     }
 
     @Transactional(readOnly = true)
-    boolean isExistByNickname(PlayerDto updatePlayerDto) {
+    boolean isExistByNickname(PlayerEditDto updatePlayerDto) {
         return playerRepository.existsByNickname(updatePlayerDto.getNickname());
     }
 
     @Transactional
-    public String editPlayerProfileImage(PlayerDto updatePlayerDto) {
-        Player editPlayer = findPlayerByEmail(updatePlayerDto.getEmail());
+    public String editPlayerProfileImage(PlayerEditDto updatePlayerDto) {
+        Player editPlayer = updatePlayerDto.getAuthPlayer();
         return editPlayer.updateProfile(updatePlayerDto);
     }
 
