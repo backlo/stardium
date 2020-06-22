@@ -45,7 +45,10 @@ public class PlayerApiController {
     @PutMapping("/profile")
     public ResponseEntity<ResponseMyProfile> editMyProfile(@RequestBody RequestEditPlayer requestEditPlayer,
                                                            @AuthorizePlayer Player player) {
-        Player updatedPlayer = playerService.editPlayer(requestEditPlayer.toEntity(player));
+
+        Player updatedPlayer = playerService.editPlayer(
+                requestEditPlayer.toEntity(player)
+        );
 
         return ResponseEntity.ok(
                 ResponseMyProfile.builder()

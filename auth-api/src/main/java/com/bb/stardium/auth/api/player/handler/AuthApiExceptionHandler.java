@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class AuthApiExceptionHandler extends AbstractApiExceptionHandler {
 
     @ExceptionHandler({EmailAlreadyExistException.class, NicknameAlreadyExistException.class, PlayerNotFoundException.class})
-    public ResponseEntity<Object> handlePlayerNotFound(Exception ex) {
+    public ResponseEntity<Object> handleBadRequestPlayerRequest(Exception ex) {
         return buildResponseEntity(
                 new ErrorResponse(HttpStatus.BAD_REQUEST, ex)
         );

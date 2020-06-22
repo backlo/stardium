@@ -1,7 +1,7 @@
 package com.bb.stardium.auth.api.player.dto;
 
 import com.bb.stardium.domain.player.Player;
-import com.bb.stardium.service.player.dto.PlayerDto;
+import com.bb.stardium.service.player.dto.PlayerEditDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,9 +15,9 @@ public class RequestEditPlayer {
     private String nickname;
     private String statusMessage;
 
-    public PlayerDto toEntity(Player player) {
-        return PlayerDto.builder()
-                .email(player.getEmail())
+    public PlayerEditDto toEntity(Player player) {
+        return PlayerEditDto.builder()
+                .authPlayer(player)
                 .password(checkRequestField(this.password, player.getPassword()))
                 .nickname(checkRequestField(this.nickname, player.getNickname()))
                 .statusMessage(checkRequestField(this.statusMessage, player.getStatusMessage()))
