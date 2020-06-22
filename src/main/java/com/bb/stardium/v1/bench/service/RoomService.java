@@ -24,21 +24,6 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
 
-    public long create(RoomRequestDto roomRequest, Player player) {
-        Room room = roomRequest.toEntity(player);
-        room.addPlayer(player);
-        Room saveRoom = roomRepository.save(room);
-        return saveRoom.getId();
-    }
-
-    public long update(long roomId, RoomRequestDto roomRequestDto, final Player player) {
-        Room room = roomRepository.findById(roomId).orElseThrow(NotFoundRoomException::new);
-        checkRoomMaster(player, room);
-
-        room.update(roomRequestDto.toEntity(player));
-        return room.getId();
-    }
-
     private void checkRoomMaster(Player player, Room room) {
         if (room.isNotMaster(player)) {
             throw new MasterAndRoomNotMatchedException();
@@ -58,56 +43,11 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public Room findRoom(long roomId) {
-        return roomRepository.findById(roomId)
-                .orElseThrow(NotFoundRoomException::new);
-    }
-
-    public List<RoomResponseDto> findAllRooms() { // TODO: 필요한지 논의
-        List<Room> rooms = roomRepository.findAll();
-        return toResponseDtos(rooms);
-    }
-
-    private List<RoomResponseDto> toResponseDtos(List<Room> rooms) {
-        return rooms.stream()
-                .map(RoomResponseDto::new)
-                .collect(Collectors.toList());
-    }
-
-    public Room join(Player loggedInPlayer, Long roomId) {
-        Room room = findRoom(roomId);
-        if (room.hasPlayer(loggedInPlayer)) {
-            throw new AlreadyJoinedException();
-        }
-
-        room.addPlayer(loggedInPlayer);
-        return room;
-    }
-
-    public void quit(Player loggedInPlayer, Long roomId) {
-        Room room = findRoom(roomId);
-
-        if (room.isReady()) {
-            throw new FixedReadyRoomException();
-        }
-
-        room.removePlayer(loggedInPlayer);
-    }
-
-    @Transactional(readOnly = true)
     public List<RoomResponseDto> findAllUnexpiredRooms() {
         return roomRepository.findAll().stream()
                 .filter(Room::isUnexpiredRoom)
                 .filter(Room::hasRemainingSeat)
                 .sorted(Comparator.comparing(Room::getStartTime)) // TODO: 추후 추출? 혹은 쿼리 등 다른 방법?
-                .map(RoomResponseDto::new)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<RoomResponseDto> findPlayerJoinedRoom(Player player) {
-        return roomRepository.findByPlayersEmail(player.getEmail()).stream()
-                .sorted(Comparator.comparing(Room::getStartTime))
                 .map(RoomResponseDto::new)
                 .collect(Collectors.toList());
     }

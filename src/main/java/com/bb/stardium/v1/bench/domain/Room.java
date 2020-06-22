@@ -50,35 +50,6 @@ public class Room {
             inverseJoinColumns = @JoinColumn(name = "player_id"))
     private List<Player> players = new ArrayList<>();
 
-    public void update(Room updatedRoom) {
-        this.title = updatedRoom.getTitle();
-        this.intro = updatedRoom.getIntro();
-        this.address = updatedRoom.getAddress();
-        this.startTime = updatedRoom.getStartTime();
-        this.endTime = updatedRoom.getEndTime();
-        this.playersLimit = updatedRoom.getPlayersLimit();
-    }
-
-    public boolean isNotMaster(Player masterPlayer) {
-        return this.master != masterPlayer;
-    }
-
-    public void addPlayer(Player player) {
-        if (hasPlayer(player)) {
-            throw new PlayerAlreadyExistException();
-        }
-        this.players.add(player);
-        player.addRoom(this);
-    }
-
-    public boolean hasPlayer(Player player) {
-        return players.contains(player);
-    }
-
-    public void removePlayer(Player player) {
-        player.removeRoom(this);
-        this.players.remove(player);
-    }
 
     public boolean isUnexpiredRoom() {
         return this.getStartTime().isAfter(LocalDateTime.now());

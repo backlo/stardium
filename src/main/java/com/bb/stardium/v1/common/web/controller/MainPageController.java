@@ -48,11 +48,4 @@ public class MainPageController {
         return homepageRooms(model, roomService.findRoomBySearchKeyword(searchKeyword));
     }
 
-    @GetMapping("/my-room")
-    public String myRoomPage(Model model, @LoggedInPlayer Player loggedInPlayer) {
-        List<RoomResponseDto> myRooms = roomService.findPlayerJoinedRoom(loggedInPlayer);
-        model.addAttribute("rooms", myRooms);
-        return "main-my-room";
-    }
-
 }
