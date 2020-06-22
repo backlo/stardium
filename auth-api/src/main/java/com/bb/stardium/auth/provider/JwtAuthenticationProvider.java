@@ -1,4 +1,4 @@
-package com.bb.stardium.auth.security.provider;
+package com.bb.stardium.auth.provider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.bb.stardium.auth.security.handler;
+package com.bb.stardium.auth.handler;
 
 import com.bb.stardium.error.model.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;

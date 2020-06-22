@@ -1,6 +1,6 @@
-package com.bb.stardium.auth.security.handler;
+package com.bb.stardium.auth.handler;
 
-import com.bb.stardium.auth.security.handler.dto.TokenResponse;
+import com.bb.stardium.auth.handler.dto.TokenResponse;
 import com.bb.stardium.security.model.AuthenticationPlayer;
 import com.bb.stardium.security.service.SecurityService;
 import com.fasterxml.jackson.databind.ObjectMapper;

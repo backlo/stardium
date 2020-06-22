@@ -1,4 +1,4 @@
-package com.bb.stardium.auth.security.filter.dto.core;
+package com.bb.stardium.auth.filter.dto.core;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

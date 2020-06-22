@@ -1,4 +1,4 @@
-package com.bb.stardium.auth.security.oauth;
+package com.bb.stardium.auth.oauth;
 
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 

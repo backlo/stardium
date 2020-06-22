@@ -1,7 +1,6 @@
-package com.bb.stardium.auth.security.handler;
+package com.bb.stardium.auth.handler;
 
-import com.bb.stardium.auth.security.handler.dto.LogoutResponse;
-import com.bb.stardium.security.service.SecurityService;
+import com.bb.stardium.auth.handler.dto.LogoutResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

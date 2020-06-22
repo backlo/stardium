@@ -1,8 +1,8 @@
-package com.bb.stardium.auth.security.filter;
+package com.bb.stardium.auth.filter;
 
-import com.bb.stardium.auth.security.filter.dto.PlayerCreateViewModel;
-import com.bb.stardium.auth.security.filter.dto.PlayerEditViewModel;
-import com.bb.stardium.auth.security.filter.dto.core.PlayerViewModel;
+import com.bb.stardium.auth.filter.dto.PlayerCreateViewModel;
+import com.bb.stardium.auth.filter.dto.PlayerEditViewModel;
+import com.bb.stardium.auth.filter.dto.core.PlayerViewModel;
 import com.bb.stardium.error.exception.FieldsEmptyException;
 import com.bb.stardium.error.model.ErrorResponse;
 import com.bb.stardium.util.CopyHttpServletRequest;

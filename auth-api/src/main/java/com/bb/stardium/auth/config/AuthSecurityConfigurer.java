@@ -1,11 +1,11 @@
-package com.bb.stardium.auth.security.config;
+package com.bb.stardium.auth.config;
 
-import com.bb.stardium.auth.security.filter.JwtAuthenticationFilter;
-import com.bb.stardium.auth.security.filter.PasswordEncoderFilter;
-import com.bb.stardium.auth.security.handler.JwtAuthenticationFailureHandler;
-import com.bb.stardium.auth.security.handler.JwtAuthenticationSuccessHandler;
-import com.bb.stardium.auth.security.handler.JwtLogoutSuccessHandler;
-import com.bb.stardium.auth.security.provider.JwtAuthenticationProvider;
+import com.bb.stardium.auth.filter.JwtAuthenticationFilter;
+import com.bb.stardium.auth.filter.PasswordEncoderFilter;
+import com.bb.stardium.auth.handler.JwtAuthenticationFailureHandler;
+import com.bb.stardium.auth.handler.JwtAuthenticationSuccessHandler;
+import com.bb.stardium.auth.handler.JwtLogoutSuccessHandler;
+import com.bb.stardium.auth.provider.JwtAuthenticationProvider;
 import com.bb.stardium.security.filter.JwtVerifyFilter;
 import com.bb.stardium.security.service.SecurityService;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

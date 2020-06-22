@@ -1,6 +1,6 @@
-package com.bb.stardium.auth.security.filter.dto;
+package com.bb.stardium.auth.filter.dto;
 
-import com.bb.stardium.auth.security.filter.dto.core.PlayerViewModel;
+import com.bb.stardium.auth.filter.dto.core.PlayerViewModel;
 import com.bb.stardium.error.exception.FieldsEmptyException;
 import lombok.Getter;
 import org.springframework.util.StringUtils;

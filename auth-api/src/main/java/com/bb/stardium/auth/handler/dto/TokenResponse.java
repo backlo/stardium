@@ -1,4 +1,4 @@
-package com.bb.stardium.auth.security.handler.dto;
+package com.bb.stardium.auth.handler.dto;
 
 import lombok.Builder;
 import lombok.Getter;
