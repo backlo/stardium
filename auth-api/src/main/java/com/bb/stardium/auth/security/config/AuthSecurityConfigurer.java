@@ -6,10 +6,8 @@ import com.bb.stardium.auth.security.handler.JwtAuthenticationFailureHandler;
 import com.bb.stardium.auth.security.handler.JwtAuthenticationSuccessHandler;
 import com.bb.stardium.auth.security.handler.JwtLogoutSuccessHandler;
 import com.bb.stardium.auth.security.provider.JwtAuthenticationProvider;
-import com.bb.stardium.interceptor.resolver.AuthorizePlayerArgumentResolver;
 import com.bb.stardium.security.filter.JwtVerifyFilter;
 import com.bb.stardium.security.service.SecurityService;
-import com.bb.stardium.service.player.PlayerService;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,38 +24,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
-public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter {
     private final SecurityService securityService;
-    private final PlayerService playerService;
 
-    public AuthSecurityConfigurer(SecurityService securityService, PlayerService playerService) {
+
+    public AuthSecurityConfigurer(SecurityService securityService) {
         this.securityService = securityService;
-        this.playerService = playerService;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
-    }
-
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(authorizePlayerArgumentResolver());
-    }
-
-    @Bean
-    public AuthorizePlayerArgumentResolver authorizePlayerArgumentResolver() {
-        return new AuthorizePlayerArgumentResolver(playerService);
     }
 
     @Bean
@@ -80,7 +64,7 @@ public class AuthSecurityConfigurer extends WebSecurityConfigurerAdapter impleme
                 .antMatchers(HttpMethod.POST, "/players").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers("/players/**").hasRole("USER")
-                .antMatchers(HttpMethod.GET,"/logout").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/logout").hasRole("USER")
                 .antMatchers("/*").denyAll()
                 .anyRequest().authenticated()
                 .and()
