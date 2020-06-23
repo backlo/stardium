@@ -3,8 +3,6 @@ package com.bb.stardium.v1.common.web.controller;
 import com.bb.stardium.v1.bench.domain.Section;
 import com.bb.stardium.v1.bench.dto.RoomResponseDto;
 import com.bb.stardium.v1.bench.service.RoomService;
-import com.bb.stardium.v1.common.web.annotation.LoggedInPlayer;
-import com.bb.stardium.v1.player.domain.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

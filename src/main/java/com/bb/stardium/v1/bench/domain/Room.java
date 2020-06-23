@@ -1,10 +1,7 @@
 package com.bb.stardium.v1.bench.domain;
 
-import com.bb.stardium.v1.bench.domain.exception.PlayerAlreadyExistException;
 import com.bb.stardium.v1.player.domain.Player;
-import lombok.*;
 
-import javax.persistence.*;
 import javax.validation.constraints.Future;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -2,9 +2,7 @@ package com.bb.stardium.v1.bench.service;
 
 import com.bb.stardium.v1.bench.domain.Room;
 import com.bb.stardium.v1.bench.domain.repository.RoomRepository;
-import com.bb.stardium.v1.bench.dto.RoomRequestDto;
 import com.bb.stardium.v1.bench.dto.RoomResponseDto;
-import com.bb.stardium.v1.bench.service.exception.AlreadyJoinedException;
 import com.bb.stardium.v1.bench.service.exception.FixedReadyRoomException;
 import com.bb.stardium.v1.bench.service.exception.MasterAndRoomNotMatchedException;
 import com.bb.stardium.v1.bench.service.exception.NotFoundRoomException;
