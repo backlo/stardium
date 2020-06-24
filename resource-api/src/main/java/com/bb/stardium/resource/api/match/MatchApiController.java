@@ -8,6 +8,7 @@ import com.bb.stardium.resource.api.common.dto.RequestPage;
 import com.bb.stardium.resource.api.common.dto.ResponseMatchPageImpl;
 import com.bb.stardium.resource.api.common.dto.ResponsePage;
 import com.bb.stardium.resource.api.match.dto.ResponseMatch;
+import com.bb.stardium.resource.api.match.dto.ResponsePlayerOfTeam;
 import com.bb.stardium.resource.api.match.dto.ResponseTeams;
 import com.bb.stardium.service.club.ClubService;
 import com.bb.stardium.service.match.MatchService;
@@ -89,4 +90,17 @@ public class MatchApiController {
                         .build()
         );
     }
+
+    @GetMapping("{id}/teams/{playerId}")
+    public ResponseEntity<ResponsePlayerOfTeam> getPlayerOfTeams(@PathVariable Long id,
+                                                                 @PathVariable Long playerId,
+                                                                 @AuthorizePlayer Player authPlayer) {
+        Player findPlayerOfTeams = matchService.getPlayerOfTeams(id, playerId, authPlayer);
+        return ResponseEntity.ok(
+                ResponsePlayerOfTeam.builder()
+                        .findPlayer(findPlayerOfTeams)
+                        .build()
+        );
+    }
+
 }

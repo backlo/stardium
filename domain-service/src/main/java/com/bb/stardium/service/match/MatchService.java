@@ -6,6 +6,7 @@ import com.bb.stardium.domain.match.Match;
 import com.bb.stardium.domain.match.repository.MatchRepository;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.service.match.dto.MatchDto;
+import com.bb.stardium.service.player.exception.PlayerNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,16 @@ public class MatchService {
         return findMatchesByClubId.stream()
                 .map(Match::getPlayer)
                 .collect(Collectors.toList());
+    }
+
+    public Player getPlayerOfTeams(Long id, Long playerId, Player authPlayer) {
+        List<Match> findMatchesByClubId = checkMatchInPlayer(authPlayer, matchRepository.findAllByClubId(id));
+
+        return findMatchesByClubId.stream()
+                .filter(match -> match.isEqualPlayerId(playerId))
+                .findFirst()
+                .map(Match::getPlayer)
+                .orElseThrow(PlayerNotFoundException::new);
     }
 
     private List<Match> checkMatchInPlayer(Player authPlayer, List<Match> findMatchesByClubId) {

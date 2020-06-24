@@ -40,4 +40,8 @@ public class Match {
     public boolean isSamePlayerAndClub(Club club, Player authPlayer) {
         return club.equals(this.club) && authPlayer.equals(this.player);
     }
+
+    public boolean isEqualPlayerId(Long playerId) {
+        return this.player.getId().equals(playerId);
+    }
 }
