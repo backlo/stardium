@@ -8,6 +8,7 @@ import com.bb.stardium.resource.api.common.dto.RequestPage;
 import com.bb.stardium.resource.api.common.dto.ResponseMatchPageImpl;
 import com.bb.stardium.resource.api.common.dto.ResponsePage;
 import com.bb.stardium.resource.api.match.dto.ResponseMatch;
+import com.bb.stardium.resource.api.match.dto.ResponseTeams;
 import com.bb.stardium.service.club.ClubService;
 import com.bb.stardium.service.match.MatchService;
 import com.bb.stardium.service.match.dto.MatchDto;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/matches")
@@ -74,5 +77,16 @@ public class MatchApiController {
         } catch (IllegalArgumentException e) {
             throw new IllegalPageFormException();
         }
+    }
+
+    @GetMapping("/{id}/teams")
+    public ResponseEntity<ResponseTeams> getMatchTeam(@PathVariable Long id, @AuthorizePlayer Player authPlayer) {
+        List<Player> getTeamPlayers = matchService.getMatchTeams(id, authPlayer);
+
+        return ResponseEntity.ok(
+                ResponseTeams.builder()
+                        .getTeamPlayers(getTeamPlayers)
+                        .build()
+        );
     }
 }
