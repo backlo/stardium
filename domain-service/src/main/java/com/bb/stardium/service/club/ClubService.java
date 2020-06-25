@@ -65,4 +65,7 @@ public class ClubService {
         return clubRepository.findAllByAddress_Section(section, pageable);
     }
 
+    public List<Club> findAllBySearchKeyword(String keyword) {
+        return clubRepository.findAllByTitleContainingOrIntroContaining(keyword, keyword);
+    }
 }

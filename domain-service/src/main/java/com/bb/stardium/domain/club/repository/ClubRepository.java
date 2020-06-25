@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public interface ClubRepository extends JpaRepository<Club, Long> {
@@ -14,5 +15,5 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
 
     Page<Club> findAllByAddress_Section(String section, Pageable pageable);
 
-//    List<Room> findAllByTitleContaining(final String searchKeyword);
+    List<Club> findAllByTitleContainingOrIntroContaining(String title, String intro);
 }
