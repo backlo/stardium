@@ -7,3 +7,5 @@ include 'auth-api'
 include 'aws-api'
 include 'resource-api'
 include 'common-api'
+include 'search-api'
+
