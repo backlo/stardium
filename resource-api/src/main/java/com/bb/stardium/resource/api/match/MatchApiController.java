@@ -14,6 +14,7 @@ import com.bb.stardium.service.club.ClubService;
 import com.bb.stardium.service.match.MatchService;
 import com.bb.stardium.service.match.dto.MatchDto;
 import org.springframework.data.domain.Page;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -75,7 +76,7 @@ public class MatchApiController {
                             .matchPageInfo(matches)
                             .build()
             );
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | PropertyReferenceException e) {
             throw new IllegalPageFormException();
         }
     }
