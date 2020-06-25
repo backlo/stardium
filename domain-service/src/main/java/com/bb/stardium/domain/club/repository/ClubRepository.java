@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public interface ClubRepository extends JpaRepository<Club, Long> {
     Page<Club> findAllByStartTimeIsAfter(LocalDateTime startTime, Pageable pageable);
 
-//    List<Room> findAllByAddressSectionOrderByStartTimeAsc(final String section);
-//
+    Page<Club> findAllByAddress_Section(String section, Pageable pageable);
+
 //    List<Room> findAllByTitleContaining(final String searchKeyword);
 }

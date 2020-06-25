@@ -93,14 +93,14 @@ public class ClubApiController {
     @GetMapping("/sort")
     public ResponseEntity<ResponsePage> getSortClub(@RequestParam(value = "section") String section, RequestPage pageable) {
         try {
-            Page<Club> findAllClubs = clubService.findAllClubsFilterBySection(section);
+            Page<Club> findAllClubs = clubService.findAllClubsFilterBySection(section, pageable.of());
 
             return ResponseEntity.ok(
                     ResponseClubPageImpl.builder()
                             .clubPageInfo(findAllClubs)
                             .build()
             );
-        } catch (Exception e) {
+        } catch (IllegalArgumentException | PropertyReferenceException e) {
             throw new IllegalPageFormException();
         }
     }

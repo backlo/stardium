@@ -2,6 +2,7 @@ package com.bb.stardium.service.club;
 
 import com.bb.stardium.domain.club.Club;
 import com.bb.stardium.domain.club.Section;
+import com.bb.stardium.domain.club.exception.NotAllowSectionException;
 import com.bb.stardium.domain.club.repository.ClubRepository;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.service.club.dto.ClubDto;
@@ -56,10 +57,12 @@ public class ClubService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Club> findAllClubsFilterBySection(String section) {
-//        clubRepository.findAllBy
-        return null;
-    }
+    public Page<Club> findAllClubsFilterBySection(String section, Pageable pageable) {
+        if (!Section.isExistSection(section)) {
+            throw new NotAllowSectionException();
+        }
 
+        return clubRepository.findAllByAddress_Section(section, pageable);
+    }
 
 }
