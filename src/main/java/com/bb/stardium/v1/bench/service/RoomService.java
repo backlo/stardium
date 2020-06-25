@@ -40,29 +40,4 @@ public class RoomService {
         return true;
     }
 
-    @Transactional(readOnly = true)
-    public List<RoomResponseDto> findAllUnexpiredRooms() {
-        return roomRepository.findAll().stream()
-                .filter(Room::isUnexpiredRoom)
-                .filter(Room::hasRemainingSeat)
-                .sorted(Comparator.comparing(Room::getStartTime)) // TODO: 추후 추출? 혹은 쿼리 등 다른 방법?
-                .map(RoomResponseDto::new)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<RoomResponseDto> findRoomsFilterBySection(String section) {
-        return roomRepository.findAllByAddressSectionOrderByStartTimeAsc(section).stream()
-                .filter(Room::isUnexpiredRoom)
-                .map(RoomResponseDto::new)
-                .collect(Collectors.toList());
-    }
-
-    public List<RoomResponseDto> findRoomBySearchKeyword(String searchKeyword) {
-        return roomRepository.findAllByTitleContaining(searchKeyword).stream()
-                .filter(Room::isUnexpiredRoom)
-                .map(RoomResponseDto::new)
-                .collect(Collectors.toList());
-    }
-
 }
