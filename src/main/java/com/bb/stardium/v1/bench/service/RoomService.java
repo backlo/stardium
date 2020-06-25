@@ -2,7 +2,6 @@ package com.bb.stardium.v1.bench.service;
 
 import com.bb.stardium.v1.bench.domain.Room;
 import com.bb.stardium.v1.bench.domain.repository.RoomRepository;
-import com.bb.stardium.v1.bench.dto.RoomResponseDto;
 import com.bb.stardium.v1.bench.service.exception.FixedReadyRoomException;
 import com.bb.stardium.v1.bench.service.exception.MasterAndRoomNotMatchedException;
 import com.bb.stardium.v1.bench.service.exception.NotFoundRoomException;
@@ -10,10 +9,6 @@ import com.bb.stardium.v1.player.domain.Player;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
