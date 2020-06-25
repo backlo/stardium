@@ -1,6 +1,7 @@
 package com.bb.stardium.service.club;
 
 import com.bb.stardium.domain.club.Club;
+import com.bb.stardium.domain.club.Section;
 import com.bb.stardium.domain.club.repository.ClubRepository;
 import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.service.club.dto.ClubDto;
@@ -9,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ClubService {
@@ -28,8 +32,8 @@ public class ClubService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Club> findAllClubs(Pageable pageable) {
-        return clubRepository.findAll(pageable);
+    public Page<Club> findAllUnexpiredClubs(Pageable pageable) {
+        return clubRepository.findAllByStartTimeIsAfter(LocalDateTime.now(), pageable);
     }
 
     @Transactional(readOnly = true)
@@ -46,4 +50,16 @@ public class ClubService {
         return club.checkMasterAndLoginPlayer(loginPlayer)
                 .update(clubDto);
     }
+
+    public List<String> findAllSections() {
+        return Section.getAllSections();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Club> findAllClubsFilterBySection(String section) {
+//        clubRepository.findAllBy
+        return null;
+    }
+
+
 }

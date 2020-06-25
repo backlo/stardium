@@ -15,9 +15,10 @@ public enum ErrorCode {
     FIELD_EMPTY_EXCEPTION(FieldsEmptyException.class, 104),
 
     NOT_ALLOW_CITY_EXCEPTION(NotAllowCityException.class, 200),
-    NOT_FOUND_CLUB_EXCEPTION(NotFoundClubsException.class, 201),
-    MASTER_AND_CLUB_NOT_MATCHED_EXCEPTION(MasterAndClubNotMatchedException.class, 202),
-    ILLEGAL_PAGE_FORM_EXCEPTION(IllegalPageFormException.class, 203),
+    NOT_ALLOW_SECTION_EXCEPTION(NotAllowSectionException.class, 201),
+    NOT_FOUND_CLUB_EXCEPTION(NotFoundClubsException.class, 202),
+    MASTER_AND_CLUB_NOT_MATCHED_EXCEPTION(MasterAndClubNotMatchedException.class, 203),
+    ILLEGAL_PAGE_FORM_EXCEPTION(IllegalPageFormException.class, 204),
 
     FILE_CONVERT_EXCEPTION(FileConvertException.class, 300),
     FILE_UPLOAD_EXCEPTION(FileUploadException.class, 301),

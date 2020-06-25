@@ -139,4 +139,8 @@ public class Club {
         return joinPlayers.stream()
                 .anyMatch(match -> match.isJoinPlayer(authPlayer));
     }
+
+    public boolean hasRemainingSeat() {
+        return this.playersLimit - joinPlayers.size() > 0;
+    }
 }

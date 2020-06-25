@@ -1,6 +1,7 @@
 package com.bb.stardium.domain.club;
 
 import com.bb.stardium.domain.club.exception.NotAllowCityException;
+import com.bb.stardium.domain.club.exception.NotAllowSectionException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class Address {
     @Builder
     public Address(String city, String section, String detail) {
         this.city = checkCityName(city);
-        this.section = section;
+        this.section = checkSectionName(section);
         this.detail = detail;
     }
 
@@ -30,5 +31,13 @@ public class Address {
             throw new NotAllowCityException();
         }
         return city;
+    }
+
+    private String checkSectionName(String section) {
+        if (!Section.isExistSection(section)) {
+            throw new NotAllowSectionException();
+        }
+
+        return section;
     }
 }

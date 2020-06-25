@@ -1,9 +1,12 @@
 package com.bb.stardium.domain.club;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
 public enum Section {
     JONGRO("종로구"), JUNGGU("중구"), YONGSAN("용산구"),
     SUNGDONG("성동구"), GWANGJIN("광진구"), DONGDAEMUN("동대문구"),
@@ -15,7 +18,7 @@ public enum Section {
     SEOCHO("서초구"), GANGNAM("강남구"), SONGPA("송파구"),
     GANGDONG("강동구");
 
-    private String sectionName;
+    private final String sectionName;
 
     Section(String sectionName) {
         this.sectionName = sectionName;
@@ -28,7 +31,12 @@ public enum Section {
                 .collect(Collectors.toList());
     }
 
-    private String getSectionName() {
-        return this.sectionName;
+    public static boolean isExistSection(String sectionName) {
+        return Arrays.stream(Section.values())
+                .anyMatch(section -> section.isEqualSectionName(sectionName));
+    }
+
+    private boolean isEqualSectionName(String sectionName) {
+        return this.sectionName.equals(sectionName);
     }
 }
