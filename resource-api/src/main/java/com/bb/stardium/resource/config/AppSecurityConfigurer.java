@@ -19,7 +19,6 @@ public class AppSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     private final SecurityService securityService;
 
-
     public AppSecurityConfigurer(SecurityService securityService) {
         this.securityService = securityService;
     }

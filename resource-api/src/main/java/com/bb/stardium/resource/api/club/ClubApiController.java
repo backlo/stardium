@@ -5,15 +5,19 @@ import com.bb.stardium.domain.player.Player;
 import com.bb.stardium.error.exception.IllegalPageFormException;
 import com.bb.stardium.resolver.annotation.AuthorizePlayer;
 import com.bb.stardium.resource.api.club.dto.RequestClub;
-import com.bb.stardium.resource.api.common.dto.RequestPage;
 import com.bb.stardium.resource.api.club.dto.ResponseClub;
+import com.bb.stardium.resource.api.club.dto.ResponseSections;
+import com.bb.stardium.resource.api.common.dto.RequestPage;
 import com.bb.stardium.resource.api.common.dto.ResponseClubPageImpl;
 import com.bb.stardium.resource.api.common.dto.ResponsePage;
 import com.bb.stardium.service.club.ClubService;
 import com.bb.stardium.service.club.dto.ClubDto;
 import org.springframework.data.domain.Page;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/clubs")
@@ -40,13 +44,13 @@ public class ClubApiController {
     @GetMapping
     public ResponseEntity<ResponsePage> getAllClubList(RequestPage pageable) {
         try {
-            Page<Club> clubs = clubService.findAllClubs(pageable.of());
+            Page<Club> clubs = clubService.findAllUnexpiredClubs(pageable.of());
             return ResponseEntity.ok(
                     ResponseClubPageImpl.builder()
                             .clubPageInfo(clubs)
                             .build()
             );
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | PropertyReferenceException e) {
             throw new IllegalPageFormException();
         }
     }
@@ -75,5 +79,29 @@ public class ClubApiController {
         );
     }
 
+    @GetMapping("/sections")
+    public ResponseEntity<ResponseSections> getSections() {
+        List<String> sections = clubService.findAllSections();
 
+        return ResponseEntity.ok(
+                ResponseSections.builder()
+                        .sections(sections)
+                        .build()
+        );
+    }
+
+    @GetMapping("/sort")
+    public ResponseEntity<ResponsePage> getSortClub(@RequestParam(value = "section") String section, RequestPage pageable) {
+        try {
+            Page<Club> findAllClubs = clubService.findAllClubsFilterBySection(section);
+
+            return ResponseEntity.ok(
+                    ResponseClubPageImpl.builder()
+                            .clubPageInfo(findAllClubs)
+                            .build()
+            );
+        } catch (Exception e) {
+            throw new IllegalPageFormException();
+        }
+    }
 }
