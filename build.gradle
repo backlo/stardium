@@ -17,7 +17,7 @@
 }
  
 ext {
-    projectGroup = 'com.jojoldu.bns'
+    projectGroup = 'com.stardium.bb'
     projectVersion = '0.0.1-'+new Date().format("yyyyMMddHHmmss") 
 }
 
@@ -47,15 +47,6 @@ subprojects {
 
     test {
         useJUnitPlatform()
-    }
-
-
-    compileQuerydsl{
-        options.annotationProcessorPath = configurations.querydsl
-    }
-
-    configurations {
-        querydsl.extendsFrom compileClasspath
     }
 
     dependencies {
