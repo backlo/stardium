@@ -56,6 +56,8 @@ public class SecurityService implements UserDetailsService {
             LoginPlayer player = authenticationRepositorySupport.findByEmail(email);
             return new AuthenticationPlayer(player.getEmail(),
                     player.getPassword(),
+                    player.getNickname(),
+                    player.getProfileImage(),
                     setAuthorities(player.getRole())
             );
         } catch (Exception ex) {
@@ -66,5 +68,13 @@ public class SecurityService implements UserDetailsService {
 
     private Collection<? extends GrantedAuthority> setAuthorities(String role) {
         return List.of(new SimpleGrantedAuthority(role));
+    }
+
+    public String extractNickname(String token) throws IllegalAccessException {
+        try {
+            return jwtUtil.extractNickname(token);
+        } catch (JwtException e) {
+            throw new IllegalAccessException(e.getMessage());
+        }
     }
 }

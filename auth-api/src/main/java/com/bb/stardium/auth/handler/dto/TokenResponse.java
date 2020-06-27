@@ -1,16 +1,21 @@
 package com.bb.stardium.auth.handler.dto;
 
+import com.bb.stardium.domain.player.PlayerProfileImage;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class TokenResponse {
-    private String token;
+    private final String token;
+    private final String email;
+    private final String nickname;
+    private final PlayerProfileImage profile;
 
     @Builder
-    public TokenResponse(String token) {
+    public TokenResponse(String token, String email, String nickname, PlayerProfileImage profile) {
         this.token = token;
+        this.email = email;
+        this.nickname = nickname;
+        this.profile = profile;
     }
 }

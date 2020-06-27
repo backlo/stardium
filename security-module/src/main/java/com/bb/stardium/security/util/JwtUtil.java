@@ -30,6 +30,7 @@ public class JwtUtil {
 
     public String generateToken(AuthenticationPlayer player) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("nickname", player.getNickname());
 
         return createToken(claims, player.getUsername());
     }
@@ -61,7 +62,6 @@ public class JwtUtil {
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) throws JwtException {
         Claims claims = extractAllClaims(token);
-
         return claimsResolver.apply(claims);
     }
 
@@ -70,5 +70,9 @@ public class JwtUtil {
                 .setSigningKey(key.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public String extractNickname(String token) {
+        return extractClaim(token, claims -> claims.get("nickname", String.class));
     }
 }

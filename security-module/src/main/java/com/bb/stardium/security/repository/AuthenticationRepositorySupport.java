@@ -26,6 +26,8 @@ public class AuthenticationRepositorySupport extends QuerydslRepositorySupport {
                 .select(Projections.constructor(LoginPlayer.class,
                         player.email,
                         player.password,
+                        player.nickname,
+                        player.profile,
                         player.role))
                 .where(player.email.eq(email))
                 .fetchOne();

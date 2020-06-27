@@ -35,6 +35,9 @@ public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
                 .writeValueAsString(
                         TokenResponse.builder()
                                 .token(TOKEN_TYPE + token)
+                                .email(player.getUsername())
+                                .nickname(player.getNickname())
+                                .profile(player.getProfile())
                                 .build()
                 );
 
