@@ -1,16 +1,50 @@
 plugins {
-    id 'java'
+    id 'org.asciidoctor.convert' version '1.5.9.2'
 }
 
-group 'com.bb'
-version '0.0.1-SNAPSHOT'
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
 
-sourceCompatibility = 1.8
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
 
-repositories {
-    mavenCentral()
+bootJar {
+    enabled = false
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}/html5") {
+        into 'static/docs'
+    }
+}
+
+jar {
+    enabled = true
+}
+
+check {
+    dependsOn(test)
+    outputs.dir snippetsDir
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation project(":security-module")
+    implementation project(":common-api")
+    implementation project(":chat-service")
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    
+    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.2.RELEASE'
+
+    testImplementation 'io.rest-assured:rest-assured:4.1.2'
+    testImplementation 'io.rest-assured:json-path:4.1.2'
+    testImplementation 'io.rest-assured:xml-path:4.1.2'
+    testImplementation 'io.rest-assured:json-schema-validator:4.1.2'
+    testImplementation 'io.rest-assured:spring-mock-mvc:4.1.2'
+
+    testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
+    testImplementation 'io.rest-assured:rest-assured:4.1.1'
 }

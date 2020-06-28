@@ -17,12 +17,12 @@
 }
  
 ext {
-    projectGroup = 'com.stardium.bb'
+    projectGroup = 'com.bb.stardium'
     projectVersion = '0.0.1-'+new Date().format("yyyyMMddHHmmss") 
 }
 
 allprojects {
-    group 'com.bb'
+    group 'com.bb.stardium'
     version '0.0.1-SNAPSHOT'
 }
 
@@ -50,8 +50,6 @@ subprojects {
     }
 
     dependencies {
-//        implementation 'org.springframework.boot:spring-boot-starter-websocket'
-        
         annotationProcessor 'org.projectlombok:lombok'
 
         testImplementation('org.springframework.boot:spring-boot-starter-test') {

@@ -9,4 +9,5 @@ include 'resource-api'
 include 'common-api'
 include 'search-api'
 include 'chat-api'
+include 'chat-service'
 
