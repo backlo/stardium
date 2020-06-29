@@ -3,7 +3,7 @@ package com.bb.stardium.aws.api.profile.handler;
 import com.bb.stardium.error.exception.*;
 import com.bb.stardium.error.handler.AbstractApiExceptionHandler;
 import com.bb.stardium.error.model.ErrorResponse;
-import com.bb.stardium.service.player.exception.InvalidProfileUrlException;
+import com.bb.stardium.chat.service.player.exception.InvalidProfileUrlException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

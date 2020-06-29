@@ -1,7 +1,7 @@
 package com.bb.stardium.resource.api.club.dto;
 
-import com.bb.stardium.domain.player.Player;
-import com.bb.stardium.service.club.dto.ClubDto;
+import com.bb.stardium.chat.domain.player.Player;
+import com.bb.stardium.chat.service.club.dto.ClubDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;

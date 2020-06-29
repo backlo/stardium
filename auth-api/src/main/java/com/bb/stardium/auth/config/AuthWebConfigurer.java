@@ -1,7 +1,7 @@
 package com.bb.stardium.auth.config;
 
 import com.bb.stardium.resolver.AuthorizePlayerArgumentResolver;
-import com.bb.stardium.service.player.PlayerService;
+import com.bb.stardium.chat.service.player.PlayerService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

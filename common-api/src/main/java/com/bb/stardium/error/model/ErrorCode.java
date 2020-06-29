@@ -1,9 +1,9 @@
 package com.bb.stardium.error.model;
 
-import com.bb.stardium.domain.club.exception.*;
+import com.bb.stardium.chat.domain.club.exception.*;
 import com.bb.stardium.error.exception.*;
-import com.bb.stardium.service.club.exception.NotFoundClubsException;
-import com.bb.stardium.service.player.exception.*;
+import com.bb.stardium.chat.service.club.exception.NotFoundClubsException;
+import com.bb.stardium.chat.service.player.exception.*;
 
 import java.util.Arrays;
 

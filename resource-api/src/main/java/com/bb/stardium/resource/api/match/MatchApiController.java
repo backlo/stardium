@@ -1,7 +1,7 @@
 package com.bb.stardium.resource.api.match;
 
-import com.bb.stardium.domain.match.Match;
-import com.bb.stardium.domain.player.Player;
+import com.bb.stardium.chat.domain.match.Match;
+import com.bb.stardium.chat.domain.player.Player;
 import com.bb.stardium.error.exception.IllegalPageFormException;
 import com.bb.stardium.resolver.annotation.AuthorizePlayer;
 import com.bb.stardium.resource.api.common.dto.RequestPage;
@@ -10,9 +10,9 @@ import com.bb.stardium.resource.api.common.dto.ResponsePage;
 import com.bb.stardium.resource.api.match.dto.ResponseMatch;
 import com.bb.stardium.resource.api.match.dto.ResponsePlayerOfTeam;
 import com.bb.stardium.resource.api.match.dto.ResponseTeams;
-import com.bb.stardium.service.club.ClubService;
-import com.bb.stardium.service.match.MatchService;
-import com.bb.stardium.service.match.dto.MatchDto;
+import com.bb.stardium.chat.service.club.ClubService;
+import com.bb.stardium.chat.service.match.MatchService;
+import com.bb.stardium.chat.service.match.dto.MatchDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.ResponseEntity;

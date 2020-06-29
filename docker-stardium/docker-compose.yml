@@ -11,3 +11,10 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_INITDB_ARGS=--encoding=UTF-8
     restart: always
+
+  chat_db:
+      image: redis
+      container_name: SrardiumRedis
+      ports:
+        - "16379:6379"
+      environment:

@@ -5,9 +5,9 @@ import com.bb.stardium.auth.api.player.dto.RequestPlayer;
 import com.bb.stardium.auth.api.player.dto.ResponseMyProfile;
 import com.bb.stardium.auth.api.player.dto.ResponsePlayer;
 import com.bb.stardium.resolver.annotation.AuthorizePlayer;
-import com.bb.stardium.domain.player.Player;
-import com.bb.stardium.service.player.PlayerService;
-import com.bb.stardium.service.player.dto.PlayerDto;
+import com.bb.stardium.chat.domain.player.Player;
+import com.bb.stardium.chat.service.player.PlayerService;
+import com.bb.stardium.chat.service.player.dto.PlayerDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

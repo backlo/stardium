@@ -1,7 +1,7 @@
 package com.bb.stardium.auth.api.player.dto;
 
-import com.bb.stardium.domain.player.Player;
-import com.bb.stardium.domain.player.PlayerProfileImage;
+import com.bb.stardium.chat.domain.player.Player;
+import com.bb.stardium.chat.domain.player.PlayerProfileImage;
 import lombok.Builder;
 import lombok.Getter;
 

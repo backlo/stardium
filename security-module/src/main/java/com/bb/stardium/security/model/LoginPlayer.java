@@ -1,6 +1,6 @@
 package com.bb.stardium.security.model;
 
-import com.bb.stardium.domain.player.PlayerProfileImage;
+import com.bb.stardium.chat.domain.player.PlayerProfileImage;
 import lombok.Builder;
 import lombok.Getter;
 

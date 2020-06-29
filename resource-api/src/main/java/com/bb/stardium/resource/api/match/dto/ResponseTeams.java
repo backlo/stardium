@@ -1,6 +1,6 @@
 package com.bb.stardium.resource.api.match.dto;
 
-import com.bb.stardium.domain.player.Player;
+import com.bb.stardium.chat.domain.player.Player;
 import lombok.Builder;
 import lombok.Getter;
 

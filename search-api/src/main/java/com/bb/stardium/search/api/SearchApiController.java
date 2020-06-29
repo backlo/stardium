@@ -1,8 +1,8 @@
 package com.bb.stardium.search.api;
 
-import com.bb.stardium.domain.club.Club;
+import com.bb.stardium.chat.domain.club.Club;
 import com.bb.stardium.search.api.dto.ResponseSearchClubList;
-import com.bb.stardium.service.search.SearchService;
+import com.bb.stardium.chat.service.search.SearchService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

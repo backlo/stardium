@@ -1,12 +1,12 @@
 package com.bb.stardium.resource.api.club.handler;
 
-import com.bb.stardium.domain.club.exception.MasterAndClubNotMatchedException;
-import com.bb.stardium.domain.club.exception.NotAllowCityException;
-import com.bb.stardium.domain.club.exception.NotAllowSectionException;
+import com.bb.stardium.chat.domain.club.exception.MasterAndClubNotMatchedException;
+import com.bb.stardium.chat.domain.club.exception.NotAllowCityException;
+import com.bb.stardium.chat.domain.club.exception.NotAllowSectionException;
 import com.bb.stardium.error.exception.IllegalPageFormException;
 import com.bb.stardium.error.handler.AbstractApiExceptionHandler;
 import com.bb.stardium.error.model.ErrorResponse;
-import com.bb.stardium.service.club.exception.NotFoundClubsException;
+import com.bb.stardium.chat.service.club.exception.NotFoundClubsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

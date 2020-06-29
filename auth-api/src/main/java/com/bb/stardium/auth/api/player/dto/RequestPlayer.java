@@ -1,6 +1,6 @@
 package com.bb.stardium.auth.api.player.dto;
 
-import com.bb.stardium.service.player.dto.PlayerDto;
+import com.bb.stardium.chat.service.player.dto.PlayerDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

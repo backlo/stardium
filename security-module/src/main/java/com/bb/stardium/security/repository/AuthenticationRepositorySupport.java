@@ -1,6 +1,6 @@
 package com.bb.stardium.security.repository;
 
-import com.bb.stardium.domain.player.Player;
+import com.bb.stardium.chat.domain.player.Player;
 import com.bb.stardium.security.model.LoginPlayer;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -8,7 +8,7 @@ import org.hibernate.hql.internal.ast.QuerySyntaxException;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
-import static com.bb.stardium.domain.player.QPlayer.player;
+import static com.bb.stardium.chat.domain.player.QPlayer.player;
 
 
 @Repository

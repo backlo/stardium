@@ -2,7 +2,6 @@ package com.bb.stardium.aws.util;
 
 import com.bb.stardium.aws.util.media.FileConverter;
 import com.bb.stardium.aws.util.media.S3FileUploader;
-import com.bb.stardium.domain.player.PlayerProfileImage;
 import com.bb.stardium.error.exception.MultipartFileEmptyException;
 import com.bb.stardium.error.exception.NotImageFormException;
 import org.springframework.web.multipart.MultipartFile;

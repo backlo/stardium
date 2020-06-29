@@ -1,8 +1,8 @@
 package com.bb.stardium.search.api.dto;
 
-import com.bb.stardium.domain.club.Address;
-import com.bb.stardium.domain.club.Club;
-import com.bb.stardium.domain.player.Player;
+import com.bb.stardium.chat.domain.club.Address;
+import com.bb.stardium.chat.domain.club.Club;
+import com.bb.stardium.chat.domain.player.Player;
 import lombok.Builder;
 import lombok.Getter;
 

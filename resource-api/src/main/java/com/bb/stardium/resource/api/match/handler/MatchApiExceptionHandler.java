@@ -1,12 +1,12 @@
 package com.bb.stardium.resource.api.match.handler;
 
-import com.bb.stardium.domain.club.exception.NotFoundMatchException;
-import com.bb.stardium.domain.club.exception.OverLimitPlayersSizeException;
-import com.bb.stardium.domain.club.exception.PlayerNotExistClubException;
+import com.bb.stardium.chat.domain.club.exception.NotFoundMatchException;
+import com.bb.stardium.chat.domain.club.exception.OverLimitPlayersSizeException;
+import com.bb.stardium.chat.domain.club.exception.PlayerNotExistClubException;
 import com.bb.stardium.error.handler.AbstractApiExceptionHandler;
 import com.bb.stardium.error.model.ErrorResponse;
-import com.bb.stardium.domain.club.exception.PlayerAlreadyJoinClubException;
-import com.bb.stardium.service.player.exception.PlayerNotFoundException;
+import com.bb.stardium.chat.domain.club.exception.PlayerAlreadyJoinClubException;
+import com.bb.stardium.chat.service.player.exception.PlayerNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

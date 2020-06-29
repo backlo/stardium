@@ -1,6 +1,6 @@
 package com.bb.stardium.resource.api.common.dto;
 
-import com.bb.stardium.domain.match.Match;
+import com.bb.stardium.chat.domain.match.Match;
 import com.bb.stardium.resource.api.club.dto.ResponseClub;
 import lombok.Builder;
 import org.springframework.data.domain.Page;

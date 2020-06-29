@@ -2,10 +2,10 @@ package com.bb.stardium.aws.api.profile;
 
 import com.bb.stardium.aws.api.profile.dto.ResponseUploadImage;
 import com.bb.stardium.aws.util.S3UploadUtils;
-import com.bb.stardium.domain.player.Player;
+import com.bb.stardium.chat.domain.player.Player;
 import com.bb.stardium.resolver.annotation.AuthorizePlayer;
-import com.bb.stardium.service.player.PlayerService;
-import com.bb.stardium.service.player.dto.PlayerEditDto;
+import com.bb.stardium.chat.service.player.PlayerService;
+import com.bb.stardium.chat.service.player.dto.PlayerEditDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;

@@ -1,7 +1,7 @@
 package com.bb.stardium.resolver;
 
 import com.bb.stardium.resolver.annotation.AuthorizePlayer;
-import com.bb.stardium.service.player.PlayerService;
+import com.bb.stardium.chat.service.player.PlayerService;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
