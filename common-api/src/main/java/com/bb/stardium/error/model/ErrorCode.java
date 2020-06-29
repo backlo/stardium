@@ -1,9 +1,13 @@
 package com.bb.stardium.error.model;
 
 import com.bb.stardium.chat.domain.club.exception.*;
-import com.bb.stardium.error.exception.*;
+import com.bb.stardium.error.exception.IllegalMessageTypeException;
 import com.bb.stardium.chat.service.club.exception.NotFoundClubsException;
-import com.bb.stardium.chat.service.player.exception.*;
+import com.bb.stardium.chat.service.player.exception.EmailAlreadyExistException;
+import com.bb.stardium.chat.service.player.exception.InvalidProfileUrlException;
+import com.bb.stardium.chat.service.player.exception.NicknameAlreadyExistException;
+import com.bb.stardium.chat.service.player.exception.PlayerNotFoundException;
+import com.bb.stardium.error.exception.*;
 
 import java.util.Arrays;
 
@@ -30,7 +34,10 @@ public enum ErrorCode {
     PLAYER_ALREADY_JOIN_CLUB_EXCEPTION(PlayerAlreadyJoinClubException.class, 400),
     NOT_FOUND_MATCH_EXCEPTION(NotFoundMatchException.class, 401),
     PLAYER_NOT_EXIST_CLUB_EXCEPTION(PlayerNotExistClubException.class, 402),
-    OVER_LIMIT_PLAYERS_SIZE_EXCEPTION(OverLimitPlayersSizeException.class, 403);
+    OVER_LIMIT_PLAYERS_SIZE_EXCEPTION(OverLimitPlayersSizeException.class, 403),
+
+    ILLEGAL_MESSAGE_TYPE_EXCEPTION(IllegalMessageTypeException.class, 500),
+    MISMATCH_MASTER_AND_NICKNAME_EXCEPTION(MismatchMasterAndNicknameException.class, 501);
 
     private final Object exceptionClazz;
     private final int code;
