@@ -2,8 +2,11 @@ bootJar { enabled = false }
 jar { enabled = true }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'it.ozimov:embedded-redis:0.7.2'
-    
+//    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+//    implementation 'it.ozimov:embedded-redis:0.7.2'
+
+    implementation 'org.springframework:spring-context'
+
+
     testRuntimeOnly 'com.h2database:h2'
 }
