@@ -4,12 +4,12 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class ChatInfoToClub {
+public class ChatClub {
     private final Long clubId;
     private final String master;
 
     @Builder
-    public ChatInfoToClub(Long clubId, String master) {
+    public ChatClub(Long clubId, String master) {
         this.clubId = clubId;
         this.master = master;
     }

@@ -1,23 +1,23 @@
 package com.bb.stardium.chat.service;
 
-import com.bb.stardium.chat.domain.ChatInfoToClub;
-import com.bb.stardium.chat.domain.repository.ChatRepository;
+import com.bb.stardium.chat.domain.ChatClub;
+import com.bb.stardium.chat.domain.repository.ChatMessageRepository;
 import com.bb.stardium.chat.service.dto.ChatDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ChatService {
-    private final ChatRepository chatRepository;
+    private final ChatMessageRepository chatMessageRepository;
 
-    public ChatService(ChatRepository chatRepository) {
-        this.chatRepository = chatRepository;
+    public ChatService(ChatMessageRepository chatMessageRepository) {
+        this.chatMessageRepository = chatMessageRepository;
     }
 
-    public ChatInfoToClub createRoom(ChatDto chatDto) {
-        return chatRepository.createChat(chatDto);
+    public ChatClub createRoom(ChatDto chatDto) {
+        return chatMessageRepository.createChat(chatDto);
     }
 
-    public ChatInfoToClub findChatById(Long clubId) {
-        return chatRepository.findChatByClubId(clubId);
+    public ChatClub findChatById(Long clubId) {
+        return chatMessageRepository.findChatByClubId(clubId);
     }
 }

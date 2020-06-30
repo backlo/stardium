@@ -1,15 +1,15 @@
 package com.bb.stardium.chat.api.chat.dto;
 
-import com.bb.stardium.chat.domain.ChatInfoToClub;
+import com.bb.stardium.chat.domain.ChatClub;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class ResponseChatClub {
-    private final ChatInfoToClub chatInfo;
+    private final ChatClub chatInfo;
 
     @Builder
-    public ResponseChatClub(ChatInfoToClub chatInfo) {
+    public ResponseChatClub(ChatClub chatInfo) {
         this.chatInfo = chatInfo;
     }
 }

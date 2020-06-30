@@ -18,7 +18,7 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/stardium-chatting").setAllowedOrigins("*")
+        registry.addEndpoint("/stardium-chat").setAllowedOrigins("*")
                 .withSockJS();
     }
 }

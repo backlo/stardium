@@ -2,7 +2,7 @@ package com.bb.stardium.chat.api.chat;
 
 import com.bb.stardium.chat.api.chat.dto.RequestChatClub;
 import com.bb.stardium.chat.api.chat.dto.ResponseChatClub;
-import com.bb.stardium.chat.domain.ChatInfoToClub;
+import com.bb.stardium.chat.domain.ChatClub;
 import com.bb.stardium.chat.resolver.PlayerNickname;
 import com.bb.stardium.chat.service.ChatService;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class ChatApiController {
     public ResponseEntity<ResponseChatClub> createChat(@PathVariable(name = "clubId") Long clubId,
                                                        @PlayerNickname String nickname,
                                                        @RequestBody RequestChatClub requestDto) {
-        ChatInfoToClub createdChat = chatService.createRoom(requestDto.toEntity(clubId, nickname));
+        ChatClub createdChat = chatService.createRoom(requestDto.toEntity(clubId, nickname));
 
         return ResponseEntity.ok(
                 ResponseChatClub.builder()
@@ -32,7 +32,7 @@ public class ChatApiController {
     }
 
     @GetMapping
-    public ChatInfoToClub findChatInfoClubById(@PathVariable(name = "clubId") Long clubId) {
+    public ChatClub findChatInfoClubById(@PathVariable(name = "clubId") Long clubId) {
         return chatService.findChatById(clubId);
     }
 }
