@@ -1,5 +1,6 @@
 package com.bb.stardium.chat.config;
 
+import com.bb.stardium.chat.handler.StompHandler;
 import com.bb.stardium.chat.resolver.PlayerNicknameArgumentResolver;
 import com.bb.stardium.security.service.SecurityService;
 import org.springframework.context.annotation.Bean;
@@ -29,4 +30,8 @@ public class ChatWebConfigurer implements WebMvcConfigurer {
         return new PlayerNicknameArgumentResolver(securityService);
     }
 
+    @Bean
+    public StompHandler stompHandler() {
+        return new StompHandler(securityService);
+    }
 }
