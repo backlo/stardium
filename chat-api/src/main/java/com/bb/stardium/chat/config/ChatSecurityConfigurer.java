@@ -26,8 +26,9 @@ public class ChatSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/stardium-chat").permitAll()
                 .antMatchers("/**").hasRole("USER")
-                .anyRequest().authenticated()
+                .anyRequest().denyAll()
                 .and()
                 .csrf().disable()
                 .formLogin().disable()

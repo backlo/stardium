@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/clubs/{clubId}/chats")
 public class ChatApiController {
-
     private final ChatService chatService;
 
     public ChatApiController(ChatService chatService) {

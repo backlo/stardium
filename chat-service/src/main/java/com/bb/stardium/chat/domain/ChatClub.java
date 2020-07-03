@@ -3,8 +3,10 @@ package com.bb.stardium.chat.domain;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Getter
-public class ChatClub {
+public class ChatClub implements Serializable {
     private final Long clubId;
     private final String master;
 
