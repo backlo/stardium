@@ -16,7 +16,7 @@
 
 #### 인증 구조
 
-![spring security 인증](/Users/inkwon/IdeaProjects/WoowaTechCourse/step4/stardium-docs/images/spring security 구조.png)
+![spring security 인증](docs/images/security%20filters.png)
 
 #### 인증 순서
 
@@ -41,7 +41,7 @@
 
 스프링 시큐어리티 필터에는 다음과 같이 동작한다.
 
-![spring filters](/Users/inkwon/IdeaProjects/WoowaTechCourse/step4/stardium-docs/images/security filters.png)
+![spring filters](docs/images/spring%20security%20구조.png)
 
 1. **SecuirtyContextPersistenceFilter** : SecurityContextRepository에서 SecurityContext를 가져오거나 저장하는 역할
 2. **LogoutFilter** : 설정된 로그아웃 URL로 오는 요청을 감시하며, 해당 유저를 로그아웃 처리하는 역할
