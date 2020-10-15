@@ -48,7 +48,7 @@
 ### 2차 - 개인 프로젝트
 
   - 서비스 타겟을 앱으로 변경함에 따라 서버를 비동기 통신 스팩으로 변경
-  - Rest API 문서 작성 
+  - [Rest API](https://github.com/backlo/stardium/blob/master/docs/api/Stardium%20API.md) 문서 작성 
   - JPQL을 사용했던 스팩을 QueryDSL로 변경
   - 모든 연관관계 LAZY 로딩으로 바꾸고 DB 성능 튜닝화 (불필요한 query 문 삭제 및 N+1 문제 해결)
   - Session 인증을 Spring Security + JWT 로 변경
