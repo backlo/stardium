@@ -29,11 +29,11 @@
 
 ### 1차
 
-![](/Users/inkwon/IdeaProjects/WoowaTechCourse/step4/stardium/docs/images/Architecture1.png)
+<img src="https://github.com/backlo/stardium/blob/master/docs/images/Architecture1.png" width="80%" height="50%"/>
 
 ### 2차
 
-![](/Users/inkwon/IdeaProjects/WoowaTechCourse/step4/stardium/docs/images/Architecture2.png)
+<img src="https://github.com/backlo/stardium/blob/master/docs/images/Architecture2.png" width="80%" height="50%"/>
 
 ## 내가 한 역할
 
