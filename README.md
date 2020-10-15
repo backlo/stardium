@@ -29,11 +29,11 @@
 
 ### 1차 - 기능 우선과 CI 구축 초점
 
-<img src="https://github.com/backlo/stardium/blob/master/docs/images/Architecture1.png" height="50%"/>
+<img src="https://github.com/backlo/stardium/blob/master/docs/images/Architecture1.png" width="60%" height="50%"/>
 
 ### 2차 - 기능 고도화 및 세분화 초점
 
-<img src="https://github.com/backlo/stardium/blob/master/docs/images/Architecture2.png" height="50%"/>
+<img src="https://github.com/backlo/stardium/blob/master/docs/images/Architecture2.png" width="60%" height="50%"/>
 
 ## Stardium에서 내가 한 주요 역활
 
