@@ -98,4 +98,4 @@
 
 ## Stardium 데모 영상
 
-<iframe width="640" height="480" src="https://www.youtube.com/embed/wkLuv0CkU60" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<a target="_blank" href="https://www.youtube.com/watch?v=wkLuv0CkU60"><img src="https://i.imgur.com/Of7l1e1.png" width="750" height="430" /></a>
