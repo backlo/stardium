@@ -95,3 +95,7 @@
    1. 서버를 주기적으로 업데이트를 할 경우 관리가 불편
    2. 서버의 이력들을 docker-compose.yml로 코드화 하여 docker 컨테이너를 생성
    3. DockerFile로 서버 스팩을 정밀하게 명세화 할 예정
+
+## Stardium 데모 영상
+
+<iframe width="640" height="480" src="https://www.youtube.com/embed/wkLuv0CkU60" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
