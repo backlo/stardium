@@ -29,11 +29,11 @@
 
 ### 1차 - 기능 우선과 CI 구축 초점
 
-<img src="https://github.com/backlo/stardium/blob/master/docs/images/Architecture1.png" width="60%" height="50%"/>
+<img src="./docs/images/Architecture1.png" width="60%" height="50%"/>
 
 ### 2차 - 기능 고도화 및 세분화 초점
 
-<img src="https://github.com/backlo/stardium/blob/master/docs/images/Architecture2.png" width="60%" height="50%"/>
+<img src="./docs/images/Architecture2.png" width="60%" height="50%"/>
 
 ## Stardium 주요 내용
 
@@ -53,17 +53,15 @@
 
 ### 1차 - 팀 프로젝트
 
-1. 플레이어가 원하는 소모임 방에 들어가는 비지니스 로직 구현
+1. 플레이어가 원하는 소모임 방에 들어가는 비지니스 로직, 프로필 관리 로직 구현
    1. Entity간 연관관계 매핑
-2. 플레이어의 프로필 관리 로직 구현
-   1. 정적 파일 AWS S3에 저장 기능 설계
+   2. 정적 파일 AWS S3에 저장 기능 설계
 3. 카카오 API를 사용해서 로그인 되게 하는 로직 구현
    1. 카카오 API 에게 로그인 요청하는 커넥터 구현
    2. 인증받은 사용자 정보를 Session 인증 방식으로 설계
 4. Junit5를 이용해 서비스, 도메인 모델 테스트 진행
    1. 서비스의 신뢰성을 얻고자 테스트 커버리지 85%로 유지
    2. 인수 테스트는 따로 통합 테스트 모듈을 만들어 테스트 진행 
-5. Semantic UI를 가지고 UI/UX 디자인 (Kakao map API, Daum Post API 등 사용)
 
 ### 2차 - 개인 프로젝트
 
@@ -71,7 +69,11 @@
    1. [REST API](https://github.com/backlo/stardium/blob/master/docs/api/Stardium%20API.md)로 문서 작성
       * 자원과 행위를 최대한 잘 나타내도록 설계
       * Response Status Code를 의미있게 리턴
-      * 화면별로 API 설계 -> 추후 자원에 맞게 정리 예정
+   2. 패키지로 구분되어있던 계층을 멀티 모듈로 나눠 구현
+      * 하나의 거대한 프로젝트에서 작은 단위로 나눠 의존성을 최소화 시키게 하기 위해 멀티 모듈로 진행
+      * 각 서버의 빌드 환경을 다르게 하기 위해 멀티 모듈 사용
+      * 프로젝트 서버 분리시 공통된 자원을 사용할 경우 동일함을 보장해야 함
+        * 이러한 이유로 모듈을 따로 누눠 동일성을 보장
 2. 쿼리 튜닝
    1. QueryDSL를 사용
       * 사용한 이유
@@ -85,12 +87,8 @@
 3. Session 인증 방식  -> Spring Security + JWT 인증 방식으로 변경
    1. 사용자 정보를 암호화 하지않아 보안에 취약
    2. 접근 권한을 설정하지 않아 Admin 접근 제어에 불리
-   3. Session방식은 내부 톰켓에 정보를 저장하는 구조로 되어있기 때문에 서버에 부담을 줌
+   3. Session방식은 내부 톰켓에 정보를 저장하는 구조로 되어있기 때문에 서버에 부담을 준다고 판단 -> 레디스를  사용하여 사용자  정보 
    4. 필터에서 바로 인증 / 인가를 해주기 때문에 자원 낭비 절약
-4. 단일 서버에서 다중 서버로 변경
-   1. 단일 서버에 멀티 쓰레드 방식은 서버 부하 및 대기 시간이 길어진다는 단점이 있음
-   2. 주기능과 부기능을 나눠 서버를 분리
-   3. 이때 패키지로 구성 된 프로젝트에서 멀티 모듈로 변경해 서로 의존성을 낮추고 재사용이 가능하도록 분리
 5. Docker를 사용하여 서버 스팩 로그를 기록
    1. 서버를 주기적으로 업데이트를 할 경우 관리가 불편
    2. 서버의 이력들을 docker-compose.yml로 코드화 하여 docker 컨테이너를 생성
